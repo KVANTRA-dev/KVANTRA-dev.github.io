@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOUZ — Unified MCP Server for Obsidian</title>
+    <meta name="description" content="Unified MCP server for Obsidian. Three modes: LUCA (graph-only), PRIZMA (semantic), SLOI (strict hierarchy). Local-first. You define your own cores in config.yaml.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg:             #0a0b10;
+            --bg-card:        #0f1018;
+            --bg-card-hover:  #131520;
+            --bg-deep:        #07080d;
+            --text:           #f0f2f8;
+            --text-muted:     #8892a4;
+            --text-dim:       #3a4055;
+            --border:         #1a1d2e;
+            --border-bright:  #252840;
+
+            --core:     #BC1F50;
+            --pattern:  #D06AFF;
+            --module:   #448CAA;
+            --quant:    #F26F39;
+            --artifact: #C4FF7B;
+
+            --hierarchy: #ffffff;
+            --temporary: #3FFF62;
+            --semantic:  #FF00A1;
+            --error:     #FF0004;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, sans-serif;
+            line-height: 1.65;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.1rem 0;
+            background: rgba(10,11,16,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .nav-logo-symbol {
+            color: var(--core);
+            font-weight: 700;
+        }
+
+        .nav-logo-text {
+            color: var(--artifact);
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        .nav-gh {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .lang-btn {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--text-dim);
+            border: 1px solid transparent;
+            background: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active {
+            color: var(--text-muted);
+            border-color: var(--border-bright);
+        }
+
+        .lang-btn:hover { color: var(--text-muted); }
+
+        .nav-logo-text {
+            color: var(--artifact);
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        .nav-gh {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-bright);
+            border-radius: 8px;
+            color: var(--text) !important;
+            font-size: 0.85rem !important;
+            font-weight: 500;
+            transition: border-color 0.2s, background 0.2s !important;
+        }
+
+        .nav-gh:hover {
+            border-color: var(--module) !important;
+            background: var(--bg-card-hover) !important;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .lang-btn {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--text-dim);
+            border: 1px solid transparent;
+            background: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active {
+            color: var(--text-muted);
+            border-color: var(--border-bright);
+        }
+
+        .lang-btn:hover { color: var(--text-muted); }
+
+        /* ── SECTION BASE ── */
+        .section {
+            padding: 7rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.2em;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 580px;
+            margin: 0 auto 3.5rem;
+            line-height: 1.75;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% 50%, rgba(68,140,170,0.08) 0%, transparent 60%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(68,140,170,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(68,140,170,0.025) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+        }
+
+        .hero-decor {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .hero-flow {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .hero-flow-line {
+            stroke: rgba(68,140,170,0.06);
+            stroke-width: 1;
+            fill: none;
+        }
+
+        /* Level dots - left */
+        .hero-l1 { top: 15%; left: 5%; }
+        .hero-l2 { top: 30%; left: 4%; }
+        .hero-l3 { top: 45%; left: 6%; }
+        .hero-l4 { top: 60%; left: 8%; }
+        .hero-l5 { top: 75%; left: 10%; }
+
+        /* Level dots - right */
+        .hero-r1 { top: 20%; right: 6%; }
+        .hero-r2 { top: 35%; right: 4%; }
+        .hero-r3 { top: 50%; right: 5%; }
+        .hero-r4 { top: 65%; right: 7%; }
+        .hero-r5 { top: 80%; right: 9%; }
+
+        .hero-level-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .hero-level-dot.l1 { background: var(--core); }
+        .hero-level-dot.l2 { background: var(--pattern); }
+        .hero-level-dot.l3 { background: var(--module); }
+        .hero-level-dot.l4 { background: var(--quant); }
+        .hero-level-dot.l5 { background: var(--artifact); }
+
+        .hero-level-ring {
+            border: 1px solid;
+            border-radius: 50%;
+            opacity: 0.15;
+        }
+
+        .hero-level-ring.l1 { border-color: var(--core); width: 16px; height: 16px; }
+        .hero-level-ring.l2 { border-color: var(--pattern); width: 20px; height: 20px; }
+        .hero-level-ring.l3 { border-color: var(--module); width: 24px; height: 24px; }
+        .hero-level-ring.l4 { border-color: var(--quant); width: 28px; height: 28px; }
+        .hero-level-ring.l5 { border-color: var(--artifact); width: 32px; height: 32px; }
+
+        .hero-center-glyph {
+            position: absolute;
+            font-family: 'JetBrains Mono', monospace;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        .hero-center-glyph.c1 { top: 25%; left: 20%; font-size: 0.8rem; color: var(--core); }
+        .hero-center-glyph.c2 { top: 40%; right: 22%; font-size: 1rem; color: var(--pattern); }
+        .hero-center-glyph.c3 { bottom: 28%; left: 25%; font-size: 0.9rem; color: var(--module); }
+        .hero-center-glyph.c4 { bottom: 40%; right: 18%; font-size: 0.7rem; color: var(--quant); }
+
+        .hero-center {
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3.8rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: 0.08em;
+            margin: 0 0 0.75rem;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            letter-spacing: 0.2em;
+            text-transform: lowercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-sub {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin: 0 0 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-bright);
+            border-radius: 10px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .hero-cta:hover {
+            border-color: var(--module);
+            background: var(--bg-card-hover);
+        }
+
+        /* ── BLACK HOLE NODE ── */
+        .bh-node {
+            border-radius: 50%;
+            background: var(--bg-deep);
+            border: 2px solid currentColor;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            position: relative;
+            transition: box-shadow 0.3s;
+            cursor: default;
+            flex-shrink: 0;
+        }
+
+        .bh-node::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            opacity: 0.14;
+            background: currentColor;
+            filter: blur(10px);
+            pointer-events: none;
+        }
+
+        .bh-node::after {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            opacity: 0.05;
+            background: currentColor;
+            filter: blur(20px);
+            pointer-events: none;
+        }
+
+        .bh-node:hover {
+            box-shadow: 0 0 28px 4px currentColor;
+        }
+
+        /* ── PILLARS ── */
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .pillar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2rem 1.75rem;
+            transition: border-color 0.25s, background 0.25s, transform 0.25s;
+        }
+
+        .pillar-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-bright);
+            transform: translateY(-2px);
+        }
+
+        .pillar-icon {
+            width: 44px; height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            font-size: 1.3rem;
+        }
+
+        .pillar-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .pillar-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .pillar-chain {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            margin-top: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* ── PROTOCOL FLOW SVG ── */
+        .protocol-svg-wrap {
+            margin: 0 auto 2.5rem;
+            max-width: 1000px;
+        }
+
+        /* ── SERVER CARDS ── */
+        .server-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .server-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2rem 1.75rem;
+            transition: border-color 0.25s, background 0.25s, transform 0.25s;
+        }
+
+        .server-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-bright);
+            transform: translateY(-2px);
+        }
+
+        .server-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .server-card h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+        }
+
+        .server-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .server-features {
+            list-style: none;
+        }
+
+        .server-features li {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+            padding: 0.25rem 0;
+            display: flex;
+            align-items: baseline;
+            gap: 0.6rem;
+        }
+
+        .feat-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            position: relative;
+            top: -1px;
+        }
+
+        /* ── ISOMORPHISM TABLE ── */
+        .iso-table-wrap {
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .iso-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .iso-table thead th {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .iso-table tbody td {
+            font-size: 0.88rem;
+            padding: 0.85rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+
+        .iso-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .iso-table tbody tr:hover td {
+            background: var(--bg-card-hover);
+        }
+
+        .iso-table .col-universe {
+            color: var(--text-muted);
+        }
+
+        .iso-table .col-arrow {
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            text-align: center;
+            width: 60px;
+        }
+
+        .iso-table .col-knowledge {
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+        }
+
+        /* ── FORMULA ── */
+        .formula-wrap {
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .formula-big {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.75rem;
+        }
+
+        .formula-annotation {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .formula-legend {
+            display: flex;
+            justify-content: center;
+            gap: 1.75rem;
+            flex-wrap: wrap;
+        }
+
+        .fl-item {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .fl-dot {
+            width: 7px; height: 7px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        /* ── SPLIT (quick start) ── */
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .split-content h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .split-content p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+            margin-bottom: 0.75rem;
+        }
+
+        .stack-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1.5rem;
+        }
+
+        .stack-badge {
+            padding: 0.25rem 0.65rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-bright);
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .code-window {
+            background: #050609;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .cw-bar {
+            padding: 0.7rem 1rem;
+            background: #0a0b10;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .cw-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+        }
+
+        .cw-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-left: 0.4rem;
+        }
+
+        .cw-body {
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.95;
+        }
+
+        .cw-line { color: var(--text-dim); }
+        .cw-cmd  { color: var(--module); }
+        .cw-ok   { color: var(--temporary); }
+        .cw-err  { color: var(--error); }
+        .cw-info { color: #4a6090; }
+        .cw-comment { color: #252840; }
+
+        /* ── QUOTE ── */
+        .quote-section {
+            padding: 5rem 0;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(188,31,80,0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .quote-block {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .quote-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .quote-attr {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            letter-spacing: 0.08em;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 3rem 0;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.82rem;
+        }
+
+        .footer-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.12em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--text-muted); }
+
+        .footer-mit {
+            margin-top: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: #1a1d2e;
+        }
+
+        .footer-ghost {
+            margin-top: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            color: var(--border);
+            letter-spacing: 0.1em;
+            font-style: italic;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .hero-title { font-size: 2.8rem; }
+            .pillars { grid-template-columns: 1fr; }
+            .server-cards { grid-template-columns: 1fr; }
+            .split { grid-template-columns: 1fr; gap: 2rem; }
+            .formula-big { font-size: 1.3rem; }
+            .iso-table thead th,
+            .iso-table tbody td { padding: 0.7rem 1rem; font-size: 0.8rem; }
+        }
+
+        @media (max-width: 600px) {
+            .hero-title { font-size: 2.2rem; }
+            .formula-big { font-size: 1rem; }
+            nav .nav-links { display: none; }
+            .iso-table thead th,
+            .iso-table tbody td { padding: 0.5rem 0.75rem; font-size: 0.72rem; }
+        }
+
+        /* i18n */
+        [data-lang] { display: none; }
+        [data-lang="en"] { display: block; }
+        .inline-lang { display: none; }
+        .inline-lang.en { display: inline; }
+    </style>
+</head>
+<body>
+
+    <!-- ══════════════════════════════
+         NAV
+    ══════════════════════════════ -->
+    <nav>
+        <div class="container nav-inner">
+            <a href="../index.html" class="nav-logo" style="text-decoration:none;">
+                <span class="nav-logo-symbol">{</span>
+                <span class="nav-logo-text">
+                    <span class="inline-lang en">KVANTRA</span>
+                    <span class="inline-lang ru">КВАНТРА</span>
+                </span>
+                <span class="nav-logo-symbol">}</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">
+                    <span class="inline-lang en">Home</span>
+                    <span class="inline-lang ru">Главная</span>
+                </a></li>
+                <li><a href="#servers">
+                    <span class="inline-lang en">Servers</span>
+                    <span class="inline-lang ru">Серверы</span>
+                </a></li>
+                <li><a href="#protocol">
+                    <span class="inline-lang en">Protocol</span>
+                    <span class="inline-lang ru">Протокол</span>
+                </a></li>
+                <li><a href="#start">
+                    <span class="inline-lang en">Quick Start</span>
+                    <span class="inline-lang ru">Быстрый старт</span>
+                </a></li>
+                <li><a href="#usecases">
+                    <span class="inline-lang en">Use Cases</span>
+                    <span class="inline-lang ru">Примеры</span>
+                </a></li>
+                <li>
+                    <div class="lang-switch">
+                        <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+                        <button class="lang-btn" onclick="setLang('en')">EN</button>
+                    </div>
+                </li>
+                <li><a href="https://github.com/KVANTRA-dev/NOUZ-MCP" class="nav-gh" target="_blank">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    GitHub
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ══════════════════════════════
+         HERO
+    ══════════════════════════════ -->
+    <header class="hero">
+        <!-- Flow lines converging from edges toward center -->
+        <svg class="hero-flow" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path class="hero-flow-line" d="M2,10 Q20,25 45,47" />
+            <path class="hero-flow-line" d="M3,25 Q18,35 43,49" />
+            <path class="hero-flow-line" d="M1,40 Q15,45 44,50" />
+            <path class="hero-flow-line" d="M4,55 Q20,52 45,51" />
+            <path class="hero-flow-line" d="M2,70 Q22,60 46,52" />
+            <path class="hero-flow-line" d="M5,85 Q25,65 47,53" />
+            <path class="hero-flow-line" d="M98,8 Q80,22 55,47" />
+            <path class="hero-flow-line" d="M97,28 Q82,38 56,49" />
+            <path class="hero-flow-line" d="M99,42 Q84,46 55,50" />
+            <path class="hero-flow-line" d="M96,58 Q78,54 54,51" />
+            <path class="hero-flow-line" d="M98,72 Q76,62 53,52" />
+            <path class="hero-flow-line" d="M95,90 Q72,68 52,53" />
+        </svg>
+
+        <!-- Left side: level dots -->
+        <div class="hero-decor hero-l1"><div class="hero-level-dot l1"></div></div>
+        <div class="hero-decor hero-l2"><div class="hero-level-ring l2"></div></div>
+        <div class="hero-decor hero-l3"><div class="hero-level-dot l3"></div></div>
+        <div class="hero-decor hero-l4"><div class="hero-level-ring l4"></div></div>
+        <div class="hero-decor hero-l5"><div class="hero-level-dot l5"></div></div>
+
+        <!-- Right side: level rings -->
+        <div class="hero-decor hero-r1"><div class="hero-level-ring l1"></div></div>
+        <div class="hero-decor hero-r2"><div class="hero-level-dot l2"></div></div>
+        <div class="hero-decor hero-r3"><div class="hero-level-ring l3"></div></div>
+        <div class="hero-decor hero-r4"><div class="hero-level-dot l4"></div></div>
+        <div class="hero-decor hero-r5"><div class="hero-level-ring l5"></div></div>
+
+        <!-- Center hints — Ψ Δ Σ: the three cores -->
+        <span class="hero-center-glyph c1">Ψ</span>
+        <span class="hero-center-glyph c2">Δ</span>
+        <span class="hero-center-glyph c3">Σ</span>
+        <span class="hero-center-glyph c4">φ</span>
+
+        <div class="hero-center">
+            <h1 class="hero-title">NOUZ</h1>
+            <div class="hero-subtitle">
+                <span class="inline-lang en">unified mcp server for obsidian</span>
+                <span class="inline-lang ru">унифицированный mcp-сервер для obsidian</span>
+            </div>
+            <p class="hero-sub">
+                <span class="inline-lang en">One server. Three philosophies. Your knowledge graph — local, structured, semantic.</span>
+                <span class="inline-lang ru">Один сервер. Три философии. Ваш граф знаний — локальный, структурированный, семантический.</span>
+            </p>
+            <a href="https://github.com/KVANTRA-dev/NOUZ-MCP" class="hero-cta" target="_blank">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                <span class="inline-lang en">View on GitHub</span>
+                <span class="inline-lang ru">Открыть на GitHub</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- ══════════════════════════════
+         01 — SERVERS
+    ══════════════════════════════ -->
+    <section class="section" id="servers">
+        <div class="container">
+            <div class="section-label">01 ·
+                <span class="inline-lang en">servers</span>
+                <span class="inline-lang ru">серверы</span>
+            </div>
+            <h2 class="section-title">
+                <span data-lang="en">Three implementations</span>
+                <span data-lang="ru">Три реализации</span>
+            </h2>
+            <p class="section-sub">
+                <span data-lang="en">One codebase, three levels of structure.</span>
+                <span data-lang="ru">Одна кодовая база, три уровня структуры.</span>
+            </p>
+
+            <div class="server-cards">
+                <!-- LUCA -->
+                <div class="server-card">
+                    <div class="server-header">
+                        <div class="bh-node" style="color:var(--core);width:36px;height:36px;font-size:1rem;">Δ</div>
+                        <h3 style="color:var(--core);">LUCA</h3>
+                    </div>
+                    <div class="server-subtitle">
+                        <span class="inline-lang en">"The ancestor. Graph model. Clean."</span>
+                        <span class="inline-lang ru">"Предок. Граф-модель. Чисто."</span>
+                    </div>
+                    <ul class="server-features">
+                        <li><div class="feat-dot" style="background:var(--core);"></div>
+                            <span class="inline-lang en">Pure DAG hierarchy, no embeddings</span>
+                            <span class="inline-lang ru">Чистая DAG-иерархия, без эмбеддингов</span>
+                        </li>
+                        <li><div class="feat-dot" style="background:var(--core);"></div>
+                            <span class="inline-lang en">YAML frontmatter read/write</span>
+                            <span class="inline-lang ru">Чтение/запись YAML frontmatter</span>
+                        </li>
+                        <li><div class="feat-dot" style="background:var(--core);"></div>
+                            <span class="inline-lang en">Entity formula formatting</span>
+                            <span class="inline-lang ru">Форматирование формулы сущности</span>
+                        </li>
+                        <li><div class="feat-dot" style="background:var(--core);"></div>
+                            <span class="inline-lang en">Lightweight, zero dependencies</span>
+                            <span class="inline-lang ru">Легковесный, без зависимостей</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- PRIZMA -->
+                <div class="server-card">
+                    <div class="server-header">
+                        <div class="bh-node" style="color:var(--pattern);width:36px;height:36px;font-size:0.8rem;">Ψ</div>
+                        <h3 style="color:var(--pattern);">PRIZMA</h3>
+                    </div>
+                    <div class="server-subtitle">
+                        <span class="inline-lang en">"The prism. Full semantic model. Drift detection."</span>
+                        <span class="inline-lang ru">"Призма. Полная семантическая модель. Детекция дрифта."</span>
+                    </div>
+                    <ul class="server-features">
+                        <li><div class="feat-dot" style="background:var(--pattern);"></div>
+                            <span class="inline-lang en">Embedding classification via LM Studio</span>
+                            <span class="inline-lang ru">Классификация через эмбеддинги LM Studio</span>
+                        </li>
+                        <li><div class="feat-dot" style="background:var(--pattern);"></div>
+                            <span class="inline-lang en">Sign inheritance + core_mix propagation</span>
+                            <span class="inline-lang ru">Наследование знака + распространение core_mix</span>
+                        </li>
+                        <li><div class="feat-dot" style="background:var(--pattern);"></div>
+                            <span class="inline-lang en">Semantic bridge detection</span>
+                            <span class="inline-lang ru">Детекция семантических мостов</span>
+                        </li>
+                        <li><div class="feat-dot" style="background:var(--pattern);"></div>
+                            <span class="inline-lang en">Drift warnings, suggest_metadata</span>
+                            <span class="inline-lang ru">Предупреждения о дрифте, suggest_metadata</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- SLOI -->
+                <div class="server-card">
+                    <div class="server-header">
+                        <div class="bh-node" style="color:var(--module);width:36px;height:36px;font-size:1rem;">Σ</div>
+                        <h3 style="color:var(--module);">SLOI</h3>
+                    </div>
+                    <div class="server-subtitle">
+                        <span class="inline-lang en">"The skeleton. Strict 5-level hierarchy."</span>
+                        <span class="inline-lang ru">"Скелет. Строгая 5-уровневая иерархия."</span>
+                    </div>
+                    <ul class="server-features">
+                        <li><div class="feat-dot" style="background:var(--module);"></div>
+                            <span class="inline-lang en">Enforced L1→L2→L3→L4→L5</span>
+                            <span class="inline-lang ru">Строгий L1→L2→L3→L4→L5</span>
+                        </li>
+                        <li><div class="feat-dot" style="background:var(--module);"></div>
+                            <span class="inline-lang en">Level violation detection</span>
+                            <span class="inline-lang ru">Детекция нарушений уровней</span>
+                        </li>
+                        <li><div class="feat-dot" style="background:var(--module);"></div>
+                            <span class="inline-lang en">Recursive formula updates</span>
+                            <span class="inline-lang ru">Рекурсивное обновление формул</span>
+                        </li>
+                        <li><div class="feat-dot" style="background:var(--module);"></div>
+                            <span class="inline-lang en">Obsidian callout block sync</span>
+                            <span class="inline-lang ru">Синхронизация callout-блоков Obsidian</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         02 — PROTOCOL
+    ══════════════════════════════ -->
+    <section class="section" id="protocol">
+        <div class="container">
+            <div class="section-label">02 ·
+                <span class="inline-lang en">protocol</span>
+                <span class="inline-lang ru">протокол</span>
+            </div>
+            <h2 class="section-title">
+                <span data-lang="en">From entropy to structure</span>
+                <span data-lang="ru">От энтропии к структуре</span>
+            </h2>
+            <p class="section-sub">
+                <span data-lang="en">Raw input becomes organized knowledge. Embeddings via LM Studio (optional, PRIZMA/SLOI only). Cores are defined by you in config.yaml.</span>
+                <span data-lang="ru">Сырой поток становится организованным знанием. Эмбеддинги через LM Studio (опционально, только PRIZMA/SLOI). Ядра вы определяете сами в config.yaml.</span>
+            </p>
+
+            <!-- Protocol flow SVG -->
+            <div class="protocol-svg-wrap">
+                <svg viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+                    <defs>
+                        <filter id="glow-core"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                        <filter id="glow-sm"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                        <pattern id="bp-proto" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M20 0 L0 0 0 20" fill="none" stroke="rgba(68,140,170,0.04)" stroke-width="0.5"/>
+                        </pattern>
+                        <marker id="arr-flow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L6,3 z" fill="#252840"/>
+                        </marker>
+                    </defs>
+
+                    <rect width="1000" height="220" fill="#07080d" rx="14"/>
+                    <rect width="1000" height="220" fill="url(#bp-proto)" rx="14"/>
+
+                    <!-- Ghost glyphs -->
+                    <text x="80" y="40" font-family="JetBrains Mono,monospace" font-size="18" fill="#BC1F50" opacity="0.04">Δ</text>
+                    <text x="920" y="200" font-family="JetBrains Mono,monospace" font-size="16" fill="#448CAA" opacity="0.04">Σ</text>
+                    <text x="500" y="35" font-family="JetBrains Mono,monospace" font-size="14" fill="#D06AFF" opacity="0.04">Ψ</text>
+
+                    <!-- Main spine -->
+                    <line x1="60" y1="110" x2="940" y2="110" stroke="#1a1d2e" stroke-width="1" stroke-dasharray="6,4"/>
+
+                    <!-- NOISE -->
+                    <g transform="translate(85,110)">
+                        <circle cx="-18" cy="-22" r="2" fill="#C4FF7B" opacity="0.3"/>
+                        <circle cx="15" cy="-15" r="1.5" fill="#D06AFF" opacity="0.25"/>
+                        <circle cx="-12" cy="18" r="2.5" fill="#448CAA" opacity="0.2"/>
+                        <circle cx="20" cy="12" r="1.8" fill="#BC1F50" opacity="0.3"/>
+                        <circle cx="-5" cy="-28" r="1.2" fill="#C4FF7B" opacity="0.2"/>
+                        <circle cx="25" cy="-5" r="1.5" fill="#FF00A1" opacity="0.2"/>
+                        <circle cx="0" cy="0" r="16" fill="#07080d" stroke="#C4FF7B" stroke-width="1.5" stroke-dasharray="3,3" filter="url(#glow-sm)"/>
+                        <text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="8" fill="#C4FF7B" text-anchor="middle" opacity="0.7">?</text>
+                        <text x="0" y="55" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600" fill="#C4FF7B" text-anchor="middle" letter-spacing="1">NOISE</text>
+                        <text x="0" y="68" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a4055" text-anchor="middle">raw input</text>
+                    </g>
+                    <line x1="125" y1="110" x2="175" y2="110" stroke="#252840" stroke-width="1" marker-end="url(#arr-flow)"/>
+
+                    <!-- QUANT -->
+                    <g transform="translate(230,110)">
+                        <rect x="-22" y="-22" width="44" height="44" rx="4" fill="none" stroke="#F26F39" stroke-width="1.5" filter="url(#glow-sm)"/>
+                        <rect x="-14" y="-14" width="28" height="28" rx="2" fill="#07080d" stroke="#F26F39" stroke-width="1.2"/>
+                        <text x="0" y="5" font-family="JetBrains Mono,monospace" font-size="12" font-weight="700" fill="#F26F39" text-anchor="middle" filter="url(#glow-sm)">Q</text>
+                        <text x="0" y="55" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600" fill="#F26F39" text-anchor="middle" letter-spacing="1">QUANT</text>
+                        <text x="0" y="68" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a4055" text-anchor="middle">discretize</text>
+                    </g>
+                    <line x1="270" y1="110" x2="320" y2="110" stroke="#252840" stroke-width="1" marker-end="url(#arr-flow)"/>
+
+                    <!-- EMBED -->
+                    <g transform="translate(380,110)">
+                        <circle cx="0" cy="0" r="28" fill="none" stroke="#D06AFF" stroke-width="0.6" opacity="0.3"/>
+                        <ellipse cx="0" cy="0" rx="28" ry="14" fill="none" stroke="#D06AFF" stroke-width="0.8" opacity="0.4" transform="rotate(30)"/>
+                        <ellipse cx="0" cy="0" rx="28" ry="14" fill="none" stroke="#D06AFF" stroke-width="0.8" opacity="0.4" transform="rotate(-30)"/>
+                        <circle cx="0" cy="0" r="14" fill="#07080d" stroke="#D06AFF" stroke-width="1.5" filter="url(#glow-core)"/>
+                        <text x="0" y="5" font-family="JetBrains Mono,monospace" font-size="11" font-weight="700" fill="#D06AFF" text-anchor="middle">→</text>
+                        <text x="0" y="55" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600" fill="#D06AFF" text-anchor="middle" letter-spacing="1">EMBED</text>
+                        <text x="0" y="68" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a4055" text-anchor="middle">vectorize</text>
+                    </g>
+                    <line x1="420" y1="110" x2="470" y2="110" stroke="#252840" stroke-width="1" marker-end="url(#arr-flow)"/>
+
+                    <!-- SIGN -->
+                    <g transform="translate(530,110)">
+                        <circle cx="-18" cy="-18" r="5" fill="none" stroke="#BC1F50" stroke-width="0.8" opacity="0.4"/>
+                        <circle cx="18" cy="-18" r="5" fill="none" stroke="#448CAA" stroke-width="0.8" opacity="0.4"/>
+                        <circle cx="0" cy="18" r="5" fill="none" stroke="#D06AFF" stroke-width="0.8" opacity="0.4"/>
+                        <line x1="-14" y1="-14" x2="-4" y2="-4" stroke="#BC1F50" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.3"/>
+                        <line x1="14" y1="-14" x2="4" y2="-4" stroke="#448CAA" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.3"/>
+                        <line x1="0" y1="14" x2="0" y2="4" stroke="#D06AFF" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.3"/>
+                        <circle cx="0" cy="0" r="14" fill="#07080d" stroke="#BC1F50" stroke-width="1.8" filter="url(#glow-core)"/>
+                        <text x="0" y="5" font-family="JetBrains Mono,monospace" font-size="11" font-weight="700" fill="#BC1F50" text-anchor="middle">Δ</text>
+                        <text x="0" y="55" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600" fill="#BC1F50" text-anchor="middle" letter-spacing="1">SIGN</text>
+                        <text x="0" y="68" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a4055" text-anchor="middle">classify</text>
+                    </g>
+                    <line x1="570" y1="110" x2="620" y2="110" stroke="#252840" stroke-width="1" marker-end="url(#arr-flow)"/>
+
+                    <!-- CORE_MIX -->
+                    <g transform="translate(680,110)">
+                        <circle cx="0" cy="0" r="26" fill="none" stroke="#448CAA" stroke-width="0.6" opacity="0.3"/>
+                        <path d="M0,-26 A26,26 0 0,1 22.5,13 L0,0 Z" fill="rgba(188,31,80,0.12)" stroke="none"/>
+                        <path d="M22.5,13 A26,26 0 0,1 -22.5,13 L0,0 Z" fill="rgba(68,140,170,0.12)" stroke="none"/>
+                        <path d="M-22.5,13 A26,26 0 0,1 0,-26 L0,0 Z" fill="rgba(208,106,255,0.12)" stroke="none"/>
+                        <circle cx="0" cy="0" r="14" fill="#07080d" stroke="#448CAA" stroke-width="1.5" filter="url(#glow-core)"/>
+                        <text x="0" y="5" font-family="JetBrains Mono,monospace" font-size="8" font-weight="700" fill="#448CAA" text-anchor="middle">mix</text>
+                        <text x="0" y="55" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600" fill="#448CAA" text-anchor="middle" letter-spacing="1">CORE_MIX</text>
+                        <text x="0" y="68" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a4055" text-anchor="middle">propagate</text>
+                    </g>
+                    <line x1="720" y1="110" x2="770" y2="110" stroke="#252840" stroke-width="1" marker-end="url(#arr-flow)"/>
+
+                    <!-- STRUCTURE -->
+                    <g transform="translate(840,110)">
+                        <polygon points="0,-30 28,0 0,30 -28,0" fill="none" stroke="#C4FF7B" stroke-width="0.6" opacity="0.3"/>
+                        <polygon points="0,-20 19,0 0,20 -19,0" fill="rgba(196,255,123,0.05)" stroke="#C4FF7B" stroke-width="1" opacity="0.6"/>
+                        <polygon points="0,-10 9,0 0,10 -9,0" fill="#07080d" stroke="#C4FF7B" stroke-width="1.5" filter="url(#glow-core)"/>
+                        <circle cx="28" cy="0" r="2" fill="#C4FF7B" opacity="0.4"/>
+                        <circle cx="-28" cy="0" r="2" fill="#C4FF7B" opacity="0.4"/>
+                        <circle cx="0" cy="-30" r="2" fill="#C4FF7B" opacity="0.4"/>
+                        <circle cx="0" cy="30" r="2" fill="#C4FF7B" opacity="0.4"/>
+                        <text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="7" font-weight="700" fill="#C4FF7B" text-anchor="middle">G</text>
+                        <text x="0" y="55" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600" fill="#C4FF7B" text-anchor="middle" letter-spacing="1">STRUCTURE</text>
+                        <text x="0" y="68" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a4055" text-anchor="middle">knowledge</text>
+                    </g>
+
+                    <!-- Causality arcs -->
+                    <path d="M 830 155 Q 500 195 90 155" fill="none" stroke="rgba(242,111,57,0.12)" stroke-width="1" stroke-dasharray="4,3"/>
+                    <text x="460" y="202" font-family="JetBrains Mono,monospace" font-size="8" fill="#252840" text-anchor="middle" letter-spacing="1">
+                        <tspan class="inline-lang en">ascending causality (core_mix ↑)</tspan>
+                        <tspan class="inline-lang ru">восходящая причинность (core_mix ↑)</tspan>
+                    </text>
+
+                    <path d="M 90 65 Q 500 25 830 65" fill="none" stroke="rgba(188,31,80,0.12)" stroke-width="1" stroke-dasharray="4,3"/>
+                    <text x="460" y="20" font-family="JetBrains Mono,monospace" font-size="8" fill="#252840" text-anchor="middle" letter-spacing="1">
+                        <tspan class="inline-lang en">descending causality (sign ↓)</tspan>
+                        <tspan class="inline-lang ru">нисходящая причинность (sign ↓)</tspan>
+                    </text>
+                </svg>
+            </div>
+
+            <!-- Entity formula -->
+            <div class="formula-wrap">
+                <div class="formula-big mono">
+                    <span style="color:#3FFF62;">(</span><span style="color:#448CAA;">children</span><span style="color:#3FFF62;">)</span>
+                    &nbsp;
+                    <span style="color:#3a4055;">[</span><span style="color:#D06AFF;">entity</span><span style="color:#3a4055;">]</span>
+                    &nbsp;
+                    <span style="color:#FF00A1;">{</span><span style="color:#BC1F50;">parents</span><span style="color:#FF00A1;">}</span>
+                </div>
+                <div class="formula-annotation mono">
+                    <span class="inline-lang en">the entity formula — every node's semantic passport</span>
+                    <span class="inline-lang ru">формула сущности — семантический паспорт каждого узла</span>
+                </div>
+
+                <div class="formula-legend">
+                    <div class="fl-item">
+                        <div class="fl-dot" style="background:#3FFF62;box-shadow:0 0 5px rgba(63,255,98,0.5);"></div>
+                        <span style="color:var(--core);font-family:'JetBrains Mono',monospace;margin-right:0.2rem;">Δ</span>
+                        <span class="inline-lang en">( ) children — downstream</span>
+                        <span class="inline-lang ru">( ) потомки — вниз</span>
+                    </div>
+                    <div class="fl-item">
+                        <div class="fl-dot" style="background:#D06AFF;"></div>
+                        <span style="color:var(--pattern);font-family:'JetBrains Mono',monospace;margin-right:0.2rem;">Ψ</span>
+                        <span class="inline-lang en">[ ] entity itself</span>
+                        <span class="inline-lang ru">[ ] сама сущность</span>
+                    </div>
+                    <div class="fl-item">
+                        <div class="fl-dot" style="background:#FF00A1;box-shadow:0 0 5px rgba(255,0,161,0.5);"></div>
+                        <span style="color:var(--module);font-family:'JetBrains Mono',monospace;margin-right:0.2rem;">Σ</span>
+                        <span class="inline-lang en">{ } parents — upstream</span>
+                        <span class="inline-lang ru">{ } родители — вверх</span>
+                    </div>
+                    <div class="fl-item">
+                        <div class="fl-dot" style="background:#BC1F50;"></div>
+                        <span class="inline-lang en">sign = dominant core</span>
+                        <span class="inline-lang ru">sign = доминирующее ядро</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         03 — QUICK START
+    ══════════════════════════════ -->
+    <section class="section" id="start">
+        <div class="container split">
+            <div class="split-content">
+                <div class="section-label" style="text-align:left;margin-bottom:0.75rem;">03 ·
+                    <span class="inline-lang en">quick start</span>
+                    <span class="inline-lang ru">быстрый старт</span>
+                </div>
+                <h2>
+                    <span data-lang="en">Start in 3 minutes</span>
+                    <span data-lang="ru">Запуск за 3 минуты</span>
+                </h2>
+                <p>
+                    <span data-lang="en">NOUZ runs locally via MCP stdio. Python 3.10+, an Obsidian vault, and optionally LM Studio for embeddings. Define your semantic cores in <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">config.yaml</code> — these are your axes of meaning.</span>
+                    <span data-lang="ru">NOUZ работает локально через MCP stdio. Python 3.10+, Obsidian-хранилище, и опционально LM Studio для эмбеддингов. Определите ваши ядра в <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">config.yaml</code> — это ваши оси смысла.</span>
+                </p>
+                <p>
+                    <span data-lang="en">Pick a mode: LUCA for pure graph, PRIZMA for full semantics, SLOI for strict hierarchy. All expose the same MCP tools.</span>
+                    <span class="inline-lang ru">Выберите режим: LUCA для чистого графа, PRIZMA для полной семантики, SLOI для строгой иерархии. Все предоставляют одинаковые MCP-инструменты.</span>
+                </p>
+                <div class="stack-badges">
+                    <span class="stack-badge">Python 3.10+</span>
+                    <span class="stack-badge">MCP stdio</span>
+                    <span class="stack-badge">SQLite</span>
+                    <span class="stack-badge">LM Studio</span>
+                    <span class="stack-badge">Obsidian</span>
+                    <span class="stack-badge">YAML</span>
+                    <span class="stack-badge">MIT</span>
+                </div>
+            </div>
+
+            <div class="code-window">
+                <div class="cw-bar">
+                    <div class="cw-dot" style="background:#FF5F57;"></div>
+                    <div class="cw-dot" style="background:#FFBD2E;"></div>
+                    <div class="cw-dot" style="background:#28CA41;"></div>
+                    <span class="cw-title">kvantra · unified server</span>
+                </div>
+                <div class="cw-body">
+                    <div class="cw-line cw-comment"># clone the unified server</div>
+                    <div class="cw-line">&gt; <span class="cw-cmd">git clone https://github.com/KVANTRA-dev/NOUZ-MCP</span></div>
+                    <div class="cw-line">&gt; <span class="cw-cmd">pip install -r requirements.txt</span></div>
+                    <div class="cw-line">&nbsp;</div>
+                    <div class="cw-line cw-comment"># configure your knowledge base</div>
+                    <div class="cw-line">&gt; <span class="cw-cmd">export OBSIDIAN_ROOT=./vault</span></div>
+                    <div class="cw-line">&gt; <span class="cw-cmd">export EMBED_API_URL=http://127.0.0.1:1234/v1</span></div>
+                    <div class="cw-line">&nbsp;</div>
+                    <div class="cw-line cw-comment"># launch</div>
+                    <div class="cw-line">&gt; <span class="cw-cmd">python server.py</span></div>
+                    <div class="cw-line cw-info">[INFO] Indexing database on startup...</div>
+                    <div class="cw-line cw-info">[INFO] Indexed: 98 files, errors: 0</div>
+                    <div class="cw-line cw-info">[INFO] Core etalons loaded from DB: ['Ψ', 'Δ', 'Σ']</div>
+                    <div class="cw-line cw-info">[INFO] Prizma MCP Server v2.1.0 started</div>
+                    <div class="cw-line">&nbsp;</div>
+                    <div class="cw-line cw-comment"># watch noise become structure</div>
+                    <div class="cw-line">&gt; <span class="cw-cmd">recalc_signs</span></div>
+                    <div class="cw-line cw-ok">Updated 12 signs. 0 conflicts.</div>
+                    <div class="cw-line">&gt; <span class="cw-cmd">suggest_metadata "recursive self-organization"</span></div>
+                    <div class="cw-line cw-ok">sign: Ψ  core_mix: {Ψ:58 Δ:24 Σ:18}</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         04 — USE CASES
+    ══════════════════════════════ -->
+    <section class="section" id="usecases">
+        <div class="container">
+            <div class="section-label" style="text-align:left;margin-bottom:0.75rem;">04 ·</div>
+            <h2>
+                <span data-lang="en">How it works in practice</span>
+                <span data-lang="ru">Как это работает на практике</span>
+            </h2>
+            
+            <div class="pillars" style="margin-top:2.5rem;">
+                <!-- Use Case 1 -->
+                <div class="pillar-card">
+                    <div class="pillar-icon" style="background:rgba(208,106,255,0.1);color:var(--pattern);">
+                        <span style="font-size:1rem;">Ψ</span>
+                    </div>
+                    <h3 style="color:var(--pattern);">
+                        <span class="inline-lang en">Classify new notes</span>
+                        <span class="inline-lang ru">Классификация новых заметок</span>
+                    </h3>
+                    <p>
+                        <span class="inline-lang en">Write in Obsidian. Run <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">suggest_metadata</code>. NOUZ proposes sign and core_mix — you add to YAML frontmatter manually.</span>
+                        <span class="inline-lang ru">Пишете в Obsidian. Запускаете <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">suggest_metadata</code>. NOUZ предлагает sign и core_mix — вы добавляете в YAML вручную.</span>
+                    </p>
+                    <div class="pillar-chain">
+                        <span class="inline-lang en">prizma / sloi mode only · LM Studio required</span>
+                        <span class="inline-lang ru">только prizma / sloi · требуется LM Studio</span>
+                    </div>
+                </div>
+
+                <!-- Use Case 2 -->
+                <div class="pillar-card">
+                    <div class="pillar-icon" style="background:rgba(188,31,80,0.1);color:var(--core);">
+                        <span style="font-size:1rem;">Δ</span>
+                    </div>
+                    <h3 style="color:var(--core);">
+                        <span class="inline-lang en">Audit your knowledge</span>
+                        <span class="inline-lang ru">Аудит знаний</span>
+                    </h3>
+                    <p>
+                        <span class="inline-lang en">Run <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">recalc_signs</code> to update all notes in DB. Query SQLite to see distribution: % of Ψ vs Δ vs Σ.</span>
+                        <span class="inline-lang ru">Запустите <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">recalc_signs</code> для обновления всех заметок в БД. Запросите SQLite для просмотра распределения: % Ψ vs Δ vs Σ.</span>
+                    </p>
+                    <div class="pillar-chain">
+                        <span class="inline-lang en">works in all modes · shows knowledge drift</span>
+                        <span class="inline-lang ru">работает во всех режимах · показывает дрейф знаний</span>
+                    </div>
+                </div>
+
+                <!-- Use Case 3 -->
+                <div class="pillar-card">
+                    <div class="pillar-icon" style="background:rgba(68,140,170,0.1);color:var(--module);">
+                        <span style="font-size:1rem;">Σ</span>
+                    </div>
+                    <h3 style="color:var(--module);">
+                        <span class="inline-lang en">Find semantic neighbors</span>
+                        <span class="inline-lang ru">Поиск семантических соседей</span>
+                    </h3>
+                    <p>
+                        <span class="inline-lang en">Run <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">suggest_parents</code> to find related notes by meaning, not folder name.</span>
+                        <span class="inline-lang ru">Запустите <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">suggest_parents</code> для поиска связанных заметок по смыслу, не по папке.</span>
+                    </p>
+                    <div class="pillar-chain">
+                        <span class="inline-lang en">prizma / sloi only · LM Studio required</span>
+                        <span class="inline-lang ru">только prizma / sloi · требуется LM Studio</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:3rem;padding:1.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;">
+                <h4 style="color:var(--text-muted);margin-bottom:1rem;font-size:0.9rem;">
+                    <span class="inline-lang en">⚠️ What NOUZ is NOT</span>
+                    <span class="inline-lang ru">⚠️ Чем NOUZ НЕ является</span>
+                </h4>
+                <ul style="color:var(--text-dim);font-size:0.85rem;line-height:1.8;margin-left:1.2rem;">
+                    <li>
+                        <span class="inline-lang en">It does NOT auto-write to your notes — you run commands, NOUZ suggests, you decide what to add.</span>
+                        <span class="inline-lang ru">NOUZ НЕ пишет в заметки автоматически — вы запускаете команды, NOUZ предлагает, вы решаете что добавить.</span>
+                    </li>
+                    <li>
+                        <span class="inline-lang en">It does NOT require cloud API — runs 100% locally with LM Studio (free, open source).</span>
+                        <span class="inline-lang ru">NOUZ НЕ требует облачного API — работает 100% локально с LM Studio (бесплатно, open source).</span>
+                    </li>
+                    <li>
+                        <span class="inline-lang en">LUCA mode works WITHOUT embeddings — just YAML frontmatter and links.</span>
+                        <span class="inline-lang ru">Режим LUCA работает БЕЗ эмбеддингов — только YAML frontmatter и ссылки.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         FOOTER
+    ══════════════════════════════ -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <span class="nav-logo-symbol" style="margin-right: 0.5rem;">{</span>
+                <span class="nav-logo-text" style="margin: 0 0.5rem;">KVANTRA</span>
+                <span class="nav-logo-symbol" style="margin-left: 0.5rem;">}</span>
+            </div>
+            <div class="footer-links">
+                <a href="../index.html">
+                    <span class="inline-lang en">Home</span>
+                    <span class="inline-lang ru">Главная</span>
+                </a>
+                <a href="https://github.com/KVANTRA-dev/NOUZ-MCP" target="_blank">GitHub</a>
+                <a href="https://t.me/volnaya_sreda" target="_blank">
+                    <span class="inline-lang en">Volnaya Sreda</span>
+                    <span class="inline-lang ru">Вольная Среда</span>
+                </a>
+            </div>
+            <div class="footer-mit">&copy; 2026 KVANTRA. MIT License.</div>
+            <div class="footer-ghost">structure emerges from content</div>
+        </div>
+    </footer>
+
+    <script>
+        function setLang(lang) {
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                el.style.display = el.getAttribute('data-lang') === lang ? 'block' : 'none';
+            });
+            document.querySelectorAll('.inline-lang').forEach(el => {
+                el.style.display = el.classList.contains(lang) ? 'inline' : 'none';
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
+            });
+        }
+
+        setLang('ru');
+    </script>
+
+</body>
+</html>
