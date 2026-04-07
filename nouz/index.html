@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOUZ — Unified MCP Server for Obsidian</title>
-    <meta name="description" content="Unified MCP server for Obsidian. Three modes: LUCA (graph-only), PRIZMA (semantic), SLOI (strict hierarchy). Local-first. You define your own cores in config.yaml.">
+    <title>NOUZ — MCP-сервер для Obsidian</title>
+    <meta name="description" content="Единый MCP-сервер для Obsidian. Три режима: LUCA (чистый граф), PRIZMA (семантический), SLOI (строгая иерархия). Всё локально. Вы задаёте свои ядра в config.yaml.">
+    <meta name="description" lang="en" content="Unified MCP server for Obsidian. Three modes: LUCA (graph-only), PRIZMA (semantic), SLOI (strict hierarchy). Local-first. You define your own cores in config.yaml.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="NOUZ — MCP-сервер для Obsidian">
+    <meta property="og:description" content="Один сервер. Три подхода. Граф знаний — локальный, структурированный, семантический.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kvantra-dev.github.io/nouz/">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:locale:alternate" content="en_US">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,68 +88,11 @@
             display: flex;
             align-items: center;
             gap: 0.6rem;
-        }
-
-        .nav-logo-symbol {
-            color: var(--core);
-            font-weight: 700;
-        }
-
-        .nav-logo-text {
-            color: var(--artifact);
-            font-weight: 700;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.88rem;
-            transition: color 0.2s;
         }
 
-        .nav-links a:hover { color: var(--text); }
-
-        .nav-gh {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .lang-switch {
-            display: flex;
-            gap: 0.25rem;
-        }
-
-        .lang-btn {
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            color: var(--text-dim);
-            border: 1px solid transparent;
-            background: none;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            transition: all 0.2s;
-        }
-
-        .lang-btn.active {
-            color: var(--text-muted);
-            border-color: var(--border-bright);
-        }
-
-        .lang-btn:hover { color: var(--text-muted); }
-
-        .nav-logo-text {
-            color: var(--artifact);
-            font-weight: 700;
-        }
+        .nav-logo-symbol { color: var(--core); font-weight: 700; }
+        .nav-logo-text { color: var(--artifact); font-weight: 700; }
 
         .nav-links {
             display: flex;
@@ -177,10 +129,7 @@
             background: var(--bg-card-hover) !important;
         }
 
-        .lang-switch {
-            display: flex;
-            gap: 0.25rem;
-        }
+        .lang-switch { display: flex; gap: 0.25rem; }
 
         .lang-btn {
             padding: 0.25rem 0.5rem;
@@ -358,66 +307,7 @@
             pointer-events: none;
         }
 
-        .bh-node:hover {
-            box-shadow: 0 0 28px 4px currentColor;
-        }
-
-        /* ── PILLARS ── */
-        .pillars {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.25rem;
-        }
-
-        .pillar-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 2rem 1.75rem;
-            transition: border-color 0.25s, background 0.25s, transform 0.25s;
-        }
-
-        .pillar-card:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-bright);
-            transform: translateY(-2px);
-        }
-
-        .pillar-icon {
-            width: 44px; height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.25rem;
-            font-size: 1.3rem;
-        }
-
-        .pillar-card h3 {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .pillar-card p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-        }
-
-        .pillar-chain {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--text-dim);
-            margin-top: 1rem;
-            letter-spacing: 0.05em;
-        }
-
-        /* ── PROTOCOL FLOW SVG ── */
-        .protocol-svg-wrap {
-            margin: 0 auto 2.5rem;
-            max-width: 1000px;
-        }
+        .bh-node:hover { box-shadow: 0 0 28px 4px currentColor; }
 
         /* ── SERVER CARDS ── */
         .server-cards {
@@ -462,9 +352,7 @@
             font-style: italic;
         }
 
-        .server-features {
-            list-style: none;
-        }
+        .server-features { list-style: none; }
 
         .server-features li {
             font-size: 0.82rem;
@@ -485,110 +373,7 @@
             top: -1px;
         }
 
-        /* ── ISOMORPHISM TABLE ── */
-        .iso-table-wrap {
-            background: var(--bg-deep);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            overflow: hidden;
-        }
-
-        .iso-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .iso-table thead th {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--text-dim);
-            padding: 1.25rem 1.5rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .iso-table tbody td {
-            font-size: 0.88rem;
-            padding: 0.85rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            transition: background 0.15s;
-        }
-
-        .iso-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        .iso-table tbody tr:hover td {
-            background: var(--bg-card-hover);
-        }
-
-        .iso-table .col-universe {
-            color: var(--text-muted);
-        }
-
-        .iso-table .col-arrow {
-            color: var(--text-dim);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            text-align: center;
-            width: 60px;
-        }
-
-        .iso-table .col-knowledge {
-            color: var(--text);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.82rem;
-        }
-
-        /* ── FORMULA ── */
-        .formula-wrap {
-            background: var(--bg-deep);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .formula-big {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            margin-bottom: 0.75rem;
-        }
-
-        .formula-annotation {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            margin-bottom: 2rem;
-        }
-
-        .formula-legend {
-            display: flex;
-            justify-content: center;
-            gap: 1.75rem;
-            flex-wrap: wrap;
-        }
-
-        .fl-item {
-            display: flex;
-            align-items: center;
-            gap: 0.45rem;
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-
-        .fl-dot {
-            width: 7px; height: 7px;
-            border-radius: 2px;
-            flex-shrink: 0;
-        }
-
-        /* ── SPLIT (quick start) ── */
+        /* ── SPLIT LAYOUT ── */
         .split {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -610,6 +395,191 @@
             margin-bottom: 0.75rem;
         }
 
+        /* ── FORMULA ── */
+        .formula-box {
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .formula-big {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            margin-bottom: 1rem;
+        }
+
+        .formula-legend {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            font-size: 0.8rem;
+        }
+
+        .formula-legend > div { text-align: center; }
+
+        .formula-legend .fl-symbol {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .formula-legend .fl-desc {
+            color: var(--text-dim);
+        }
+
+        /* ── NOTE WINDOW ── */
+        .note-window {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .note-header {
+            background: var(--bg-deep);
+            padding: 0.75rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .note-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .note-filename {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-left: 0.5rem;
+        }
+
+        .note-body {
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            line-height: 1.8;
+        }
+
+        .note-formula {
+            margin-top: 1.25rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--border);
+        }
+
+        .note-formula-label {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .note-formula-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        /* ── PIPELINE ── */
+        .pipeline-wrap {
+            margin-top: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+            max-width: 680px;
+        }
+
+        .pipe-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .pipe-node {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-deep);
+            border: 1.5px solid var(--border-bright);
+        }
+
+        .pipe-node--noise  { border-color: var(--text-dim); }
+        .pipe-node--core   { border-color: var(--core);    box-shadow: 0 0 12px rgba(188,31,80,0.25); }
+        .pipe-node--hier   { border-color: rgba(255,255,255,0.18); }
+        .pipe-node--mix    { border-color: var(--module);  box-shadow: 0 0 12px rgba(68,140,170,0.2); }
+        .pipe-node--sem    { border-color: var(--semantic); box-shadow: 0 0 12px rgba(255,0,161,0.2); }
+
+        .pipe-symbol {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-dim);
+        }
+
+        .pipe-node--core .pipe-symbol { color: var(--core); }
+        .pipe-node--mix  .pipe-symbol { color: var(--module); }
+        .pipe-node--sem  .pipe-symbol { color: var(--semantic); }
+
+        .pipe-content { padding: 0.6rem 0 1.2rem; }
+
+        .pipe-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .pipe-desc {
+            font-size: 0.88rem;
+            color: var(--text-dim);
+            line-height: 1.65;
+        }
+
+        .pipe-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            color: var(--module);
+            background: rgba(68,140,170,0.08);
+            padding: 0.05em 0.3em;
+            border-radius: 3px;
+        }
+
+        .pipe-levels {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .pipe-lvl-arrow { color: var(--text-dim); font-weight: 400; }
+
+        .pipe-arrow {
+            font-size: 1rem;
+            color: var(--text-dim);
+            padding: 0.1rem 0 0.1rem 1.4rem;
+            line-height: 1;
+            opacity: 0.5;
+        }
+
+        /* ── QUICK START ── */
         .stack-badges {
             display: flex;
             flex-wrap: wrap;
@@ -643,11 +613,7 @@
             gap: 0.45rem;
         }
 
-        .cw-dot {
-            width: 10px; height: 10px;
-            border-radius: 50%;
-        }
-
+        .cw-dot { width: 10px; height: 10px; border-radius: 50%; }
         .cw-title {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
@@ -669,45 +635,56 @@
         .cw-info { color: #4a6090; }
         .cw-comment { color: #252840; }
 
-        /* ── QUOTE ── */
-        .quote-section {
-            padding: 5rem 0;
-            border-bottom: 1px solid var(--border);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+        /* ── USE CASES ── */
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
         }
 
-        .quote-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(188,31,80,0.04) 0%, transparent 70%);
-            pointer-events: none;
+        .pillar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2rem 1.75rem;
+            transition: border-color 0.25s, background 0.25s, transform 0.25s;
         }
 
-        .quote-block {
-            position: relative;
-            z-index: 1;
-            max-width: 700px;
-            margin: 0 auto;
+        .pillar-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-bright);
+            transform: translateY(-2px);
         }
 
-        .quote-text {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.35rem;
-            font-weight: 500;
-            color: var(--text);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            font-style: italic;
+        .pillar-icon {
+            width: 44px; height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            font-size: 1.3rem;
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        .quote-attr {
+        .pillar-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .pillar-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .pillar-chain {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.72rem;
             color: var(--text-dim);
-            letter-spacing: 0.08em;
+            margin-top: 1rem;
+            letter-spacing: 0.05em;
         }
 
         /* ── FOOTER ── */
@@ -765,28 +742,26 @@
         /* ── RESPONSIVE ── */
         @media (max-width: 900px) {
             .hero-title { font-size: 2.8rem; }
-            .pillars { grid-template-columns: 1fr; }
             .server-cards { grid-template-columns: 1fr; }
             .split { grid-template-columns: 1fr; gap: 2rem; }
+            .pillars { grid-template-columns: 1fr; }
             .formula-big { font-size: 1.3rem; }
-            .iso-table thead th,
-            .iso-table tbody td { padding: 0.7rem 1rem; font-size: 0.8rem; }
             .hero-star { display: none; }
+            .pipeline-wrap { max-width: 100%; }
         }
 
         @media (max-width: 600px) {
             .hero-title { font-size: 2.2rem; }
             .formula-big { font-size: 1rem; }
+            .formula-legend { grid-template-columns: 1fr; gap: 0.6rem; }
             nav .nav-links { display: none; }
-            .iso-table thead th,
-            .iso-table tbody td { padding: 0.5rem 0.75rem; font-size: 0.72rem; }
         }
 
-        /* i18n */
+        /* i18n — default RU */
         [data-lang] { display: none; }
-        [data-lang="en"] { display: block; }
+        [data-lang="ru"] { display: block; }
         .inline-lang { display: none; }
-        .inline-lang.en { display: inline; }
+        .inline-lang.ru { display: inline; }
     </style>
 </head>
 <body>
@@ -796,7 +771,7 @@
     ══════════════════════════════ -->
     <nav>
         <div class="container nav-inner">
-            <a href="../index.html" class="nav-logo" style="text-decoration:none;">
+            <a href="../index.html" class="nav-logo">
                 <span class="nav-logo-symbol">{</span>
                 <span class="nav-logo-text">
                     <span class="inline-lang en">KVANTRA</span>
@@ -809,21 +784,17 @@
                     <span class="inline-lang en">Home</span>
                     <span class="inline-lang ru">Главная</span>
                 </a></li>
-                <li><a href="#servers">
-                    <span class="inline-lang en">Servers</span>
-                    <span class="inline-lang ru">Серверы</span>
+                <li><a href="#how">
+                    <span class="inline-lang en">How it works</span>
+                    <span class="inline-lang ru">Как работает</span>
                 </a></li>
-                <li><a href="#protocol">
-                    <span class="inline-lang en">Protocol</span>
-                    <span class="inline-lang ru">Протокол</span>
+                <li><a href="#tools">
+                    <span class="inline-lang en">Tools</span>
+                    <span class="inline-lang ru">Инструменты</span>
                 </a></li>
                 <li><a href="#start">
                     <span class="inline-lang en">Quick Start</span>
-                    <span class="inline-lang ru">Быстрый старт</span>
-                </a></li>
-                <li><a href="#usecases">
-                    <span class="inline-lang en">Use Cases</span>
-                    <span class="inline-lang ru">Примеры</span>
+                    <span class="inline-lang ru">Старт</span>
                 </a></li>
                 <li>
                     <div class="lang-switch">
@@ -843,9 +814,9 @@
          HERO
     ══════════════════════════════ -->
     <header class="hero">
-        <span class="hero-star" style="top:22%;left:18%;color:var(--pattern);font-size:0.75rem;">Ψ</span>
-        <span class="hero-star" style="top:55%;right:15%;color:var(--core);font-size:0.65rem;">Δ</span>
-        <span class="hero-star" style="bottom:25%;left:22%;color:var(--module);font-size:0.7rem;">Σ</span>
+        <span class="hero-star" style="top:22%;left:18%;color:var(--pattern);font-size:0.75rem;">T</span>
+        <span class="hero-star" style="top:55%;right:15%;color:var(--core);font-size:0.65rem;">S</span>
+        <span class="hero-star" style="bottom:25%;left:22%;color:var(--module);font-size:0.7rem;">H</span>
 
         <div class="hero-center">
             <h1 class="hero-title">NOUZ</h1>
@@ -854,8 +825,8 @@
                 <span class="inline-lang ru">унифицированный mcp-сервер для obsidian</span>
             </div>
             <p class="hero-sub">
-                <span class="inline-lang en">One server. Three philosophies. Your knowledge graph — local, structured, semantic.</span>
-                <span class="inline-lang ru">Один сервер. Три философии. Ваш граф знаний — локальный, структурированный, семантический.</span>
+                <span class="inline-lang en">One server. Three approaches. Your notes become a knowledge graph — local, structured, semantic.</span>
+                <span class="inline-lang ru">Один сервер. Три подхода. Заметки становятся графом знаний — локальным, структурированным, семантическим.</span>
             </p>
             <a href="https://github.com/KVANTRA-dev/NOUZ-MCP" class="hero-cta" target="_blank">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -866,318 +837,370 @@
     </header>
 
     <!-- ══════════════════════════════
-         01 — SERVERS
+         HOW IT WORKS — combined: structure + formula + approaches
     ══════════════════════════════ -->
-    <section class="section" id="servers">
+    <section class="section" id="how">
         <div class="container">
-            <div class="section-label">01 ·
-                <span class="inline-lang en">servers</span>
-                <span class="inline-lang ru">серверы</span>
-            </div>
             <h2 class="section-title">
-                <span data-lang="en">Three implementations</span>
-                <span data-lang="ru">Три реализации</span>
+                <span data-lang="en">How it works</span>
+                <span data-lang="ru">Как это работает</span>
             </h2>
             <p class="section-sub">
-                <span data-lang="en">One codebase, three levels of structure.</span>
-                <span data-lang="ru">Одна кодовая база, три уровня структуры.</span>
+                <span class="inline-lang en">You write notes. NOUZ reads YAML frontmatter, builds a DAG, classifies content by embeddings, and detects semantic bridges across branches.</span>
+                <span class="inline-lang ru">Вы пишете заметки. NOUZ читает YAML frontmatter, строит DAG, классифицирует контент через эмбеддинги и обнаруживает семантические мосты между ветками.</span>
             </p>
 
-            <div class="server-cards">
-                <!-- LUCA -->
+            <!-- Semantic bridges SVG -->
+            <div style="background:var(--bg-deep);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:4rem;">
+                <img src="svg_semantic_bridges_etalon.svg" alt="Semantic bridges — cross-level, cross-domain connections" style="width:100%;display:block;border-radius:14px;">
+            </div>
+
+            <!-- Formula + Note example side by side -->
+            <div class="split" style="margin-bottom:4rem;">
+                <div class="split-content">
+                    <h3 style="font-size:1.4rem;font-weight:700;margin-bottom:1rem;">
+                        <span data-lang="en">Node formula</span>
+                        <span data-lang="ru">Формула узла</span>
+                    </h3>
+                    <div class="formula-box">
+                        <div class="formula-big mono">
+                            <span style="color:#3FFF62;">(</span><span style="color:#448CAA;">children</span><span style="color:#3FFF62;">)</span>
+                            &nbsp;
+                            <span style="color:#3a4055;">[</span><span style="color:#D06AFF;">entity</span><span style="color:#3a4055;">]</span>
+                            &nbsp;
+                            <span style="color:#FF00A1;">{</span><span style="color:#BC1F50;">parents</span><span style="color:#FF00A1;">}</span>
+                        </div>
+                        <div class="formula-legend mono">
+                            <div>
+                                <div class="fl-symbol" style="color:#3FFF62;">( )</div>
+                                <div class="fl-desc"><span class="inline-lang en">children</span><span class="inline-lang ru">потомки</span></div>
+                            </div>
+                            <div>
+                                <div class="fl-symbol" style="color:#D06AFF;">[ ]</div>
+                                <div class="fl-desc"><span class="inline-lang en">entity</span><span class="inline-lang ru">узел</span></div>
+                            </div>
+                            <div>
+                                <div class="fl-symbol" style="color:#FF00A1;">{ }</div>
+                                <div class="fl-desc"><span class="inline-lang en">parents</span><span class="inline-lang ru">родители</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.7;">
+                        <span class="inline-lang en">Each node declares <code class="pipe-code">parents</code> in YAML. NOUZ reads the links and builds the DAG. Semantic bridges form automatically between nodes with high cosine similarity across different branches.</span>
+                        <span class="inline-lang ru">Каждый узел объявляет <code class="pipe-code">parents</code> в YAML. NOUZ читает ссылки и строит DAG. Семантические мосты формируются автоматически между узлами с высоким косинусным сходством из разных веток.</span>
+                    </p>
+                </div>
+
+                <div class="note-window">
+                    <div class="note-header">
+                        <div class="note-dot" style="background:var(--core);"></div>
+                        <div class="note-dot" style="background:var(--pattern);"></div>
+                        <div class="note-dot" style="background:var(--module);"></div>
+                        <span class="note-filename">note.md</span>
+                    </div>
+                    <div class="note-body">
+                        <div style="color:var(--text-dim);">---</div>
+                        <div><span style="color:var(--pattern);">type</span>: <span style="color:var(--artifact);">module</span></div>
+                        <div><span style="color:var(--pattern);">level</span>: <span style="color:var(--quant);">3</span></div>
+                        <div><span style="color:var(--pattern);">sign</span>: <span style="color:var(--core);">T</span></div>
+                        <div><span style="color:var(--pattern);">parents</span>:</div>
+                        <div style="padding-left:1rem;">- <span style="color:var(--module);">[[Science]]</span></div>
+                        <div style="color:var(--text-dim);">---</div>
+                        <div style="margin-top:1rem; color:var(--text-muted);">Your note content here...</div>
+                        <div class="note-formula">
+                            <div class="note-formula-label mono">ENTITY FORMULA</div>
+                            <div class="note-formula-value mono">
+                                <span style="color:#3FFF62;">(</span><span style="color:#448CAA;">2S</span><span style="color:#3FFF62;">)</span>
+                                <span style="color:#D06AFF; font-weight:700;">[</span><span style="color:#D06AFF;">T</span><span style="color:#D06AFF;">]</span>
+                                <span style="color:#FF00A1;">{</span><span style="color:#BC1F50;">S</span><span style="color:#FF00A1;">}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Three approaches — compact -->
+            <h3 style="font-size:1.4rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">
+                <span data-lang="en">Three approaches</span>
+                <span data-lang="ru">Три подхода</span>
+            </h3>
+            <div class="server-cards" style="margin-bottom:4rem;">
                 <div class="server-card">
                     <div class="server-header">
-                        <div class="bh-node" style="color:var(--core);width:36px;height:36px;font-size:1rem;">Δ</div>
+                        <div class="bh-node" style="color:var(--core);width:32px;height:32px;font-size:0.85rem;">{ }</div>
                         <h3 style="color:var(--core);">LUCA</h3>
                     </div>
-                    <div class="server-subtitle">
-                        <span class="inline-lang en">"The ancestor. Graph model. Clean."</span>
-                        <span class="inline-lang ru">"Предок. Граф-модель. Чисто."</span>
-                    </div>
-                    <ul class="server-features">
-                        <li><div class="feat-dot" style="background:var(--core);"></div>
-                            <span class="inline-lang en">Pure DAG hierarchy, no embeddings</span>
-                            <span class="inline-lang ru">Чистая DAG-иерархия, без эмбеддингов</span>
-                        </li>
-                        <li><div class="feat-dot" style="background:var(--core);"></div>
-                            <span class="inline-lang en">YAML frontmatter read/write</span>
-                            <span class="inline-lang ru">Чтение/запись YAML frontmatter</span>
-                        </li>
-                        <li><div class="feat-dot" style="background:var(--core);"></div>
-                            <span class="inline-lang en">Entity formula formatting</span>
-                            <span class="inline-lang ru">Форматирование формулы сущности</span>
-                        </li>
-                        <li><div class="feat-dot" style="background:var(--core);"></div>
-                            <span class="inline-lang en">Lightweight, zero dependencies</span>
-                            <span class="inline-lang ru">Легковесный, без зависимостей</span>
-                        </li>
-                    </ul>
+                    <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;">
+                        <span class="inline-lang en">Pure DAG. No embeddings needed. YAML frontmatter, hierarchy, entity formulas.</span>
+                        <span class="inline-lang ru">Чистый DAG. Без эмбеддингов. YAML frontmatter, иерархия, формулы сущностей.</span>
+                    </p>
                 </div>
-
-                <!-- PRIZMA -->
                 <div class="server-card">
                     <div class="server-header">
-                        <div class="bh-node" style="color:var(--pattern);width:36px;height:36px;font-size:0.8rem;">Ψ</div>
+                        <div class="bh-node" style="color:var(--pattern);width:32px;height:32px;font-size:0.65rem;">[ ]</div>
                         <h3 style="color:var(--pattern);">PRIZMA</h3>
                     </div>
-                    <div class="server-subtitle">
-                        <span class="inline-lang en">"The prism. Full semantic model. Drift detection."</span>
-                        <span class="inline-lang ru">"Призма. Полная семантическая модель. Детекция дрифта."</span>
-                    </div>
-                    <ul class="server-features">
-                        <li><div class="feat-dot" style="background:var(--pattern);"></div>
-                            <span class="inline-lang en">Embedding classification via LM Studio</span>
-                            <span class="inline-lang ru">Классификация через эмбеддинги LM Studio</span>
-                        </li>
-                        <li><div class="feat-dot" style="background:var(--pattern);"></div>
-                            <span class="inline-lang en">Sign inheritance + core_mix propagation</span>
-                            <span class="inline-lang ru">Наследование знака + распространение core_mix</span>
-                        </li>
-                        <li><div class="feat-dot" style="background:var(--pattern);"></div>
-                            <span class="inline-lang en">Semantic bridge detection</span>
-                            <span class="inline-lang ru">Детекция семантических мостов</span>
-                        </li>
-                        <li><div class="feat-dot" style="background:var(--pattern);"></div>
-                            <span class="inline-lang en">Drift warnings, suggest_metadata</span>
-                            <span class="inline-lang ru">Предупреждения о дрифте, suggest_metadata</span>
-                        </li>
-                    </ul>
+                    <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;">
+                        <span class="inline-lang en">Full semantics. Embedding classification, sign inheritance, core_mix, semantic bridges, drift detection.</span>
+                        <span class="inline-lang ru">Полная семантика. Классификация по эмбеддингам, наследование знака, core_mix, семантические мосты, детекция дрифта.</span>
+                    </p>
                 </div>
-
-                <!-- SLOI -->
                 <div class="server-card">
                     <div class="server-header">
-                        <div class="bh-node" style="color:var(--module);width:36px;height:36px;font-size:1rem;">Σ</div>
+                        <div class="bh-node" style="color:var(--module);width:32px;height:32px;font-size:0.55rem;">L1–5</div>
                         <h3 style="color:var(--module);">SLOI</h3>
                     </div>
-                    <div class="server-subtitle">
-                        <span class="inline-lang en">"The skeleton. Strict 5-level hierarchy."</span>
-                        <span class="inline-lang ru">"Скелет. Строгая 5-уровневая иерархия."</span>
-                    </div>
-                    <ul class="server-features">
-                        <li><div class="feat-dot" style="background:var(--module);"></div>
-                            <span class="inline-lang en">Enforced L1→L2→L3→L4→L5</span>
-                            <span class="inline-lang ru">Строгий L1→L2→L3→L4→L5</span>
-                        </li>
-                        <li><div class="feat-dot" style="background:var(--module);"></div>
-                            <span class="inline-lang en">Level violation detection</span>
-                            <span class="inline-lang ru">Детекция нарушений уровней</span>
-                        </li>
-                        <li><div class="feat-dot" style="background:var(--module);"></div>
-                            <span class="inline-lang en">Recursive formula updates</span>
-                            <span class="inline-lang ru">Рекурсивное обновление формул</span>
-                        </li>
-                        <li><div class="feat-dot" style="background:var(--module);"></div>
-                            <span class="inline-lang en">Obsidian callout block sync</span>
-                            <span class="inline-lang ru">Синхронизация callout-блоков Obsidian</span>
-                        </li>
-                    </ul>
+                    <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;">
+                        <span class="inline-lang en">Strict 5-level hierarchy. Level enforcement, violation detection, recursive formula updates.</span>
+                        <span class="inline-lang ru">Строгая 5-уровневая иерархия. Контроль уровней, детекция нарушений, рекурсивное обновление формул.</span>
+                    </p>
                 </div>
             </div>
+
+            <!-- Pipeline -->
+            <h3 style="font-size:1.4rem;font-weight:700;margin-bottom:1.5rem;">
+                <span data-lang="en">From note to graph</span>
+                <span data-lang="ru">От заметки к графу</span>
+            </h3>
+
+            <div class="pipeline-wrap">
+
+                <!-- NOISE -->
+                <div class="pipe-step">
+                    <div class="pipe-node pipe-node--noise">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <circle cx="5" cy="7" r="1.5" fill="rgba(255,255,255,0.2)"/>
+                            <circle cx="10" cy="4" r="1.5" fill="rgba(255,255,255,0.15)"/>
+                            <circle cx="15" cy="8" r="1.5" fill="rgba(255,255,255,0.2)"/>
+                            <circle cx="7" cy="13" r="1.5" fill="rgba(255,255,255,0.12)"/>
+                            <circle cx="13" cy="14" r="1.5" fill="rgba(255,255,255,0.15)"/>
+                            <circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.08)"/>
+                        </svg>
+                    </div>
+                    <div class="pipe-content">
+                        <div class="pipe-label">NOISE</div>
+                        <div class="pipe-desc">
+                            <span class="inline-lang en">A raw note. No structure yet — just text.</span>
+                            <span class="inline-lang ru">Сырая заметка. Ещё нет структуры — только текст.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pipe-arrow">↓</div>
+
+                <!-- EMBED + SIGN -->
+                <div class="pipe-step">
+                    <div class="pipe-node pipe-node--core">
+                        <span class="pipe-symbol">L1</span>
+                    </div>
+                    <div class="pipe-content">
+                        <div class="pipe-label" style="color:var(--core);">
+                            <span class="inline-lang en">Vectorize &amp; classify</span>
+                            <span class="inline-lang ru">Векторизация и классификация</span>
+                        </div>
+                        <div class="pipe-desc">
+                            <span class="inline-lang en">The embedding model converts the note to a vector. Cosine distance to core etalons determines its <code class="pipe-code">sign</code>.</span>
+                            <span class="inline-lang ru">Модель эмбеддингов переводит заметку в вектор. Косинусное расстояние до эталонов ядер определяет <code class="pipe-code">sign</code>.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pipe-arrow">↓</div>
+
+                <!-- HIERARCHY -->
+                <div class="pipe-step">
+                    <div class="pipe-node pipe-node--hier">
+                        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                            <line x1="11" y1="3" x2="11" y2="10" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                            <line x1="11" y1="10" x2="5" y2="18" stroke="rgba(255,255,255,0.25)" stroke-width="1.2"/>
+                            <line x1="11" y1="10" x2="17" y2="18" stroke="rgba(255,255,255,0.25)" stroke-width="1.2"/>
+                            <circle cx="11" cy="3" r="2" fill="var(--core)"/>
+                            <circle cx="5" cy="18" r="1.5" fill="rgba(242,111,57,0.7)"/>
+                            <circle cx="17" cy="18" r="1.5" fill="rgba(68,140,170,0.7)"/>
+                        </svg>
+                    </div>
+                    <div class="pipe-content">
+                        <div class="pipe-label">
+                            <span class="inline-lang en">DAG grows downward</span>
+                            <span class="inline-lang ru">DAG растёт вниз</span>
+                        </div>
+                        <div class="pipe-desc">
+                            <span class="inline-lang en">You add <code class="pipe-code">parents: [NodeName]</code> in YAML. NOUZ reads the links and places the note in the graph.</span>
+                            <span class="inline-lang ru">Вы добавляете <code class="pipe-code">parents: [Название]</code> в YAML. NOUZ читает ссылки и размещает заметку в графе.</span>
+                        </div>
+                        <div class="pipe-levels">
+                            <span style="color:var(--core);">L1</span>
+                            <span class="pipe-lvl-arrow">→</span>
+                            <span style="color:var(--pattern);">L2</span>
+                            <span class="pipe-lvl-arrow">→</span>
+                            <span style="color:var(--module);">L3</span>
+                            <span class="pipe-lvl-arrow">→</span>
+                            <span style="color:var(--quant);">L4</span>
+                            <span class="pipe-lvl-arrow">→</span>
+                            <span style="color:var(--artifact);">L5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pipe-arrow">↑</div>
+
+                <!-- CORE_MIX -->
+                <div class="pipe-step">
+                    <div class="pipe-node pipe-node--mix">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <line x1="5" y1="16" x2="10" y2="9" stroke="rgba(68,140,170,0.5)" stroke-width="1.2"/>
+                            <line x1="15" y1="16" x2="10" y2="9" stroke="rgba(68,140,170,0.5)" stroke-width="1.2"/>
+                            <line x1="10" y1="9" x2="10" y2="4" stroke="rgba(68,140,170,0.7)" stroke-width="1.5"/>
+                            <polygon points="10,3 7.5,7 12.5,7" fill="rgba(68,140,170,0.8)"/>
+                        </svg>
+                    </div>
+                    <div class="pipe-content">
+                        <div class="pipe-label" style="color:var(--module);">CORE_MIX</div>
+                        <div class="pipe-desc">
+                            <span class="inline-lang en">Sign distributions propagate upward. Each parent node accumulates a weighted mix of its children's signs.</span>
+                            <span class="inline-lang ru">Распределения знаков поднимаются вверх. Каждый родитель накапливает взвешенную смесь знаков потомков.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pipe-arrow" style="color:var(--semantic); opacity:0.7;">⟷</div>
+
+                <!-- SEMANTIC BRIDGES -->
+                <div class="pipe-step">
+                    <div class="pipe-node pipe-node--sem">
+                        <svg width="22" height="16" viewBox="0 0 22 16" fill="none">
+                            <path d="M2,14 Q11,2 20,14" stroke="#FF00A1" stroke-width="1.5" stroke-dasharray="3,2" fill="none"/>
+                            <circle cx="2" cy="14" r="2" fill="#FF00A1" opacity="0.7"/>
+                            <circle cx="20" cy="14" r="2" fill="#FF00A1" opacity="0.7"/>
+                            <circle cx="11" cy="5" r="1.5" fill="#FF00A1" opacity="0.4"/>
+                        </svg>
+                    </div>
+                    <div class="pipe-content">
+                        <div class="pipe-label" style="color:var(--semantic);">
+                            <span class="inline-lang en">Semantic bridges</span>
+                            <span class="inline-lang ru">Семантические мосты</span>
+                        </div>
+                        <div class="pipe-desc">
+                            <span class="inline-lang en">High cosine similarity between nodes from different branches — NOUZ proposes a link, you confirm.</span>
+                            <span class="inline-lang ru">Высокое косинусное сходство между узлами из разных веток — NOUZ предлагает связь, вы подтверждаете.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </section>
 
     <!-- ══════════════════════════════
-         02 — PROTOCOL
+         05 — TOOLS
     ══════════════════════════════ -->
-    <section class="section" id="protocol">
+    <section class="section" id="tools">
         <div class="container">
-            <div class="section-label">02 ·
-                <span class="inline-lang en">protocol</span>
-                <span class="inline-lang ru">протокол</span>
-            </div>
             <h2 class="section-title">
-                <span data-lang="en">From entropy to structure</span>
-                <span data-lang="ru">От энтропии к структуре</span>
+                <span data-lang="en">MCP Tools</span>
+                <span data-lang="ru">MCP-инструменты</span>
             </h2>
-            <p class="section-sub">
-                <span data-lang="en">Raw input becomes organized knowledge. Embeddings via LM Studio (optional, PRIZMA/SLOI only). Cores are defined by you in config.yaml.</span>
-                <span data-lang="ru">Сырой поток становится организованным знанием. Эмбеддинги через LM Studio (опционально, только PRIZMA/SLOI). Ядра вы определяете сами в config.yaml.</span>
-            </p>
 
-            <!-- Protocol flow SVG -->
-            <div class="protocol-svg-wrap">
-                <svg viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-                    <defs>
-                        <filter id="glow-core"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-                        <filter id="glow-sm"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-                        <pattern id="bp-proto" width="20" height="20" patternUnits="userSpaceOnUse">
-                            <path d="M20 0 L0 0 0 20" fill="none" stroke="rgba(68,140,170,0.04)" stroke-width="0.5"/>
-                        </pattern>
-                        <marker id="arr-flow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-                            <path d="M0,0 L0,6 L6,3 z" fill="#252840"/>
-                        </marker>
-                    </defs>
+            <div class="pillars">
+                <!-- Tool 1 -->
+                <div class="pillar-card">
+                    <div class="pillar-icon" style="background:rgba(208,106,255,0.1);color:var(--pattern);">
+                        <span style="font-size:1rem;">?</span>
+                    </div>
+                    <h3 style="color:var(--pattern);">
+                        <span class="inline-lang en">suggest_metadata</span>
+                        <span class="inline-lang ru">suggest_metadata</span>
+                    </h3>
+                    <p>
+                        <span class="inline-lang en">Classifies a note by embedding similarity to cores. Returns suggested sign, level, and core_mix — you decide whether to apply.</span>
+                        <span class="inline-lang ru">Классифицирует заметку по близости эмбеддинга к ядрам. Возвращает предлагаемые sign, level и core_mix — вы решаете, применять или нет.</span>
+                    </p>
+                    <div class="pillar-chain">
+                        <span class="inline-lang en">prizma / sloi · LM Studio required</span>
+                        <span class="inline-lang ru">prizma / sloi · требуется LM Studio</span>
+                    </div>
+                </div>
 
-                    <rect width="1000" height="220" fill="#07080d" rx="14"/>
-                    <rect width="1000" height="220" fill="url(#bp-proto)" rx="14"/>
+                <!-- Tool 2 -->
+                <div class="pillar-card">
+                    <div class="pillar-icon" style="background:rgba(188,31,80,0.1);color:var(--core);">
+                        <span style="font-size:1rem;">↻</span>
+                    </div>
+                    <h3 style="color:var(--core);">
+                        <span class="inline-lang en">recalc_signs</span>
+                        <span class="inline-lang ru">recalc_signs</span>
+                    </h3>
+                    <p>
+                        <span class="inline-lang en">Reclassifies all indexed notes. Shows sign distribution across your vault — useful for tracking knowledge drift over time.</span>
+                        <span class="inline-lang ru">Переклассифицирует все проиндексированные заметки. Показывает распределение знаков — полезно для отслеживания дрейфа знаний.</span>
+                    </p>
+                    <div class="pillar-chain">
+                        <span class="inline-lang en">all modes · shows knowledge drift</span>
+                        <span class="inline-lang ru">все режимы · показывает дрейф знаний</span>
+                    </div>
+                </div>
 
-                    <!-- Ghost glyphs -->
-                    <text x="80" y="40" font-family="JetBrains Mono,monospace" font-size="18" fill="#BC1F50" opacity="0.04">Δ</text>
-                    <text x="920" y="200" font-family="JetBrains Mono,monospace" font-size="16" fill="#448CAA" opacity="0.04">Σ</text>
-                    <text x="500" y="35" font-family="JetBrains Mono,monospace" font-size="14" fill="#D06AFF" opacity="0.04">Ψ</text>
-
-                    <!-- Main spine -->
-                    <line x1="60" y1="110" x2="940" y2="110" stroke="#1a1d2e" stroke-width="1" stroke-dasharray="6,4"/>
-
-                    <!-- NOISE -->
-                    <g transform="translate(85,110)">
-                        <circle cx="-18" cy="-22" r="2" fill="#C4FF7B" opacity="0.3"/>
-                        <circle cx="15" cy="-15" r="1.5" fill="#D06AFF" opacity="0.25"/>
-                        <circle cx="-12" cy="18" r="2.5" fill="#448CAA" opacity="0.2"/>
-                        <circle cx="20" cy="12" r="1.8" fill="#BC1F50" opacity="0.3"/>
-                        <circle cx="-5" cy="-28" r="1.2" fill="#C4FF7B" opacity="0.2"/>
-                        <circle cx="25" cy="-5" r="1.5" fill="#FF00A1" opacity="0.2"/>
-                        <circle cx="0" cy="0" r="16" fill="#07080d" stroke="#C4FF7B" stroke-width="1.5" stroke-dasharray="3,3" filter="url(#glow-sm)"/>
-                        <text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="8" fill="#C4FF7B" text-anchor="middle" opacity="0.7">?</text>
-                        <text x="0" y="55" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600" fill="#C4FF7B" text-anchor="middle" letter-spacing="1">NOISE</text>
-                        <text x="0" y="68" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a4055" text-anchor="middle">raw input</text>
-                    </g>
-                    <line x1="125" y1="110" x2="175" y2="110" stroke="#252840" stroke-width="1" marker-end="url(#arr-flow)"/>
-
-                    <!-- QUANT -->
-                    <g transform="translate(230,110)">
-                        <rect x="-22" y="-22" width="44" height="44" rx="4" fill="none" stroke="#F26F39" stroke-width="1.5" filter="url(#glow-sm)"/>
-                        <rect x="-14" y="-14" width="28" height="28" rx="2" fill="#07080d" stroke="#F26F39" stroke-width="1.2"/>
-                        <text x="0" y="5" font-family="JetBrains Mono,monospace" font-size="12" font-weight="700" fill="#F26F39" text-anchor="middle" filter="url(#glow-sm)">Q</text>
-                        <text x="0" y="55" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600" fill="#F26F39" text-anchor="middle" letter-spacing="1">QUANT</text>
-                        <text x="0" y="68" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a4055" text-anchor="middle">discretize</text>
-                    </g>
-                    <line x1="270" y1="110" x2="320" y2="110" stroke="#252840" stroke-width="1" marker-end="url(#arr-flow)"/>
-
-                    <!-- EMBED -->
-                    <g transform="translate(380,110)">
-                        <circle cx="0" cy="0" r="28" fill="none" stroke="#D06AFF" stroke-width="0.6" opacity="0.3"/>
-                        <ellipse cx="0" cy="0" rx="28" ry="14" fill="none" stroke="#D06AFF" stroke-width="0.8" opacity="0.4" transform="rotate(30)"/>
-                        <ellipse cx="0" cy="0" rx="28" ry="14" fill="none" stroke="#D06AFF" stroke-width="0.8" opacity="0.4" transform="rotate(-30)"/>
-                        <circle cx="0" cy="0" r="14" fill="#07080d" stroke="#D06AFF" stroke-width="1.5" filter="url(#glow-core)"/>
-                        <text x="0" y="5" font-family="JetBrains Mono,monospace" font-size="11" font-weight="700" fill="#D06AFF" text-anchor="middle">→</text>
-                        <text x="0" y="55" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600" fill="#D06AFF" text-anchor="middle" letter-spacing="1">EMBED</text>
-                        <text x="0" y="68" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a4055" text-anchor="middle">vectorize</text>
-                    </g>
-                    <line x1="420" y1="110" x2="470" y2="110" stroke="#252840" stroke-width="1" marker-end="url(#arr-flow)"/>
-
-                    <!-- SIGN -->
-                    <g transform="translate(530,110)">
-                        <circle cx="-18" cy="-18" r="5" fill="none" stroke="#BC1F50" stroke-width="0.8" opacity="0.4"/>
-                        <circle cx="18" cy="-18" r="5" fill="none" stroke="#448CAA" stroke-width="0.8" opacity="0.4"/>
-                        <circle cx="0" cy="18" r="5" fill="none" stroke="#D06AFF" stroke-width="0.8" opacity="0.4"/>
-                        <line x1="-14" y1="-14" x2="-4" y2="-4" stroke="#BC1F50" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.3"/>
-                        <line x1="14" y1="-14" x2="4" y2="-4" stroke="#448CAA" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.3"/>
-                        <line x1="0" y1="14" x2="0" y2="4" stroke="#D06AFF" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.3"/>
-                        <circle cx="0" cy="0" r="14" fill="#07080d" stroke="#BC1F50" stroke-width="1.8" filter="url(#glow-core)"/>
-                        <text x="0" y="5" font-family="JetBrains Mono,monospace" font-size="11" font-weight="700" fill="#BC1F50" text-anchor="middle">Δ</text>
-                        <text x="0" y="55" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600" fill="#BC1F50" text-anchor="middle" letter-spacing="1">SIGN</text>
-                        <text x="0" y="68" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a4055" text-anchor="middle">classify</text>
-                    </g>
-                    <line x1="570" y1="110" x2="620" y2="110" stroke="#252840" stroke-width="1" marker-end="url(#arr-flow)"/>
-
-                    <!-- CORE_MIX -->
-                    <g transform="translate(680,110)">
-                        <circle cx="0" cy="0" r="26" fill="none" stroke="#448CAA" stroke-width="0.6" opacity="0.3"/>
-                        <path d="M0,-26 A26,26 0 0,1 22.5,13 L0,0 Z" fill="rgba(188,31,80,0.12)" stroke="none"/>
-                        <path d="M22.5,13 A26,26 0 0,1 -22.5,13 L0,0 Z" fill="rgba(68,140,170,0.12)" stroke="none"/>
-                        <path d="M-22.5,13 A26,26 0 0,1 0,-26 L0,0 Z" fill="rgba(208,106,255,0.12)" stroke="none"/>
-                        <circle cx="0" cy="0" r="14" fill="#07080d" stroke="#448CAA" stroke-width="1.5" filter="url(#glow-core)"/>
-                        <text x="0" y="5" font-family="JetBrains Mono,monospace" font-size="8" font-weight="700" fill="#448CAA" text-anchor="middle">mix</text>
-                        <text x="0" y="55" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600" fill="#448CAA" text-anchor="middle" letter-spacing="1">CORE_MIX</text>
-                        <text x="0" y="68" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a4055" text-anchor="middle">propagate</text>
-                    </g>
-                    <line x1="720" y1="110" x2="770" y2="110" stroke="#252840" stroke-width="1" marker-end="url(#arr-flow)"/>
-
-                    <!-- STRUCTURE -->
-                    <g transform="translate(840,110)">
-                        <polygon points="0,-30 28,0 0,30 -28,0" fill="none" stroke="#C4FF7B" stroke-width="0.6" opacity="0.3"/>
-                        <polygon points="0,-20 19,0 0,20 -19,0" fill="rgba(196,255,123,0.05)" stroke="#C4FF7B" stroke-width="1" opacity="0.6"/>
-                        <polygon points="0,-10 9,0 0,10 -9,0" fill="#07080d" stroke="#C4FF7B" stroke-width="1.5" filter="url(#glow-core)"/>
-                        <circle cx="28" cy="0" r="2" fill="#C4FF7B" opacity="0.4"/>
-                        <circle cx="-28" cy="0" r="2" fill="#C4FF7B" opacity="0.4"/>
-                        <circle cx="0" cy="-30" r="2" fill="#C4FF7B" opacity="0.4"/>
-                        <circle cx="0" cy="30" r="2" fill="#C4FF7B" opacity="0.4"/>
-                        <text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="7" font-weight="700" fill="#C4FF7B" text-anchor="middle">G</text>
-                        <text x="0" y="55" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600" fill="#C4FF7B" text-anchor="middle" letter-spacing="1">STRUCTURE</text>
-                        <text x="0" y="68" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a4055" text-anchor="middle">knowledge</text>
-                    </g>
-
-                    <!-- Causality arcs -->
-                    <path d="M 830 155 Q 500 195 90 155" fill="none" stroke="rgba(242,111,57,0.12)" stroke-width="1" stroke-dasharray="4,3"/>
-                    <text x="460" y="202" font-family="JetBrains Mono,monospace" font-size="8" fill="#252840" text-anchor="middle" letter-spacing="1">
-                        <tspan class="inline-lang en">ascending causality (core_mix ↑)</tspan>
-                        <tspan class="inline-lang ru">восходящая причинность (core_mix ↑)</tspan>
-                    </text>
-
-                    <path d="M 90 65 Q 500 25 830 65" fill="none" stroke="rgba(188,31,80,0.12)" stroke-width="1" stroke-dasharray="4,3"/>
-                    <text x="460" y="20" font-family="JetBrains Mono,monospace" font-size="8" fill="#252840" text-anchor="middle" letter-spacing="1">
-                        <tspan class="inline-lang en">descending causality (sign ↓)</tspan>
-                        <tspan class="inline-lang ru">нисходящая причинность (sign ↓)</tspan>
-                    </text>
-                </svg>
+                <!-- Tool 3 -->
+                <div class="pillar-card">
+                    <div class="pillar-icon" style="background:rgba(68,140,170,0.1);color:var(--module);">
+                        <span style="font-size:1rem;">↑</span>
+                    </div>
+                    <h3 style="color:var(--module);">
+                        <span class="inline-lang en">suggest_parents</span>
+                        <span class="inline-lang ru">suggest_parents</span>
+                    </h3>
+                    <p>
+                        <span class="inline-lang en">Finds semantically related notes by vector similarity. Suggests parent links you might want to add to YAML frontmatter.</span>
+                        <span class="inline-lang ru">Находит семантически связанные заметки по векторной близости. Предлагает родительские ссылки для добавления в YAML.</span>
+                    </p>
+                    <div class="pillar-chain">
+                        <span class="inline-lang en">prizma / sloi · LM Studio required</span>
+                        <span class="inline-lang ru">prizma / sloi · требуется LM Studio</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- Entity formula -->
-            <div class="formula-wrap">
-                <div class="formula-big mono">
-                    <span style="color:#3FFF62;">(</span><span style="color:#448CAA;">children</span><span style="color:#3FFF62;">)</span>
-                    &nbsp;
-                    <span style="color:#3a4055;">[</span><span style="color:#D06AFF;">entity</span><span style="color:#3a4055;">]</span>
-                    &nbsp;
-                    <span style="color:#FF00A1;">{</span><span style="color:#BC1F50;">parents</span><span style="color:#FF00A1;">}</span>
-                </div>
-                <div class="formula-annotation mono">
-                    <span class="inline-lang en">the entity formula — every node's semantic passport</span>
-                    <span class="inline-lang ru">формула сущности — семантический паспорт каждого узла</span>
-                </div>
-
-                <div class="formula-legend">
-                    <div class="fl-item">
-                        <div class="fl-dot" style="background:#3FFF62;box-shadow:0 0 5px rgba(63,255,98,0.5);"></div>
-                        <span style="color:var(--core);font-family:'JetBrains Mono',monospace;margin-right:0.2rem;">Δ</span>
-                        <span class="inline-lang en">( ) children — downstream</span>
-                        <span class="inline-lang ru">( ) потомки — вниз</span>
-                    </div>
-                    <div class="fl-item">
-                        <div class="fl-dot" style="background:#D06AFF;"></div>
-                        <span style="color:var(--pattern);font-family:'JetBrains Mono',monospace;margin-right:0.2rem;">Ψ</span>
-                        <span class="inline-lang en">[ ] entity itself</span>
-                        <span class="inline-lang ru">[ ] сама сущность</span>
-                    </div>
-                    <div class="fl-item">
-                        <div class="fl-dot" style="background:#FF00A1;box-shadow:0 0 5px rgba(255,0,161,0.5);"></div>
-                        <span style="color:var(--module);font-family:'JetBrains Mono',monospace;margin-right:0.2rem;">Σ</span>
-                        <span class="inline-lang en">{ } parents — upstream</span>
-                        <span class="inline-lang ru">{ } родители — вверх</span>
-                    </div>
-                    <div class="fl-item">
-                        <div class="fl-dot" style="background:#BC1F50;"></div>
-                        <span class="inline-lang en">sign = dominant core</span>
-                        <span class="inline-lang ru">sign = доминирующее ядро</span>
-                    </div>
-                </div>
+            <div style="margin-top:3rem;padding:1.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;">
+                <h4 style="color:var(--text-muted);margin-bottom:1rem;font-size:0.9rem;">
+                    <span class="inline-lang en">What NOUZ is NOT</span>
+                    <span class="inline-lang ru">Чем NOUZ НЕ является</span>
+                </h4>
+                <ul style="color:var(--text-dim);font-size:0.85rem;line-height:1.8;margin-left:1.2rem;list-style:none;">
+                    <li style="margin-bottom:0.5rem;">
+                        <span class="inline-lang en">It does NOT auto-write to your notes — you run commands, NOUZ suggests, you decide what to add.</span>
+                        <span class="inline-lang ru">NOUZ НЕ пишет в заметки автоматически — вы запускаете команды, NOUZ предлагает, вы решаете что добавить.</span>
+                    </li>
+                    <li style="margin-bottom:0.5rem;">
+                        <span class="inline-lang en">It does NOT require cloud API — runs 100% locally with LM Studio (free, open source).</span>
+                        <span class="inline-lang ru">NOUZ НЕ требует облачного API — работает 100% локально с LM Studio (бесплатно, с открытым кодом).</span>
+                    </li>
+                    <li>
+                        <span class="inline-lang en">LUCA mode works WITHOUT embeddings — just YAML frontmatter and links.</span>
+                        <span class="inline-lang ru">Режим LUCA работает БЕЗ эмбеддингов — только YAML frontmatter и ссылки.</span>
+                    </li>
+                </ul>
             </div>
         </div>
     </section>
 
     <!-- ══════════════════════════════
-         03 — QUICK START
+         06 — QUICK START
     ══════════════════════════════ -->
     <section class="section" id="start">
         <div class="container split">
             <div class="split-content">
-                <div class="section-label" style="text-align:left;margin-bottom:0.75rem;">03 ·
-                    <span class="inline-lang en">quick start</span>
-                    <span class="inline-lang ru">быстрый старт</span>
-                </div>
                 <h2>
                     <span data-lang="en">Start in 3 minutes</span>
                     <span data-lang="ru">Запуск за 3 минуты</span>
                 </h2>
                 <p>
-                    <span data-lang="en">NOUZ runs locally via MCP stdio. Python 3.10+, an Obsidian vault, and optionally LM Studio for embeddings. Define your semantic cores in <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">config.yaml</code> — these are your axes of meaning.</span>
-                    <span data-lang="ru">NOUZ работает локально через MCP stdio. Python 3.10+, Obsidian-хранилище, и опционально LM Studio для эмбеддингов. Определите ваши ядра в <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">config.yaml</code> — это ваши оси смысла.</span>
+                    <span data-lang="en">NOUZ runs locally via MCP stdio. Python 3.10+, an Obsidian vault, and optionally LM Studio for embeddings. Define your semantic cores in <code class="pipe-code">config.yaml</code> — the categories your knowledge naturally clusters around.</span>
+                    <span data-lang="ru">NOUZ работает локально через MCP stdio. Python 3.10+, Obsidian-хранилище, и опционально LM Studio для эмбеддингов. Задайте ядра в <code class="pipe-code">config.yaml</code> — категории, вокруг которых естественно собираются ваши знания.</span>
                 </p>
                 <p>
-                    <span data-lang="en">Pick a mode: LUCA for pure graph, PRIZMA for full semantics, SLOI for strict hierarchy. All expose the same MCP tools.</span>
-                    <span class="inline-lang ru">Выберите режим: LUCA для чистого графа, PRIZMA для полной семантики, SLOI для строгой иерархии. Все предоставляют одинаковые MCP-инструменты.</span>
+                    <span data-lang="en">Pick an approach: LUCA for pure graph, PRIZMA for full semantics, SLOI for strict hierarchy. All expose the same MCP tools.</span>
+                    <span data-lang="ru">Выберите подход: LUCA для чистого графа, PRIZMA для полной семантики, SLOI для строгой иерархии. Все предоставляют одинаковые MCP-инструменты.</span>
                 </p>
                 <div class="stack-badges">
                     <span class="stack-badge">Python 3.10+</span>
@@ -1210,108 +1233,15 @@
                     <div class="cw-line">&gt; <span class="cw-cmd">python server.py</span></div>
                     <div class="cw-line cw-info">[INFO] Indexing database on startup...</div>
                     <div class="cw-line cw-info">[INFO] Indexed: 98 files, errors: 0</div>
-                    <div class="cw-line cw-info">[INFO] Core etalons loaded from DB: ['Ψ', 'Δ', 'Σ']</div>
-                    <div class="cw-line cw-info">[INFO] Prizma MCP Server v2.1.0 started</div>
+                    <div class="cw-line cw-info">[INFO] Core etalons loaded from DB: ['T', 'S', 'H']</div>
+                    <div class="cw-line cw-info">[INFO] Prizma MCP Server v2.1.1 started</div>
                     <div class="cw-line">&nbsp;</div>
                     <div class="cw-line cw-comment"># watch noise become structure</div>
                     <div class="cw-line">&gt; <span class="cw-cmd">recalc_signs</span></div>
                     <div class="cw-line cw-ok">Updated 12 signs. 0 conflicts.</div>
                     <div class="cw-line">&gt; <span class="cw-cmd">suggest_metadata "recursive self-organization"</span></div>
-                    <div class="cw-line cw-ok">sign: Ψ  core_mix: {Ψ:58 Δ:24 Σ:18}</div>
+                    <div class="cw-line cw-ok">sign: T  core_mix: {T:58 S:24 H:18}</div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ══════════════════════════════
-         04 — USE CASES
-    ══════════════════════════════ -->
-    <section class="section" id="usecases">
-        <div class="container">
-            <div class="section-label" style="text-align:left;margin-bottom:0.75rem;">04 ·</div>
-            <h2>
-                <span data-lang="en">How it works in practice</span>
-                <span data-lang="ru">Как это работает на практике</span>
-            </h2>
-            
-            <div class="pillars" style="margin-top:2.5rem;">
-                <!-- Use Case 1 -->
-                <div class="pillar-card">
-                    <div class="pillar-icon" style="background:rgba(208,106,255,0.1);color:var(--pattern);">
-                        <span style="font-size:1rem;">Ψ</span>
-                    </div>
-                    <h3 style="color:var(--pattern);">
-                        <span class="inline-lang en">Classify new notes</span>
-                        <span class="inline-lang ru">Классификация новых заметок</span>
-                    </h3>
-                    <p>
-                        <span class="inline-lang en">Write in Obsidian. Run <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">suggest_metadata</code>. NOUZ proposes sign and core_mix — you add to YAML frontmatter manually.</span>
-                        <span class="inline-lang ru">Пишете в Obsidian. Запускаете <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">suggest_metadata</code>. NOUZ предлагает sign и core_mix — вы добавляете в YAML вручную.</span>
-                    </p>
-                    <div class="pillar-chain">
-                        <span class="inline-lang en">prizma / sloi mode only · LM Studio required</span>
-                        <span class="inline-lang ru">только prizma / sloi · требуется LM Studio</span>
-                    </div>
-                </div>
-
-                <!-- Use Case 2 -->
-                <div class="pillar-card">
-                    <div class="pillar-icon" style="background:rgba(188,31,80,0.1);color:var(--core);">
-                        <span style="font-size:1rem;">Δ</span>
-                    </div>
-                    <h3 style="color:var(--core);">
-                        <span class="inline-lang en">Audit your knowledge</span>
-                        <span class="inline-lang ru">Аудит знаний</span>
-                    </h3>
-                    <p>
-                        <span class="inline-lang en">Run <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">recalc_signs</code> to update all notes in DB. Query SQLite to see distribution: % of Ψ vs Δ vs Σ.</span>
-                        <span class="inline-lang ru">Запустите <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">recalc_signs</code> для обновления всех заметок в БД. Запросите SQLite для просмотра распределения: % Ψ vs Δ vs Σ.</span>
-                    </p>
-                    <div class="pillar-chain">
-                        <span class="inline-lang en">works in all modes · shows knowledge drift</span>
-                        <span class="inline-lang ru">работает во всех режимах · показывает дрейф знаний</span>
-                    </div>
-                </div>
-
-                <!-- Use Case 3 -->
-                <div class="pillar-card">
-                    <div class="pillar-icon" style="background:rgba(68,140,170,0.1);color:var(--module);">
-                        <span style="font-size:1rem;">Σ</span>
-                    </div>
-                    <h3 style="color:var(--module);">
-                        <span class="inline-lang en">Find semantic neighbors</span>
-                        <span class="inline-lang ru">Поиск семантических соседей</span>
-                    </h3>
-                    <p>
-                        <span class="inline-lang en">Run <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">suggest_parents</code> to find related notes by meaning, not folder name.</span>
-                        <span class="inline-lang ru">Запустите <code style="color:var(--module);font-family:'JetBrains Mono',monospace;">suggest_parents</code> для поиска связанных заметок по смыслу, не по папке.</span>
-                    </p>
-                    <div class="pillar-chain">
-                        <span class="inline-lang en">prizma / sloi only · LM Studio required</span>
-                        <span class="inline-lang ru">только prizma / sloi · требуется LM Studio</span>
-                    </div>
-                </div>
-            </div>
-
-            <div style="margin-top:3rem;padding:1.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;">
-                <h4 style="color:var(--text-muted);margin-bottom:1rem;font-size:0.9rem;">
-                    <span class="inline-lang en">⚠️ What NOUZ is NOT</span>
-                    <span class="inline-lang ru">⚠️ Чем NOUZ НЕ является</span>
-                </h4>
-                <ul style="color:var(--text-dim);font-size:0.85rem;line-height:1.8;margin-left:1.2rem;">
-                    <li>
-                        <span class="inline-lang en">It does NOT auto-write to your notes — you run commands, NOUZ suggests, you decide what to add.</span>
-                        <span class="inline-lang ru">NOUZ НЕ пишет в заметки автоматически — вы запускаете команды, NOUZ предлагает, вы решаете что добавить.</span>
-                    </li>
-                    <li>
-                        <span class="inline-lang en">It does NOT require cloud API — runs 100% locally with LM Studio (free, open source).</span>
-                        <span class="inline-lang ru">NOUZ НЕ требует облачного API — работает 100% локально с LM Studio (бесплатно, open source).</span>
-                    </li>
-                    <li>
-                        <span class="inline-lang en">LUCA mode works WITHOUT embeddings — just YAML frontmatter and links.</span>
-                        <span class="inline-lang ru">Режим LUCA работает БЕЗ эмбеддингов — только YAML frontmatter и ссылки.</span>
-                    </li>
-                </ul>
             </div>
         </div>
     </section>
@@ -1323,7 +1253,10 @@
         <div class="container">
             <div class="footer-logo">
                 <span class="nav-logo-symbol" style="margin-right: 0.5rem;">{</span>
-                <span class="nav-logo-text" style="margin: 0 0.5rem;">KVANTRA</span>
+                <span class="nav-logo-text" style="margin: 0 0.5rem;">
+                    <span class="inline-lang en">KVANTRA</span>
+                    <span class="inline-lang ru">КВАНТРА</span>
+                </span>
                 <span class="nav-logo-symbol" style="margin-left: 0.5rem;">}</span>
             </div>
             <div class="footer-links">
@@ -1338,7 +1271,7 @@
                 </a>
             </div>
             <div class="footer-mit">&copy; 2026 KVANTRA. MIT License.</div>
-            <div class="footer-ghost">structure emerges from content</div>
+            <div class="footer-ghost">структура рождается из содержания</div>
         </div>
     </footer>
 
