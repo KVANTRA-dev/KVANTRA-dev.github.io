@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NOUZ — MCP-сервер для Obsidian</title>
-    <meta name="description" content="Единый MCP-сервер для Obsidian. Три режима: LUCA (чистый граф), PRIZMA (семантический), SLOI (строгая иерархия). Всё локально. Вы задаёте свои ядра в config.yaml.">
-    <meta name="description" lang="en" content="Unified MCP server for Obsidian. Three modes: LUCA (graph-only), PRIZMA (semantic), SLOI (strict hierarchy). Local-first. You define your own cores in config.yaml.">
+    <meta name="description" content="Единый MCP-сервер для Obsidian. Три режима: LUCA (чистый граф), PRIZMA (семантический), SLOI (строгая иерархия). Подключи свою модель эмбеддингов.">
+    <meta name="description" lang="en" content="Unified MCP server for Obsidian. Three modes: LUCA (graph-only), PRIZMA (semantic), SLOI (strict hierarchy). Bring your own embedding model.">
 
     <!-- Open Graph -->
     <meta property="og:title" content="NOUZ — MCP-сервер для Obsidian">
-    <meta property="og:description" content="Один сервер. Три подхода. Граф знаний — локальный, структурированный, семантический.">
+    <meta property="og:description" content="Один сервер. Три подхода. Граф знаний — структурированный, семантический.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kvantra-dev.github.io/nouz/">
     <meta property="og:locale" content="ru_RU">
@@ -825,8 +825,8 @@
                 <span class="inline-lang ru">унифицированный mcp-сервер для obsidian</span>
             </div>
             <p class="hero-sub">
-                <span class="inline-lang en">One server. Three approaches. Your notes become a knowledge graph — local, structured, semantic.</span>
-                <span class="inline-lang ru">Один сервер. Три подхода. Заметки становятся графом знаний — локальным, структурированным, семантическим.</span>
+                <span class="inline-lang en">One server — three approaches to data organization. Unstructured documents become a practical knowledge base.</span>
+                <span class="inline-lang ru">Один сервер — три подхода к организации данных. Документы без структуры становятся прикладной базой знаний.</span>
             </p>
             <a href="https://github.com/KVANTRA-dev/NOUZ-MCP" class="hero-cta" target="_blank">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -1376,27 +1376,6 @@
                     </div>
                 </div>
             </div>
-
-            <div style="margin-top:3rem;padding:1.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;">
-                <h4 style="color:var(--text-muted);margin-bottom:1rem;font-size:0.9rem;">
-                    <span class="inline-lang en">What NOUZ is NOT</span>
-                    <span class="inline-lang ru">Чем NOUZ НЕ является</span>
-                </h4>
-                <ul style="color:var(--text-dim);font-size:0.85rem;line-height:1.8;margin-left:1.2rem;list-style:none;">
-                    <li style="margin-bottom:0.5rem;">
-                        <span class="inline-lang en">It does NOT auto-write to your notes — you run commands, NOUZ suggests, you decide what to add.</span>
-                        <span class="inline-lang ru">NOUZ НЕ пишет в заметки автоматически — вы запускаете команды, NOUZ предлагает, вы решаете что добавить.</span>
-                    </li>
-                    <li style="margin-bottom:0.5rem;">
-                        <span class="inline-lang en">It does NOT require cloud API — runs 100% locally with LM Studio (free, open source).</span>
-                        <span class="inline-lang ru">NOUZ НЕ требует облачного API — работает 100% локально с LM Studio (бесплатно, с открытым кодом).</span>
-                    </li>
-                    <li>
-                        <span class="inline-lang en">LUCA mode works WITHOUT embeddings — just YAML frontmatter and links.</span>
-                        <span class="inline-lang ru">Режим LUCA работает БЕЗ эмбеддингов — только YAML frontmatter и ссылки.</span>
-                    </li>
-                </ul>
-            </div>
         </div>
     </section>
 
@@ -1411,8 +1390,8 @@
                     <span data-lang="ru">Запуск за 3 минуты</span>
                 </h2>
                 <p>
-                    <span data-lang="en">NOUZ runs locally via MCP stdio. Python 3.10+, an Obsidian vault, and optionally LM Studio for embeddings. Define your semantic cores in <code class="pipe-code">config.yaml</code> — the categories your knowledge naturally clusters around.</span>
-                    <span data-lang="ru">NOUZ работает локально через MCP stdio. Python 3.10+, Obsidian-хранилище, и опционально LM Studio для эмбеддингов. Задайте ядра в <code class="pipe-code">config.yaml</code> — категории, вокруг которых естественно собираются ваши знания.</span>
+                    <span data-lang="en">NOUZ runs via MCP stdio. Python 3.10+, an Obsidian vault, and optionally LM Studio for embeddings. Define your semantic cores in <code class="pipe-code">config.yaml</code> — the categories your knowledge naturally clusters around.</span>
+                    <span data-lang="ru">NOUZ работает через MCP stdio. Python 3.10+, Obsidian-хранилище, и опционально LM Studio для эмбеддингов. Задайте ядра в <code class="pipe-code">config.yaml</code> — категории, вокруг которых естественно собираются ваши знания.</span>
                 </p>
                 <p>
                     <span data-lang="en">Pick an approach: LUCA for pure graph, PRIZMA for full semantics, SLOI for strict hierarchy. All expose the same MCP tools.</span>
