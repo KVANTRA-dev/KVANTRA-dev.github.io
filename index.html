@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KVANTRA — Прикладной ИИ и Агентные Системы</title>
     <meta name="description" content="ИИ-лаборатория. Автономные ИИ-агенты, семантические движки знаний и решения на базе прикладного машинного обучения.">
+    <meta name="description" lang="en" content="AI lab. Autonomous AI agents, semantic knowledge engines, and applied machine learning solutions.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="KVANTRA — Прикладной ИИ и Агентные Системы">
+    <meta property="og:description" content="ИИ-лаборатория. Графы знаний, семантический поиск, агентные пайплайны. Всё локально, открытый код.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kvantra-dev.github.io/">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:locale:alternate" content="en_US">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,6 +36,7 @@
             --module:   #448CAA;
             --quant:    #F26F39;
             --artifact: #C4FF7B;
+            --semantic: #FF00A1;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -455,11 +465,11 @@
             nav .nav-links { display: none; }
         }
 
-        /* i18n */
+        /* i18n — default RU */
         [data-lang] { display: none; }
-        [data-lang="en"] { display: block; }
+        [data-lang="ru"] { display: block; }
         .inline-lang { display: none; }
-        .inline-lang.en { display: inline; }
+        .inline-lang.ru { display: inline; }
     </style>
 </head>
 <body>
@@ -478,10 +488,6 @@
                 <span class="nav-logo-symbol">}</span>
             </a>
             <ul class="nav-links">
-                <li><a href="#philosophy">
-                    <span class="inline-lang en">Philosophy</span>
-                    <span class="inline-lang ru">Философия</span>
-                </a></li>
                 <li><a href="#projects">
                     <span class="inline-lang en">Projects</span>
                     <span class="inline-lang ru">Проекты</span>
@@ -504,9 +510,9 @@
          HERO
     ══════════════════════════════ -->
     <header class="hero">
-        <span class="hero-star" style="top:22%;left:18%;color:var(--pattern);font-size:0.75rem;">Ψ</span>
-        <span class="hero-star" style="top:55%;right:15%;color:var(--core);font-size:0.65rem;">Δ</span>
-        <span class="hero-star" style="bottom:25%;left:22%;color:var(--module);font-size:0.7rem;">Σ</span>
+        <span class="hero-star" style="top:22%;left:18%;color:var(--pattern);font-size:0.75rem;">T</span>
+        <span class="hero-star" style="top:55%;right:15%;color:var(--core);font-size:0.65rem;">S</span>
+        <span class="hero-star" style="bottom:25%;left:22%;color:var(--module);font-size:0.7rem;">H</span>
 
         <div class="hero-center">
             <h1 class="hero-title">
@@ -514,12 +520,12 @@
                 <span class="inline-lang ru">КВАНТРА</span>
             </h1>
             <div class="hero-subtitle">
-                <span class="inline-lang en">AI Research Lab</span>
-                <span class="inline-lang ru">ИИ-лаборатория</span>
+                <span class="inline-lang en">applied AI &amp; agentic systems</span>
+                <span class="inline-lang ru">прикладной ИИ и агентные системы</span>
             </div>
             <p class="hero-sub">
-                <span class="inline-lang en">Autonomous AI agents, semantic knowledge engines, and applied machine learning solutions. Structure emerges from content.</span>
-                <span class="inline-lang ru">Автономные ИИ-агенты, семантические движки знаний и решения на базе прикладного машинного обучения. Структура рождается из содержания.</span>
+                <span class="inline-lang en">Knowledge graphs, semantic search, agentic pipelines. Local-first, open source where possible.</span>
+                <span class="inline-lang ru">Графы знаний, семантический поиск, агентные пайплайны. Всё работает локально, открытый код там, где возможно.</span>
             </p>
             <a href="#projects" class="hero-cta">
                 <span class="inline-lang en">Explore Projects</span>
@@ -529,92 +535,10 @@
     </header>
 
     <!-- ══════════════════════════════
-         PHILOSOPHY
-    ══════════════════════════════ -->
-    <section class="section" id="philosophy">
-        <div class="container">
-            <div class="section-label">
-                01 &middot; 
-                <span class="inline-lang en">philosophy</span>
-                <span class="inline-lang ru">философия</span>
-            </div>
-            <h2 class="section-title">
-                <span data-lang="en">Principles</span>
-                <span data-lang="ru">Принципы</span>
-            </h2>
-            <p class="section-sub">
-                <span class="inline-lang en">The approach behind every system.</span>
-                <span class="inline-lang ru">Подход, который определяет каждый проект.</span>
-            </p>
-            
-            <div class="pillars">
-                <div class="pillar-card">
-                    <div class="pillar-icon" style="background:rgba(68,140,170,0.1);color:var(--module);">
-                        { }
-                    </div>
-                    <h3 style="color:var(--module);">
-                        <span class="inline-lang en">Structure from Content</span>
-                        <span class="inline-lang ru">Структура из содержания</span>
-                    </h3>
-                    <p>
-                        <span class="inline-lang en">Hierarchies aren't imposed — they emerge when data is organized right. Embeddings, graphs, DAG — tools that reveal natural structure.</span>
-                        <span class="inline-lang ru">Иерархии не навязываются — они возникают, когда данные организованы правильно. Эмбеддинги, графы, DAG — инструменты, которые выявляют естественную структуру.</span>
-                    </p>
-                    <div class="pillar-chain">
-                        <span class="inline-lang en">embeddings · graphs · DAG</span>
-                        <span class="inline-lang ru">эмбеддинги · графы · DAG</span>
-                    </div>
-                </div>
-
-                <div class="pillar-card">
-                    <div class="pillar-icon" style="background:rgba(188,31,80,0.1);color:var(--core);">
-                        <span style="font-size:1.1rem;">Ψ</span>
-                    </div>
-                    <h3 style="color:var(--core);">
-                        <span class="inline-lang en">Agents That Think</span>
-                        <span class="inline-lang ru">Агенты, которые думают</span>
-                    </h3>
-                    <p>
-                        <span class="inline-lang en">Not chatbots — autonomous systems. Agents capable of recursive self-organization, independent validation, and sub-agent routing. Every project is a thinking system.</span>
-                        <span class="inline-lang ru">Не чат-боты — автономные системы. Агенты, способные к рекурсивной самоорганизации, независимой валидации и маршрутизации подагентов. Каждый проект — думающая система.</span>
-                    </p>
-                    <div class="pillar-chain">
-                        <span class="inline-lang en">autonomous · recursive · self-organizing</span>
-                        <span class="inline-lang ru">автономность · рекурсия · самоорганизация</span>
-                    </div>
-                </div>
-
-                <div class="pillar-card">
-                    <div class="pillar-icon" style="background:rgba(208,106,255,0.1);color:var(--pattern);">
-                        <span style="font-size:1.1rem;">Δ</span>
-                    </div>
-                    <h3 style="color:var(--pattern);">
-                        <span class="inline-lang en">Local & Cloud Balance</span>
-                        <span class="inline-lang ru">Баланс локального и облака</span>
-                    </h3>
-                    <p>
-                        <span class="inline-lang en">Privacy matters, scale matters too. Local models where data stays put. Cloud where power is needed. The right tool for each task.</span>
-                        <span class="inline-lang ru">Приватность важна, но масштаб — тоже. Локальные модели там, где данные должны оставаться на месте. Облако — там, где нужна мощность. Правильный инструмент для каждой задачи.</span>
-                    </p>
-                    <div class="pillar-chain">
-                        <span class="inline-lang en">on-premise · cloud · hybrid</span>
-                        <span class="inline-lang ru">on-premise · облако · гибрид</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ══════════════════════════════
          PROJECTS
     ══════════════════════════════ -->
     <section class="section" id="projects">
         <div class="container">
-            <div class="section-label">
-                02 &middot; 
-                <span class="inline-lang en">projects</span>
-                <span class="inline-lang ru">проекты</span>
-            </div>
             <h2 class="section-title">
                 <span data-lang="en">Projects</span>
                 <span data-lang="ru">Проекты</span>
@@ -624,20 +548,46 @@
                 <!-- NOUZ -->
                 <div class="project-card">
                     <div class="project-visual">
-                        <span style="color: var(--core);">[ NOUZ ]</span>
+                        <!-- mini DAG: L1 core → L2 patterns → L3 modules -->
+                        <svg width="180" height="140" viewBox="0 0 180 140" fill="none">
+                            <!-- edges L1→L2 -->
+                            <line x1="90" y1="32" x2="52" y2="68" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                            <line x1="90" y1="32" x2="128" y2="68" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                            <!-- edges L2→L3 -->
+                            <line x1="52" y1="80" x2="32" y2="112" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+                            <line x1="52" y1="80" x2="72" y2="112" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+                            <line x1="128" y1="80" x2="108" y2="112" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+                            <line x1="128" y1="80" x2="148" y2="112" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+                            <!-- semantic bridge -->
+                            <path d="M72,112 Q90,90 108,112" fill="none" stroke="#FF00A1" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+                            <!-- L1 core -->
+                            <circle cx="90" cy="22" r="14" fill="#07080d" stroke="#BC1F50" stroke-width="1.8"/>
+                            <line x1="76" y1="22" x2="104" y2="22" stroke="#BC1F50" stroke-width="0.8" opacity="0.5"/>
+                            <line x1="90" y1="8" x2="90" y2="36" stroke="#BC1F50" stroke-width="0.8" opacity="0.5"/>
+                            <text x="90" y="26" font-family="monospace" font-size="10" font-weight="700" fill="#BC1F50" text-anchor="middle">*</text>
+                            <!-- L2 patterns -->
+                            <circle cx="52" cy="74" r="10" fill="#07080d" stroke="#D06AFF" stroke-width="1.4"/>
+                            <ellipse cx="52" cy="74" rx="17" ry="8" fill="none" stroke="#D06AFF" stroke-width="0.6" opacity="0.3" transform="rotate(30,52,74)"/>
+                            <text x="52" y="78" font-family="monospace" font-size="8" font-weight="700" fill="#D06AFF" text-anchor="middle">S</text>
+                            <circle cx="128" cy="74" r="10" fill="#07080d" stroke="#D06AFF" stroke-width="1.4"/>
+                            <ellipse cx="128" cy="74" rx="17" ry="8" fill="none" stroke="#D06AFF" stroke-width="0.6" opacity="0.3" transform="rotate(-30,128,74)"/>
+                            <text x="128" y="78" font-family="monospace" font-size="8" font-weight="700" fill="#D06AFF" text-anchor="middle">T</text>
+                            <!-- L3 modules (diamonds) -->
+                            <polygon points="32,104 40,112 32,120 24,112" fill="#07080d" stroke="#448CAA" stroke-width="1.2"/>
+                            <polygon points="72,104 80,112 72,120 64,112" fill="#07080d" stroke="#448CAA" stroke-width="1.2"/>
+                            <polygon points="108,104 116,112 108,120 100,112" fill="#07080d" stroke="#448CAA" stroke-width="1.2"/>
+                            <polygon points="148,104 156,112 148,120 140,112" fill="#07080d" stroke="#448CAA" stroke-width="1.2"/>
+                        </svg>
                     </div>
                     <div class="project-content">
                         <span class="project-tag" style="color: var(--artifact);">
                             <span class="inline-lang en">Deployed · Open Source · MIT</span>
-                            <span class="inline-lang ru">Деплоен · Open Source · MIT</span>
+                            <span class="inline-lang ru">Деплоен · Открытый код · MIT</span>
                         </span>
-                        <h3 class="project-title">
-                            <span class="inline-lang en">Knowledge Agent</span>
-                            <span class="inline-lang ru">Агент знаний</span>
-                        </h3>
+                        <h3 class="project-title">NOUZ</h3>
                         <p class="project-desc">
-                            <span class="inline-lang en">Unified MCP server for Obsidian. Semantic search via embeddings, 5-level knowledge hierarchy, graph-based link analysis, and sub-agent routing. Structure emerges from content.</span>
-                            <span class="inline-lang ru">Унифицированный MCP-сервер для Obsidian. Семантический поиск через эмбеддинги, 5-уровневая иерархия знаний, графовый анализ связей и маршрутизация подагентов. Структура рождается из содержания.</span>
+                            <span class="inline-lang en">MCP server for Obsidian. Connects your knowledge base to any AI assistant. Notes get a sign, a level, a place in the graph. Structure emerges from content — you just write.</span>
+                            <span class="inline-lang ru">MCP-сервер для Obsidian. Подключает вашу базу знаний к любому ИИ-ассистенту. Заметки получают знак, уровень, место в графе. Структура рождается из содержания — вы просто пишете.</span>
                         </p>
                         <div class="project-links">
                             <a href="nouz/index.html">
@@ -652,23 +602,48 @@
                 <!-- AXION -->
                 <div class="project-card">
                     <div class="project-visual">
-                        <span style="color: var(--module);">[ AXION ]</span>
+                        <!-- multi-agent routing diagram -->
+                        <svg width="180" height="140" viewBox="0 0 180 140" fill="none">
+                            <!-- central orchestrator -->
+                            <circle cx="90" cy="70" r="18" fill="#07080d" stroke="#448CAA" stroke-width="1.8"/>
+                            <text x="90" y="74" font-family="monospace" font-size="9" font-weight="700" fill="#448CAA" text-anchor="middle">AXION</text>
+                            <!-- spokes to sub-agents -->
+                            <line x1="90" y1="52" x2="90" y2="28" stroke="rgba(68,140,170,0.3)" stroke-width="1"/>
+                            <line x1="74" y1="58" x2="46" y2="38" stroke="rgba(68,140,170,0.3)" stroke-width="1"/>
+                            <line x1="74" y1="76" x2="38" y2="90" stroke="rgba(68,140,170,0.3)" stroke-width="1"/>
+                            <line x1="82" y1="87" x2="68" y2="118" stroke="rgba(68,140,170,0.3)" stroke-width="1"/>
+                            <line x1="106" y1="58" x2="134" y2="38" stroke="rgba(68,140,170,0.3)" stroke-width="1"/>
+                            <line x1="106" y1="76" x2="142" y2="90" stroke="rgba(68,140,170,0.3)" stroke-width="1"/>
+                            <line x1="98" y1="87" x2="112" y2="118" stroke="rgba(68,140,170,0.3)" stroke-width="1"/>
+                            <!-- sub-agent nodes -->
+                            <circle cx="90" cy="22" r="8" fill="#07080d" stroke="#F26F39" stroke-width="1.2"/>
+                            <text x="90" y="26" font-family="monospace" font-size="7" fill="#F26F39" text-anchor="middle">Q</text>
+                            <circle cx="40" cy="32" r="8" fill="#07080d" stroke="#D06AFF" stroke-width="1.2"/>
+                            <text x="40" y="36" font-family="monospace" font-size="7" fill="#D06AFF" text-anchor="middle">P</text>
+                            <circle cx="28" cy="90" r="8" fill="#07080d" stroke="#D06AFF" stroke-width="1.2"/>
+                            <text x="28" y="94" font-family="monospace" font-size="7" fill="#D06AFF" text-anchor="middle">V</text>
+                            <circle cx="68" cy="122" r="8" fill="#07080d" stroke="#F26F39" stroke-width="1.2"/>
+                            <text x="68" y="126" font-family="monospace" font-size="7" fill="#F26F39" text-anchor="middle">R</text>
+                            <circle cx="140" cy="32" r="8" fill="#07080d" stroke="#D06AFF" stroke-width="1.2"/>
+                            <text x="140" y="36" font-family="monospace" font-size="7" fill="#D06AFF" text-anchor="middle">A</text>
+                            <circle cx="152" cy="90" r="8" fill="#07080d" stroke="#D06AFF" stroke-width="1.2"/>
+                            <text x="152" y="94" font-family="monospace" font-size="7" fill="#D06AFF" text-anchor="middle">M</text>
+                            <circle cx="112" cy="122" r="8" fill="#07080d" stroke="#F26F39" stroke-width="1.2"/>
+                            <text x="112" y="126" font-family="monospace" font-size="7" fill="#F26F39" text-anchor="middle">E</text>
+                        </svg>
                     </div>
                     <div class="project-content">
                         <span class="project-tag" style="color: var(--text-muted);">
-                            <span class="inline-lang en">In Active Development</span>
-                            <span class="inline-lang ru">В активной разработке</span>
+                            <span class="inline-lang en">In Development</span>
+                            <span class="inline-lang ru">В разработке</span>
                         </span>
-                        <h3 class="project-title">
-                            <span class="inline-lang en">Semantic Framework</span>
-                            <span class="inline-lang ru">Семантический фреймворк</span>
-                        </h3>
+                        <h3 class="project-title">AXION</h3>
                         <p class="project-desc">
-                            <span class="inline-lang en">Algorithmic pipeline for enforcing directed acyclic graphs (DAG) in unstructured knowledge bases. Axion teaches AI to understand strict hierarchical logic.</span>
-                            <span class="inline-lang ru">Алгоритмический пайплайн для внедрения направленных ациклических графов (DAG) в неструктурированные базы знаний. Axion учит ИИ понимать сложную иерархическую логику.</span>
+                            <span class="inline-lang en">Algorithmic pipeline for integrating directed acyclic graphs (DAG) into unstructured knowledge bases. Hierarchical logic, semantic classification, and drift detection — built in.</span>
+                            <span class="inline-lang ru">Алгоритмический пайплайн для внедрения направленных ациклических графов (DAG) в неструктурированные базы знаний. Иерархическая логика, семантическая классификация и детекция дрифта — встроены.</span>
                         </p>
                         <div class="project-links">
-                            <a href="#" style="pointer-events: none; opacity: 0.5;">
+                            <a href="#" style="pointer-events: none; opacity: 0.4;">
                                 <span class="inline-lang en">Coming Soon</span>
                                 <span class="inline-lang ru">Скоро</span>
                             </a>
@@ -686,21 +661,21 @@
     ══════════════════════════════ -->
     <footer>
         <div class="container">
-            <a href="index.html" class="footer-logo">
+            <a href="index.html" class="footer-logo" style="text-decoration:none;">
                 <span class="nav-logo-symbol" style="margin-right: 0.5rem;">{</span>
                 <span class="nav-logo-text" style="margin: 0 0.5rem;">
                     <span class="inline-lang en">KVANTRA</span>
                     <span class="inline-lang ru">КВАНТРА</span>
                 </span>
                 <span class="nav-logo-symbol" style="margin-left: 0.5rem;">}</span>
-            </div>
+            </a>
             <div class="footer-links">
                 <a href="https://github.com/KVANTRA-dev" target="_blank">GitHub</a>
                 <a href="mailto:belkinamariaigorevna@yandex.ru">Email</a>
                 <a href="https://t.me/volnaya_sreda" target="_blank">Вольная Среда</a>
             </div>
-            <div class="footer-mit">&copy; 2026 KVANTRA. Applied AI & Agentic Systems.</div>
-            <div class="footer-ghost">structure emerges from content</div>
+            <div class="footer-mit">&copy; 2026 KVANTRA. Прикладной ИИ и агентные системы.</div>
+            <div class="footer-ghost">структура рождается из содержания</div>
         </div>
     </footer>
 
