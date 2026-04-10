@@ -1,0 +1,216 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <filter id="f-lg" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="f-md" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="f-sm" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid-s" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0L0 0 0 40" fill="none" stroke="rgba(68,140,170,0.04)" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="grid-l" width="200" height="200" patternUnits="userSpaceOnUse">
+      <path d="M200 0L0 0 0 200" fill="none" stroke="rgba(68,140,170,0.07)" stroke-width="1"/>
+    </pattern>
+    <marker id="arr" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+      <path d="M0,0 L5,2.5 L0,5 Z" fill="#252840"/>
+    </marker>
+    <marker id="arr-pink" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+      <path d="M0,0 L5,2.5 L0,5 Z" fill="#FF00A1" opacity="0.7"/>
+    </marker>
+  </defs>
+
+  <rect width="1920" height="1080" fill="#07080d"/>
+  <rect width="1920" height="1080" fill="url(#grid-l)"/>
+  <rect width="1920" height="1080" fill="url(#grid-s)"/>
+
+  <!-- Header -->
+  <text x="80" y="62" font-family="JetBrains Mono,monospace" font-size="10" fill="#1e2235" letter-spacing="4">PRISM · SEMANTIC BRIDGES · CROSS-LEVEL CROSS-DOMAIN CONNECTIONS</text>
+  <line x1="80" y1="72" x2="820" y2="72" stroke="#1a1d2e" stroke-width="0.5"/>
+
+  <!--
+    Layout: vertical DAG, 4 levels top to bottom
+    L1 Core (1 node): y=160  x=960
+    L2 Pattern (2 nodes): y=340  x=560, 1360
+    L3 Module (4 nodes): y=540  x=320, 720, 1200, 1600
+    L4 Quant (8 nodes): y=740  x=200,400, 600,800, 1100,1300, 1500,1700
+
+    Hierarchy edges = white thin
+    Semantic bridges = pink dashed, crossing levels/branches
+    Temporary links = green dashed
+  -->
+
+  <!-- ── Hierarchy edges L1→L2 ── -->
+  <line x1="960" y1="192" x2="578" y2="316" stroke="rgba(255,255,255,0.12)" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="960" y1="192" x2="1342" y2="316" stroke="rgba(255,255,255,0.12)" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- ── Hierarchy edges L2→L3 ── -->
+  <line x1="545" y1="368" x2="330" y2="516" stroke="rgba(255,255,255,0.1)" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="575" y1="368" x2="712" y2="516" stroke="rgba(255,255,255,0.1)" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="1345" y1="368" x2="1208" y2="516" stroke="rgba(255,255,255,0.1)" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="1375" y1="368" x2="1592" y2="516" stroke="rgba(255,255,255,0.1)" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- ── Hierarchy edges L3→L4 ── -->
+  <line x1="308" y1="566" x2="208" y2="716" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" marker-end="url(#arr)"/>
+  <line x1="332" y1="566" x2="408" y2="716" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" marker-end="url(#arr)"/>
+  <line x1="700" y1="566" x2="608" y2="716" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" marker-end="url(#arr)"/>
+  <line x1="740" y1="566" x2="808" y2="716" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" marker-end="url(#arr)"/>
+  <line x1="1188" y1="566" x2="1108" y2="716" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" marker-end="url(#arr)"/>
+  <line x1="1212" y1="566" x2="1308" y2="716" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" marker-end="url(#arr)"/>
+  <line x1="1580" y1="566" x2="1508" y2="716" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" marker-end="url(#arr)"/>
+  <line x1="1612" y1="566" x2="1708" y2="716" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" marker-end="url(#arr)"/>
+
+  <!-- ══ SEMANTIC BRIDGES (pink dashed) — cross-branch, cross-level ══ -->
+
+  <!-- Bridge A: L3 Module (720,540) → L3 Module (1200,540) — same level, different branch -->
+  <path d="M752,540 Q960,460 1168,540" fill="none" stroke="#FF00A1" stroke-width="1.2" stroke-dasharray="8,5" filter="url(#f-sm)" opacity="0.65"/>
+  <circle cx="960" cy="468" r="3.5" fill="#FF00A1" opacity="0.5" filter="url(#f-sm)"/>
+  <text x="960" y="454" font-family="JetBrains Mono,monospace" font-size="8" fill="#FF00A1" text-anchor="middle" opacity="0.7">#topology</text>
+  <polygon points="1168,540 1158,536 1158,544" fill="#FF00A1" opacity="0.7"/>
+
+  <!-- Bridge B: L4 Quant (400,740) → L4 Quant (1300,740) — same level, far branch -->
+  <path d="M416,740 Q850,660 1284,740" fill="none" stroke="#FF00A1" stroke-width="1.2" stroke-dasharray="8,5" filter="url(#f-sm)" opacity="0.55"/>
+  <circle cx="850" cy="668" r="3.5" fill="#FF00A1" opacity="0.45" filter="url(#f-sm)"/>
+  <text x="850" y="654" font-family="JetBrains Mono,monospace" font-size="8" fill="#FF00A1" text-anchor="middle" opacity="0.6">#entropy</text>
+  <polygon points="1284,740 1274,736 1274,744" fill="#FF00A1" opacity="0.65"/>
+
+  <!-- Bridge C: L4 Quant (600,740) → L3 Module (1600,540) — cross-level! -->
+  <path d="M614,732 Q1100,620 1582,548" fill="none" stroke="#FF00A1" stroke-width="1" stroke-dasharray="6,5" filter="url(#f-sm)" opacity="0.45"/>
+  <circle cx="1100" cy="628" r="3" fill="#FF00A1" opacity="0.4" filter="url(#f-sm)"/>
+  <text x="1120" y="618" font-family="JetBrains Mono,monospace" font-size="7" fill="#FF00A1" opacity="0.5">#vector</text>
+  <polygon points="1582,548 1572,544 1574,556" fill="#FF00A1" opacity="0.5"/>
+
+  <!-- Bridge D: L2 Pattern left (560,340) → L4 Quant (1700,740) — long diagonal cross-level -->
+  <path d="M576,350 Q1200,480 1692,732" fill="none" stroke="#FF00A1" stroke-width="1" stroke-dasharray="6,6" opacity="0.3"/>
+  <text x="1130" y="494" font-family="JetBrains Mono,monospace" font-size="7" fill="#FF00A1" opacity="0.35">#embedding</text>
+
+  <!-- Bridge E: L4 (800,740) → L4 (1100,740) — adjacent branches -->
+  <path d="M816,734 Q958,694 1084,734" fill="none" stroke="#FF00A1" stroke-width="1" stroke-dasharray="5,4" filter="url(#f-sm)" opacity="0.5"/>
+  <circle cx="958" cy="697" r="2.5" fill="#FF00A1" opacity="0.4"/>
+  <text x="958" y="684" font-family="JetBrains Mono,monospace" font-size="7" fill="#FF00A1" text-anchor="middle" opacity="0.5">#dag</text>
+  <polygon points="1084,734 1074,730 1074,738" fill="#FF00A1" opacity="0.5"/>
+
+  <!-- ══ TEMPORARY LINKS (green dashed) ══ -->
+
+  <!-- Temp A: Artifact floating → L3 Module (720,540) — node not yet placed in hierarchy -->
+  <circle cx="500" cy="880" r="10" fill="#07080d" stroke="#3FFF62" stroke-width="1" opacity="0.6"/>
+  <text x="500" y="884" font-family="JetBrains Mono,monospace" font-size="8" font-weight="700" fill="#3FFF62" text-anchor="middle" opacity="0.7">β</text>
+  <path d="M504,870 Q612,720 706,566" fill="none" stroke="#3FFF62" stroke-width="1" stroke-dasharray="5,4" opacity="0.4"/>
+  <text x="580" y="718" font-family="JetBrains Mono,monospace" font-size="7" fill="#3FFF62" opacity="0.45">temporary</text>
+
+  <!-- Temp B: Another orphan artifact → L2 Pattern right -->
+  <circle cx="1760" cy="880" r="10" fill="#07080d" stroke="#3FFF62" stroke-width="1" opacity="0.5"/>
+  <text x="1760" y="884" font-family="JetBrains Mono,monospace" font-size="8" font-weight="700" fill="#3FFF62" text-anchor="middle" opacity="0.6">δ</text>
+  <path d="M1752,870 Q1600,720 1378,368" fill="none" stroke="#3FFF62" stroke-width="1" stroke-dasharray="5,4" opacity="0.35"/>
+  <text x="1630" y="716" font-family="JetBrains Mono,monospace" font-size="7" fill="#3FFF62" opacity="0.4">temporary</text>
+
+  <!-- ══ L1 CORE ══ -->
+  <g transform="translate(960,160)">
+    <line x1="-64" y1="0" x2="64" y2="0" stroke="#BC1F50" stroke-width="1.2" opacity="0.55"/>
+    <line x1="0" y1="-64" x2="0" y2="64" stroke="#BC1F50" stroke-width="1.2" opacity="0.55"/>
+    <line x1="-45" y1="-45" x2="45" y2="45" stroke="#BC1F50" stroke-width="0.7" stroke-dasharray="3,4" opacity="0.3"/>
+    <line x1="45" y1="-45" x2="-45" y2="45" stroke="#BC1F50" stroke-width="0.7" stroke-dasharray="3,4" opacity="0.3"/>
+    <polygon points="64,0 55,-4 55,4" fill="#BC1F50" opacity="0.7"/>
+    <polygon points="0,-64 -4,-55 4,-55" fill="#BC1F50" opacity="0.7"/>
+    <circle cx="0" cy="0" r="38" fill="none" stroke="#BC1F50" stroke-width="0.4" opacity="0.1"/>
+    <circle cx="0" cy="0" r="22" fill="none" stroke="#BC1F50" stroke-width="0.5" opacity="0.18"/>
+    <circle cx="0" cy="0" r="14" fill="#07080d" stroke="#BC1F50" stroke-width="1.8" filter="url(#f-lg)"/>
+    <text x="0" y="5" font-family="JetBrains Mono,monospace" font-size="12" font-weight="700" fill="#BC1F50" text-anchor="middle" filter="url(#f-md)">φ</text>
+    <text x="0" y="86" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#BC1F50" text-anchor="middle" letter-spacing="1">L1 · Core</text>
+    <text x="0" y="100" font-family="JetBrains Mono,monospace" font-size="8" fill="#3a4055" text-anchor="middle">semantic axis</text>
+  </g>
+
+  <!-- ══ L2 PATTERNS ══ -->
+  <g transform="translate(560,340)">
+    <ellipse cx="0" cy="0" rx="64" ry="30" fill="none" stroke="#D06AFF" stroke-width="0.6" opacity="0.22"/>
+    <ellipse cx="0" cy="0" rx="64" ry="30" fill="none" stroke="#D06AFF" stroke-width="0.6" opacity="0.22" transform="rotate(60)"/>
+    <ellipse cx="0" cy="0" rx="64" ry="30" fill="none" stroke="#D06AFF" stroke-width="0.6" opacity="0.22" transform="rotate(120)"/>
+    <ellipse cx="0" cy="0" rx="42" ry="20" fill="none" stroke="#D06AFF" stroke-width="0.9" opacity="0.32"/>
+    <ellipse cx="0" cy="0" rx="42" ry="20" fill="none" stroke="#D06AFF" stroke-width="0.9" opacity="0.32" transform="rotate(60)"/>
+    <ellipse cx="0" cy="0" rx="42" ry="20" fill="none" stroke="#D06AFF" stroke-width="0.9" opacity="0.32" transform="rotate(120)"/>
+    <circle cx="0" cy="0" r="13" fill="#07080d" stroke="#D06AFF" stroke-width="1.6" filter="url(#f-lg)"/>
+    <text x="0" y="5" font-family="JetBrains Mono,monospace" font-size="11" font-weight="700" fill="#D06AFF" text-anchor="middle">Δ</text>
+    <text x="0" y="80" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#D06AFF" text-anchor="middle">L2 · Pattern</text>
+  </g>
+
+  <g transform="translate(1360,340)">
+    <ellipse cx="0" cy="0" rx="64" ry="30" fill="none" stroke="#D06AFF" stroke-width="0.6" opacity="0.22"/>
+    <ellipse cx="0" cy="0" rx="64" ry="30" fill="none" stroke="#D06AFF" stroke-width="0.6" opacity="0.22" transform="rotate(60)"/>
+    <ellipse cx="0" cy="0" rx="64" ry="30" fill="none" stroke="#D06AFF" stroke-width="0.6" opacity="0.22" transform="rotate(120)"/>
+    <ellipse cx="0" cy="0" rx="42" ry="20" fill="none" stroke="#D06AFF" stroke-width="0.9" opacity="0.32"/>
+    <ellipse cx="0" cy="0" rx="42" ry="20" fill="none" stroke="#D06AFF" stroke-width="0.9" opacity="0.32" transform="rotate(60)"/>
+    <ellipse cx="0" cy="0" rx="42" ry="20" fill="none" stroke="#D06AFF" stroke-width="0.9" opacity="0.32" transform="rotate(120)"/>
+    <circle cx="0" cy="0" r="13" fill="#07080d" stroke="#D06AFF" stroke-width="1.6" filter="url(#f-lg)"/>
+    <text x="0" y="5" font-family="JetBrains Mono,monospace" font-size="11" font-weight="700" fill="#D06AFF" text-anchor="middle">ϴ</text>
+    <text x="0" y="80" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#D06AFF" text-anchor="middle">L2 · Pattern</text>
+  </g>
+
+  <!-- ══ L3 MODULES (4 diamonds) ══ -->
+  <g transform="translate(320,540)">
+    <polygon points="0,-44 40,0 0,44 -40,0" fill="none" stroke="#448CAA" stroke-width="0.7" opacity="0.3"/>
+    <polygon points="0,-26 24,0 0,26 -24,0" fill="rgba(68,140,170,0.05)" stroke="#448CAA" stroke-width="1.2" opacity="0.6"/>
+    <polygon points="0,-12 11,0 0,12 -11,0" fill="#07080d" stroke="#448CAA" stroke-width="1.6" filter="url(#f-md)"/>
+    <text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#448CAA" text-anchor="middle">ħ</text>
+    <text x="0" y="62" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#448CAA" text-anchor="middle">L3 · Module</text>
+  </g>
+  <g transform="translate(720,540)">
+    <polygon points="0,-44 40,0 0,44 -40,0" fill="none" stroke="#448CAA" stroke-width="0.7" opacity="0.3"/>
+    <polygon points="0,-26 24,0 0,26 -24,0" fill="rgba(68,140,170,0.05)" stroke="#448CAA" stroke-width="1.2" opacity="0.6"/>
+    <polygon points="0,-12 11,0 0,12 -11,0" fill="#07080d" stroke="#448CAA" stroke-width="1.6" filter="url(#f-md)"/>
+    <text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#448CAA" text-anchor="middle">Δ</text>
+    <text x="0" y="62" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#448CAA" text-anchor="middle">L3 · Module</text>
+  </g>
+  <g transform="translate(1200,540)">
+    <polygon points="0,-44 40,0 0,44 -40,0" fill="none" stroke="#448CAA" stroke-width="0.7" opacity="0.3"/>
+    <polygon points="0,-26 24,0 0,26 -24,0" fill="rgba(68,140,170,0.05)" stroke="#448CAA" stroke-width="1.2" opacity="0.6"/>
+    <polygon points="0,-12 11,0 0,12 -11,0" fill="#07080d" stroke="#448CAA" stroke-width="1.6" filter="url(#f-md)"/>
+    <text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#448CAA" text-anchor="middle">ϴ</text>
+    <text x="0" y="62" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#448CAA" text-anchor="middle">L3 · Module</text>
+  </g>
+  <g transform="translate(1600,540)">
+    <polygon points="0,-44 40,0 0,44 -40,0" fill="none" stroke="#448CAA" stroke-width="0.7" opacity="0.3"/>
+    <polygon points="0,-26 24,0 0,26 -24,0" fill="rgba(68,140,170,0.05)" stroke="#448CAA" stroke-width="1.2" opacity="0.6"/>
+    <polygon points="0,-12 11,0 0,12 -11,0" fill="#07080d" stroke="#448CAA" stroke-width="1.6" filter="url(#f-md)"/>
+    <text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#448CAA" text-anchor="middle">ħ</text>
+    <text x="0" y="62" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#448CAA" text-anchor="middle">L3 · Module</text>
+  </g>
+
+  <!-- ══ L4 QUANTS (8 black holes) ══ -->
+  <g transform="translate(200,740)"><circle cx="0" cy="0" r="18" fill="rgba(242,111,57,0.06)"/><ellipse cx="0" cy="0" rx="28" ry="8" fill="none" stroke="#F26F39" stroke-width="0.9" opacity="0.4" transform="rotate(-20)"/><circle cx="0" cy="0" r="11" fill="#07080d" stroke="#F26F39" stroke-width="1.4"/><text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="8" font-weight="700" fill="#F26F39" text-anchor="middle">Δ</text></g>
+  <g transform="translate(400,740)"><circle cx="0" cy="0" r="18" fill="rgba(242,111,57,0.06)"/><ellipse cx="0" cy="0" rx="28" ry="8" fill="none" stroke="#F26F39" stroke-width="0.9" opacity="0.4" transform="rotate(15)"/><circle cx="0" cy="0" r="11" fill="#07080d" stroke="#F26F39" stroke-width="1.4"/><text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="8" font-weight="700" fill="#F26F39" text-anchor="middle">Δ</text></g>
+  <g transform="translate(600,740)"><circle cx="0" cy="0" r="18" fill="rgba(242,111,57,0.06)"/><ellipse cx="0" cy="0" rx="28" ry="8" fill="none" stroke="#F26F39" stroke-width="0.9" opacity="0.4" transform="rotate(-30)"/><circle cx="0" cy="0" r="11" fill="#07080d" stroke="#F26F39" stroke-width="1.4"/><text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="8" font-weight="700" fill="#F26F39" text-anchor="middle">ħ</text></g>
+  <g transform="translate(800,740)"><circle cx="0" cy="0" r="18" fill="rgba(242,111,57,0.06)"/><circle cx="0" cy="0" r="11" fill="#07080d" stroke="#F26F39" stroke-width="1.4"/><text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="8" font-weight="700" fill="#F26F39" text-anchor="middle">ϴ</text></g>
+  <g transform="translate(1100,740)"><circle cx="0" cy="0" r="18" fill="rgba(242,111,57,0.06)"/><ellipse cx="0" cy="0" rx="28" ry="8" fill="none" stroke="#F26F39" stroke-width="0.9" opacity="0.4" transform="rotate(25)"/><circle cx="0" cy="0" r="11" fill="#07080d" stroke="#F26F39" stroke-width="1.4"/><text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="8" font-weight="700" fill="#F26F39" text-anchor="middle">ϴ</text></g>
+  <g transform="translate(1300,740)"><circle cx="0" cy="0" r="18" fill="rgba(242,111,57,0.06)"/><ellipse cx="0" cy="0" rx="28" ry="8" fill="none" stroke="#F26F39" stroke-width="0.9" opacity="0.4" transform="rotate(-15)"/><circle cx="0" cy="0" r="11" fill="#07080d" stroke="#F26F39" stroke-width="1.4"/><text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="8" font-weight="700" fill="#F26F39" text-anchor="middle">Δ</text></g>
+  <g transform="translate(1500,740)"><circle cx="0" cy="0" r="18" fill="rgba(242,111,57,0.06)"/><circle cx="0" cy="0" r="11" fill="#07080d" stroke="#F26F39" stroke-width="1.4"/><text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="8" font-weight="700" fill="#F26F39" text-anchor="middle">ħ</text></g>
+  <g transform="translate(1700,740)"><circle cx="0" cy="0" r="18" fill="rgba(242,111,57,0.06)"/><ellipse cx="0" cy="0" rx="28" ry="8" fill="none" stroke="#F26F39" stroke-width="0.9" opacity="0.4" transform="rotate(35)"/><circle cx="0" cy="0" r="11" fill="#07080d" stroke="#F26F39" stroke-width="1.4"/><text x="0" y="4" font-family="JetBrains Mono,monospace" font-size="8" font-weight="700" fill="#F26F39" text-anchor="middle">ħ</text></g>
+
+  <!-- Level labels left rail -->
+  <line x1="60" y1="120" x2="60" y2="900" stroke="#1a1d2e" stroke-width="0.5"/>
+  <text x="52" y="164" font-family="JetBrains Mono,monospace" font-size="9" fill="#BC1F50" text-anchor="end" opacity="0.7">L1</text>
+  <text x="52" y="344" font-family="JetBrains Mono,monospace" font-size="9" fill="#D06AFF" text-anchor="end" opacity="0.7">L2</text>
+  <text x="52" y="544" font-family="JetBrains Mono,monospace" font-size="9" fill="#448CAA" text-anchor="end" opacity="0.7">L3</text>
+  <text x="52" y="744" font-family="JetBrains Mono,monospace" font-size="9" fill="#F26F39" text-anchor="end" opacity="0.7">L4</text>
+  <line x1="52" y1="155" x2="62" y2="155" stroke="#BC1F50" stroke-width="1" opacity="0.4"/>
+  <line x1="52" y1="335" x2="62" y2="335" stroke="#D06AFF" stroke-width="1" opacity="0.4"/>
+  <line x1="52" y1="535" x2="62" y2="535" stroke="#448CAA" stroke-width="1" opacity="0.4"/>
+  <line x1="52" y1="735" x2="62" y2="735" stroke="#F26F39" stroke-width="1" opacity="0.4"/>
+
+  <!-- Legend -->
+  <g transform="translate(80, 920)">
+    <line x1="0" y1="0" x2="40" y2="0" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    <text x="50" y="4" font-family="JetBrains Mono,monospace" font-size="9" fill="#8892a4">hierarchy</text>
+    <line x1="160" y1="0" x2="200" y2="0" stroke="#FF00A1" stroke-width="1.2" stroke-dasharray="7,4"/>
+    <text x="210" y="4" font-family="JetBrains Mono,monospace" font-size="9" fill="#FF00A1">semantic bridge — AI proposes, human confirms</text>
+    <line x1="680" y1="0" x2="720" y2="0" stroke="#3FFF62" stroke-width="1" stroke-dasharray="5,4"/>
+    <text x="730" y="4" font-family="JetBrains Mono,monospace" font-size="9" fill="#3FFF62">temporary — any level, no DAG effect</text>
+  </g>
+
+  <text x="960" y="1058" font-family="JetBrains Mono,monospace" font-size="9" fill="#1e2235" text-anchor="middle" letter-spacing="4">SEMANTIC BRIDGES · CROSS-LEVEL · CROSS-DOMAIN · TAG INTERSECTION</text>
+</svg>
