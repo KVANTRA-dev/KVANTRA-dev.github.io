@@ -1,96 +1,99 @@
-# KVANTRA — Structure Emerges from Content
+# KVANTRA — Структура появляется из содержания
 
 > Applied AI and agentic systems.
 
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://python.org)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://python.org)
 
 ---
 
-## About
+## Проекты
 
-Building tools for knowledge management and AI systems that run **on your computer**, not in the cloud.
+### 🚀 NOUZ — Семантический движок знаний для Obsidian
 
-No API keys. No external service dependencies. No data leaks.
+> *Структура появляется из содержания.*
 
----
+[![MCP](https://img.shields.io/badge/protocol-MCP_stdio-lightgrey.svg)](https://modelcontextprotocol.io)
+[![PyPI](https://img.shields.io/badge/pypi-nouz--mcp-orange.svg)](https://pypi.org/project/nouz-mcp/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19595850.svg)](https://doi.org/10.5281/zenodo.19595850)
 
-## Projects
+Когда база знаний растёт — размещение документов по папкам перестаёт работать. Агент видит файлы, но не понимает, как связаны ваши идеи.
 
-### 🚀 NOUZ — MCP Server for Obsidian
+NOUZ даёт агенту семантические координаты. Каждая заметка получает знак домена, уровень в иерархии и связи с другими заметками.
 
-**Turn note chaos into knowledge structure.**
+**Три режима:** LUCA (чистый граф) → PRIZMA (семантика) → SLOI (строгая иерархия)
 
-NOUZ reads your notes, analyzes content, and builds a knowledge graph automatically. It understands what you wrote, finds connections between topics, and tracks how your base evolves.
-
-- 📊 Classifies by meaning (embeddings)
-- 🔗 Builds graph from links
-- 🌉 Finds hidden connections between branches
-- 📈 Shows knowledge drift
-
-**Three modes:** LUCA (pure graph) → PRIZMA (semantics) → SLOI (strict hierarchy)
-
-[NOUZ Website](https://kvantra-dev.github.io/nouz/) · [GitHub](https://github.com/KVANTRA-dev/NOUZ-MCP)
+[Сайт NOUZ](https://kvantra.tech) · [GitHub](https://github.com/KVANTRA-dev/NOUZ-MCP) · [PyPI](https://pypi.org/project/nouz-mcp/)
 
 ---
 
-### 🔮 AXION — Semantic Framework (In Development)
+### 🔮 AXION — Семантический фреймворк (В разработке)
 
-**Algorithmic pipeline for embedding DAGs into unstructured knowledge bases.**
+**Алгоритмический пайплайн для embedding DAG в неструктурированные базы знаний.**
 
-- Hierarchical logic
-- Semantic classification
-- Drift detection
+- Иерархическая логика
+- Семантическая классификация
+- Обнаружение дрейфа
 
-*Coming soon.*
+*Скоро.*
 
 ---
 
-## Philosophy
+## Философия
 
 ```
 structure emerges from content
 ```
 
-No forced structure from above. Tools that **extract** structure from what you already write.
+Никакой принудительной структуры сверху. Инструменты, которые **извлекают** структуру из того, что вы уже написали.
 
-You just work. NOUZ handles the graph.
-
----
-
-## Privacy & Local-First
-
-| Component | Local? |
-|-----------|--------|
-| **Embeddings** (LM Studio / Ollama) | ✅ Yes |
-| **Your notes** | ✅ Yes |
-| **NOUZ server** | ✅ Yes |
-| **Cloud agents** (Claude, etc.) | ❌ Their logs go to cloud |
+Вы просто работаете. NOUZ управляет графом.
 
 ---
 
-## Get Started
+## Приватность и Local-First
+
+| Компонент | Локально? |
+|-----------|-----------|
+| Эмбеддинги (LM Studio / Ollama) | ✅ Да |
+| Ваши заметки | ✅ Да |
+| Сервер NOUZ | ✅ Да |
+| Контекст AI-агента (Claude, ChatGPT) | ❌ Уходит в облако |
+
+Всё критичное остаётся на вашей машине.
+
+---
+
+## Быстрый старт
 
 ### NOUZ
+
+```bash
+pip install nouz-mcp
+OBSIDIAN_ROOT=/path/to/vault nouz-mcp
+```
+
+Или из исходников:
 
 ```bash
 git clone https://github.com/KVANTRA-dev/NOUZ-MCP
 cd NOUZ-MCP
 pip install -r requirements.txt
-python server.py
+OBSIDIAN_ROOT=./vault python server.py
 ```
 
-Connect to Claude Desktop, Cursor, or Windsurf via MCP.
+Подключение к Claude Desktop, Cursor, Opencode или любому MCP-клиенту.
 
 ---
 
-## Community
+## Сообщество
 
-- 💬 [Telegram: Volnaya Sreda](https://t.me/volnaya_sreda)
+- 💬 [Telegram: Вольная Среда](https://t.me/volnaya_sreda)
+- 🌐 [kvantra.tech](https://kvantra.tech)
 - 🐙 [GitHub](https://github.com/KVANTRA-dev)
 
 ---
 
 **MIT License © 2026 KVANTRA**
 
-*Applied AI and agentic systems.*
+*Косинусы считаются. Синтаксис меняется. Семантика остаётся.*
