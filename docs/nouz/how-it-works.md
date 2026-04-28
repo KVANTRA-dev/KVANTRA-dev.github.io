@@ -113,6 +113,14 @@ score = 0.35 × core_mix_angle
 
 Порог по умолчанию: 0.65.
 
+### Автоматический поиск родителей
+
+Когда вы создаете новую заметку без указания родителей (через инструменты `process_orphans` или `add_entity`), сервер пытается сам найти для нее подходящее место в графе.
+
+Для этого он сравнивает текст вашей заметки с текстами всех потенциальных родителей. Чтобы заметка не прикрепилась к случайному месту, используется порог `parent_link_threshold` (по умолчанию `0.55`). Заметка станет "ребенком" только в том случае, если смысловая близость (косинусное расстояние) выше этого порога.
+
+Если система находит сразу нескольких подходящих кандидатов с одинаковым счетом, она смотрит на их доменные ядра (Same-core). Приоритет будет отдан тому родителю, который относится к тому же домену, что и ваша новая заметка.
+
 ## Пайплайн
 
 <div class="pipeline">
@@ -142,25 +150,7 @@ score = 0.35 × core_mix_angle
 
 Домены задаются в `config.yaml` как описательные тексты. Не список ключевых слов — а описание сути домена своими словами. Команда `calibrate_cores` превращает их в вектор-эталоны и записывает в БД.
 
-**Пример эталона:**
-
-```yaml
-etalons:
-  - sign: S
-    name: Systems Thinking
-    text: >
-      Methodology for analysing complex objects: feedback loops,
-      emergent properties, self-regulation, bifurcation points.
-      Not data and not code — a way of thinking about how parts
-      form a whole and why systems behave non-linearly.
-  - sign: E
-    name: Engineering
-    text: >
-      Software engineering and infrastructure: writing and debugging
-      code, deployment, containerisation, neural networks, inference,
-      microservices, CI/CD, refactoring, APIs. The practical discipline
-      of building computational systems.
-```
+Полные примеры текстов эталонов и рекомендации по написанию → [Конфигурация](/nouz/configuration).
 
 После `calibrate_cores` сервер выводит попарные косинусы между эталонами — в двух вариантах: сырые и mean-centered (с вычитанием среднего вектора, которое убирает анизотропию трансформерных эмбеддингов). Хороший результат: mean-centered косинус между разными доменами заметно ниже чем между одним доменом и самим собой. Если значения между всеми парами примерно одинаковые — эталоны семантически перекрываются, стоит усилить различия.
 

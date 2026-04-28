@@ -26,39 +26,13 @@ export EMBED_API_URL=http://127.0.0.1:1234/v1
 
 ### 3. Создайте config.yaml
 
-Положите `config.yaml` в корень vault. Определите домены знаний:
+Положите `config.yaml` в корень vault. Минимальный конфиг:
 
 ```yaml
-prizma:
-  mode: sloi  # luca | prizma | sloi
-
-  cores:
-    S:
-      name: Systems Thinking
-      etalon: >
-        Methodology for analysing complex objects: feedback loops,
-        emergent properties, self-regulation, bifurcation points.
-        Not data and not code — a way of thinking about how parts
-        form a whole and why systems behave non-linearly.
-    D:
-      name: Data & Science
-      etalon: >
-        Physics and cosmology: Lagrangians, tensors, quarks, fermions,
-        plasma, vacuum fluctuations. Pure science about the nature of
-        matter, energy and spacetime.
-    E:
-      name: Engineering
-      etalon: >
-        Software engineering, ML, infrastructure: writing and debugging
-        code, deployment, containerisation, neural networks, inference,
-        microservices, CI/CD, refactoring, APIs.
-
-  thresholds:
-    confident_cosine: 0.45
-    core_percent: 30
-    semantic_bridge: 0.55
-    analogy_bridge: 0.55
+mode: prizma  # luca | prizma | sloi
 ```
+
+Для семантической классификации добавьте домены (ядра) — полные примеры текстов эталонов → [Конфигурация](/nouz/configuration).
 
 ### 4. Подключите к ИИ-клиенту
 
@@ -89,7 +63,7 @@ nouz-mcp
 [INFO] Indexing database on startup...
 [INFO] Indexed: 42 files, errors: 0
 [INFO] Core etalons loaded from DB: ['S', 'D', 'E']
-[INFO] NOUZ MCP Server v2.2.0 started
+[INFO] NOUZ MCP Server v2.5.1 started
 ```
 
 ## Первые шаги
@@ -115,8 +89,7 @@ recalc_core_mix()
 Начните с режима **LUCA** — без эмбеддингов:
 
 ```yaml
-prizma:
-  mode: luca
+mode: luca
 ```
 
 Вы получаете полный DAG: иерархические связи, формулы сущностей, навигацию. Семантику можно добавить позже — переключением на PRIZMA или SLOI.

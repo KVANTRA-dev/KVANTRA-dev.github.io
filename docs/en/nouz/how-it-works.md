@@ -115,7 +115,9 @@ Default threshold: 0.65.
 
 ## Automatic Parent Search
 
-To prevent random attachment, the `parent_link_threshold` is used (default 0.55). A note becomes a child only if semantic proximity (cosine similarity) exceeds this threshold. If the system finds several suitable candidates with equal scores, it looks at their domain cores (Same-core). Priority is given to the parent belonging to the same domain as your new note.
+When you create a new note without specifying parents (via `process_orphans` or `add_entity` tools), the server tries to find a suitable place for it in the graph.
+
+To prevent random attachment, the `parent_link_threshold` is used (default `0.55`). A note becomes a child only if semantic proximity (cosine similarity) exceeds this threshold. If the system finds several suitable candidates with equal scores, it looks at their domain cores (Same-core). Priority is given to the parent belonging to the same domain as your new note.
 
 ## Pipeline
 
@@ -146,25 +148,7 @@ To prevent random attachment, the `parent_link_threshold` is used (default 0.55)
 
 Domains are defined in `config.yaml` as descriptive texts. Not a list of keywords — but a description of the domain's essence in your own words. The `calibrate_cores` command turns them into vector etalons and writes them to the database.
 
-**Etalon example:**
-
-```yaml
-etalons:
-  - sign: S
-    name: Systems Thinking
-    text: >
-      Methodology for analysing complex objects: feedback loops,
-      emergent properties, self-regulation, bifurcation points.
-      Not data and not code — a way of thinking about how parts
-      form a whole and why systems behave non-linearly.
-  - sign: E
-    name: Engineering
-    text: >
-      Software engineering and infrastructure: writing and debugging
-      code, deployment, containerisation, neural networks, inference,
-      microservices, CI/CD, refactoring, APIs. The practical discipline
-      of building computational systems.
-```
+Full etalon text examples and writing recommendations → [Configuration](/en/nouz/configuration).
 
 After `calibrate_cores`, the server outputs pairwise cosines between etalons — in two variants: raw and mean-centered (subtracting the mean vector, which removes anisotropy of transformer embeddings). A good result: mean-centered cosine between different domains is noticeably lower than between a domain and itself. If values between all pairs are roughly equal — the etalons semantically overlap, and you should strengthen the distinctions.
 

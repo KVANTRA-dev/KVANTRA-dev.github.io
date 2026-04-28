@@ -93,7 +93,15 @@ export default defineConfig({
   },
 
   themeConfig: {
-    siteTitle: 'NOUZ',
+    siteTitle: 'KVANTRA',
+
+    nav: [
+      { text: 'RU', link: '/nouz/quick-start' },
+      { text: 'EN', link: '/en/nouz/quick-start' },
+      { text: 'Быстрый старт', link: '/nouz/quick-start' },
+      { text: 'Документация', link: '/nouz/how-it-works' },
+      { text: 'Примеры', link: '/nouz/use-cases' },
+    ],
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/KVANTRA-dev/NOUZ-MCP' },
