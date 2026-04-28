@@ -18,6 +18,7 @@ export default defineConfig({
     siteTitle: 'KVANTRA',
 
     nav: [
+      { text: 'README', link: '/nouz/readme-ru' },
       { text: 'Быстрый старт', link: '/nouz/quick-start' },
       { text: 'Документация', link: '/nouz/how-it-works' },
       { text: 'Примеры', link: '/nouz/use-cases' },
@@ -25,6 +26,13 @@ export default defineConfig({
 
     sidebar: {
       '/nouz/': [
+        {
+          text: 'О проекте',
+          items: [
+            { text: 'README (RU)', link: '/nouz/readme-ru' },
+            { text: 'README (EN)', link: '/nouz/readme-en' },
+          ],
+        },
         {
           text: 'Начало работы',
           items: [
