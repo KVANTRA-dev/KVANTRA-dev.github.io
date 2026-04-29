@@ -1,165 +1,163 @@
 # How NOUZ Works
 
-You write notes. NOUZ reads the YAML frontmatter, builds a DAG, classifies content via embeddings, and finds bridges between branches.
+NOUZ reads YAML frontmatter, builds a DAG, classifies content through etalons, and proposes links between branches. You define the structure and make the decisions; AI helps compute, compare, and notice weak spots in the graph.
 
 ## Entity Formula
 
-Every node in the graph is described by a compact formula:
+Every node can be shown as a compact formula:
 
 ```
 (children)[node]{parents}
 ```
 
-**( )** — children. Signs are aggregated: a number prefix appears only when count > 1. A bush at the intersection of domains.
+**( )** — children. Signs are aggregated; a number prefix appears only when count is greater than one.
 
-**[ ]** — the node itself, with its domain sign. A composite sign (`SE`) means a cross-domain idea.
+**[ ]** — the node itself: its `sign` or `artifact_sign`.
 
-**{ }** — parents. Signs are written concatenated.
-
-**Examples:**
+**{ }** — parents. The formula stays compact even as plain text.
 
 ```
-(S2E)[E]{E}          — 3 children (1×S + 2×E), self E, parent E
-(2D)[SE]{SE}         — 2 children D, self SE, parents S and E
-(SE)[SE]{SE}         — 1 child SE, self SE, parent SE
+(2E)[E]{S}      — two E children, self E, parent S
+(σE)[σE]{E}     — quant with artifact_sign σ and domain sign E
+[β]             — artifact without parents or children
 ```
 
-The formula compresses the entire topology of a node into one line: count and domains of children, own domain, domains of parents.
+`format_entity_compact` returns this formula for any note. It is not a separate classification mechanism; it is a visual coordinate: what sits below the node, what sign the node has, and what structure it belongs to above.
 
-The `format_entity_compact` tool returns this formula for any note.
+## Graph Context
 
-## Sign — Domain Classification
+NOUZ builds the graph **top-down**: from domains to artifacts. The graph defines explicit structure, while the semantic layer adds computed signals: domain, bridges, `core_mix`, and drift.
 
-A sign shows which knowledge domain a note belongs to. Domains are defined by descriptive texts in `config.yaml` — NOUZ turns them into vector etalons and classifies each note by cosine similarity to those etalons.
+Through MCP, an agent can explicitly request a note's place in the graph:
+- parents and children;
+- level and `sign`;
+- compact formula `(children)[node]{parents}`;
+- `core_mix`, when PRIZMA or SLOI is enabled.
 
-| Level | Sign Source |
-| ----- | ----------- |
-| L1 Core | Manual — it is the domain itself |
-| L2 Pattern | Manual + embedding validation |
-| L3 Module | Inherited from L2 parent |
-| L4 Quant | Computed from content embedding |
-| L5 Artifact | Inherited from parent |
+That lets the agent work with a note as a node in the knowledge graph. Semantic calculations are separate: text is compared with etalons, bridges are found through embeddings, and `core_mix` shows how quant content changes the picture bottom-up.
 
-Priority: `manual > auto (confident) > weak_auto > inherited`
+### Level 0 (meta_root)
 
-A note receives a composite sign (e.g. `ES`) when two domains both exceed the threshold simultaneously. This is a cross-domain idea — two projections of the same thought.
+Anchor node for the whole base. Set in `config.yaml` as `meta_root: "My Knowledge Base"`. L1 cores can reference it, while the node itself is excluded from semantic calculations. In graph visualization, it is the center that holds domains in one system without affecting their content classification.
 
-## Normalization via Spread
+### artifact_sign
 
-Classification does not work on absolute cosine. Instead, normalization is applied:
+Sign determined by content heuristics (logs, chats, configs). Used for L5 to separate material type from topic. For L4 it becomes part of a composite sign (artifact + core).
+
+## Sign and artifact_sign
+
+NOUZ has two sign layers:
+
+| Level | How It Is Determined |
+| ----- | -------------------- |
+| L1-L3 | Domain sign from etalons, unless manually set |
+| L4 Quant | Composite sign: `artifact_sign` from linked artifacts + content domain sign |
+| L5 Artifact | `artifact_sign` from content-structure heuristic, no domain sign |
+
+Manual markup has priority. If `sign` is already set in YAML, the server does not overwrite it as truth, but it can still compute `sign_auto` for comparison.
+
+`artifact_sign` describes the material type: note, concept, reference, log, news, hypothesis, specification. For L4 it can be stored in YAML as part of a composite sign; for L5 it is stored in the database and displayed as the artifact sign.
+
+## Etalon Classification
+
+Domains are defined in `config.yaml` as an `etalons` list. `calibrate_cores` turns those texts into reference vectors and stores them in SQLite.
+
+During classification the server:
+
+1. Takes the content embedding after stripping HTML formulas.
+2. Compares it with mean-centered etalons.
+3. Computes spread: `max_score - min_score`.
+4. If `spread < sign_spread` (`0.05`), the difference between domains is too weak, so the server does not choose a domain.
+5. Otherwise converts scores to percentages:
 
 ```
-percent = (cosine - min) / (max - min) × 100
+adjusted = score - min_score
+percent = adjusted / sum(adjusted) * 100
 ```
 
-This solves the problem of low absolute proximity: if all texts in the vault share a similar style, absolute cosine values may be high for all domains. Spread highlights the relative dominance.
+Every domain with percentage ≥ `pattern_second_sign_threshold` (`30.0`) enters the composite sign. The dominant domain is confident when its percentage is ≥ `confident_spread` (`60.0`).
 
-Default threshold: 30% for assigning a sign to a domain.
+## Mean-Centering vs Anisotropy
 
-## Bidirectional Causality
+Transformer embeddings have an awkward property: many texts look "somewhat similar" to each other even when their domains are different. Raw cosine can therefore be misleading.
 
-Two flows work simultaneously:
+The server handles this through `_mean_center`: before comparison, it subtracts the shared mean vector from the etalons. After that, NOUZ does not trust a single raw cosine. It looks at the gap between domains: how strongly one etalon wins over the others. That is why `spread`, percentages, and thresholds matter more than one similarity number.
+
+## core_mix and Drift
+
+`sign` is intent: how a node is marked or classified. `core_mix` is the actual domain profile aggregated from lower-level content.
 
 <div class="drift-diagram">
-<span class="arrow-down">↓ sign (Intent):</span>    L1 → L2 → L3 — set by human, flows top-down<br>
-<span class="arrow-up">↑ core_mix (Reality):</span>  L4 → L3 → L2 — aggregated from content, flows bottom-up
+<span class="arrow-down">↓ sign:</span>       set manually or computed for one node<br>
+<span class="arrow-up">↑ core_mix:</span>   L4 → L3 → L2, aggregated bottom-up
 </div>
 
-**Intent** — which domain you expect from a module. **Reality** — what its content is actually about. When they diverge — that's **core_drift**.
-
-**Drift example:**
-
-```
-Module "Machine Learning":
-  sign: E (Engineering)   ← set manually at creation
-  core_mix: {S: 61%, E: 39%}  ← reality from quants below
-
-  → DRIFT WARNING
-```
-
-This is a signal. Recent notes have shifted toward systems thinking. Time to reconsider — or accept the evolution.
+If a module's `sign` says "Engineering" while `core_mix` increasingly points to "Systems Analysis", that is a drift signal: the module's content has moved away from its original frame.
 
 ## Link Types
 
-| Type | Who Creates | Meaning |
-| ---- | ----------- | ------- |
-| `hierarchy` | Human only | Structural decision. Sign propagates only along this link. |
-| `temporary` | Human or AI | Temporary link. Artifact has not yet attached to the graph. |
-| `semantic` | AI suggests, human confirms | Cross-domain semantic intersection. |
-| `analogy` | AI suggests, human confirms | Structural isomorphism — same role in the graph, different domain. |
-| `error` | Automatic | Skipped level in hierarchy. |
+| Type | Who Creates It | Meaning |
+| ---- | -------------- | ------- |
+| `hierarchy` | User | Main structural link |
+| `temporary` | User or AI | Temporary link for material not yet settled in the graph |
+| `semantic` | AI proposes | Texts from different domains share meaning |
+| `tag` | AI proposes | Similarity between tags or short concepts |
+| `analogy` | AI proposes | Similar graph role across different domains |
+| `error` | Server | Strict hierarchy violation in SLOI |
 
-### Semantic Bridges
+The formula displays only `hierarchy`, `semantic`, and `temporary` links to stay readable. Other link types remain available in MCP data and in the index.
 
-A note's embedding is compared against all notes from **other** domains. Cosine ≥ 0.55 → bridge proposed with `proposed: true`.
+## Bridges
 
-Connections within the same domain are already covered by hierarchy. A bridge is needed when two different domains speak about the same thing — in different words, different language, same meaning.
+**Semantic bridges** compare a whole note against notes from other domains. Default threshold: `semantic_bridge_threshold = 0.55`.
 
-Examples of bridges NOUZ finds:
-- Database deadlock ↔ Tragedy of the commons (structural trap)
-- Entropy ↔ Technical debt (accumulation of chaos)
-- Mycelium ↔ Internet (network pattern)
+**Tag bridges** compare tags and short concepts. They can reveal shared concepts even when full texts are different.
 
-### Analogy Bridges
+**Analogy bridges** look for structural similarity: similar `core_mix`, level, degree, and tag overlap. Default threshold: `structural_bridge_threshold = 0.55`.
 
-Structural isomorphism: two notes from different domains play a similar role in their subgraphs. Weighted formula:
-
-```
-score = 0.35 × core_mix_angle
-      + 0.25 × level_match
-      + 0.20 × degree_similarity
-      + 0.20 × tag_overlap
-```
-
-Default threshold: 0.65.
+All bridges are returned as proposals (`proposed: true`). The server shows candidates; you decide what becomes a link.
 
 ## Automatic Parent Search
 
-When you create a new note without specifying parents (via `process_orphans` or `add_entity` tools), the server tries to find a suitable place for it in the graph.
+`suggest_parents`, `process_orphans`, and `add_entity` can propose a place for a note without parents.
 
-To prevent random attachment, the `parent_link_threshold` is used (default `0.55`). A note becomes a child only if semantic proximity (cosine similarity) exceeds this threshold. If the system finds several suitable candidates with equal scores, it looks at their domain cores (Same-core). Priority is given to the parent belonging to the same domain as your new note.
+The server compares the note text with possible parents. Candidates below `parent_link_threshold` (`0.55`) are discarded. If several candidates are close, the parent from the same domain gets priority.
 
 ## Pipeline
 
 <div class="pipeline">
   <div class="step" data-n="1">
     <h4>Note</h4>
-    <p>Markdown file with YAML frontmatter: parents, type, level. Without frontmatter — NOUZ indexes without semantics.</p>
+    <p>Markdown with YAML: type, level, sign, parents, tags. Files without YAML are indexed too, but need markup.</p>
   </div>
   <div class="step" data-n="2">
-    <h4>Embedding + Classification</h4>
-    <p>Content is turned into a vector. Cosine similarity with etalons after normalization → domain sign and percentage distribution.</p>
+    <h4>Index</h4>
+    <p>The server stores metadata, content, links, and embeddings in SQLite.</p>
   </div>
   <div class="step" data-n="3">
-    <h4>Placement in DAG</h4>
-    <p>Parents from YAML place the node in the graph. Cycles are checked before writing — write_file returns an error if a cycle is detected.</p>
+    <h4>Classification</h4>
+    <p>Content is compared with etalons; L5 receives artifact_sign, L4 can receive a composite sign.</p>
   </div>
   <div class="step" data-n="4">
-    <h4>Bottom-Up Aggregation</h4>
-    <p>core_mix rises from quants (L4) to modules (L3) and patterns (L2). Parent receives a weighted average of children's domain distribution.</p>
+    <h4>Aggregation</h4>
+    <p>L4 gets a profile from text classification; L3 and L2 aggregate child nodes bottom-up.</p>
   </div>
   <div class="step" data-n="5">
-    <h4>Bridge Discovery</h4>
-    <p>Semantic and analogy bridges connect nodes across domains. All proposals are marked proposed: true — AI suggests, you decide.</p>
+    <h4>Proposals</h4>
+    <p>Bridges, parents, tags, and hierarchy errors are returned as candidates for your decision.</p>
   </div>
 </div>
 
-## Etalons
-
-Domains are defined in `config.yaml` as descriptive texts. Not a list of keywords — but a description of the domain's essence in your own words. The `calibrate_cores` command turns them into vector etalons and writes them to the database.
-
-Full etalon text examples and writing recommendations → [Configuration](/en/nouz/configuration).
-
-After `calibrate_cores`, the server outputs pairwise cosines between etalons — in two variants: raw and mean-centered (subtracting the mean vector, which removes anisotropy of transformer embeddings). A good result: mean-centered cosine between different domains is noticeably lower than between a domain and itself. If values between all pairs are roughly equal — the etalons semantically overlap, and you should strengthen the distinctions.
-
-Etalons don't need to be recalculated on every run — only when `config.yaml` changes.
-
 ## Database
 
-NOUZ stores its index in SQLite (`obsidian_kb.db` in the vault root). The database contains:
-- Metadata of all files (type, level, sign, parents)
-- Embeddings (if enabled)
-- Domain reference vectors
-- Connection graph for traversal
+NOUZ stores its index in SQLite (`obsidian_kb.db` in the vault root):
 
-The database is fully local. Data stays on your machine. If you use a cloud embedding provider (OpenAI) — only the texts sent for embedding leave your machine.
+- file metadata;
+- graph links;
+- embeddings;
+- etalon reference vectors;
+- `core_mix`, `sign_auto`, `sign_source`, `artifact_sign`.
+
+Notes and the database stay local. If you use a cloud embedding provider, only texts requested for embeddings leave your machine.
+
+SQLite does not require a separate database server: Python includes `sqlite3`, and NOUZ uses `aiosqlite` as an async wrapper. The local index file is created when the vault is indexed.

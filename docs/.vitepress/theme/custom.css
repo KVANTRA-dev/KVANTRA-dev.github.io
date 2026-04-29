@@ -1,4 +1,4 @@
-/* === Брендовые токены === */
+/* === Brand tokens === */
 :root {
   --kv-core: #BC1F50;
   --kv-pattern: #D06AFF;
@@ -6,63 +6,192 @@
   --kv-quant: #F26F39;
   --kv-artifact: #C4FF7B;
   --kv-semantic: #FF00A1;
+  --kv-analogy: #FFD700;
+  --kv-tag: #888888;
 
-  /* Акцент бренда — сдержанный, один на всё */
+  --kv-logo-bracket: var(--kv-semantic);
+  --kv-logo-sigma: #202126;
+  --kv-hero-name: #BC1F50;
+  --kv-formula-syntax: #202126;
+
   --vp-c-brand-1: #BC1F50;
   --vp-c-brand-2: #a81c48;
   --vp-c-brand-3: #94193f;
   --vp-c-brand-soft: rgba(188, 31, 80, 0.12);
 
-  /* Широкий layout — под современные 1920px+ экраны */
   --vp-layout-max-width: 1920px;
   --vp-sidebar-width: 240px;
+  --vp-nav-height: 50px;
 
   --vp-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --vp-font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 .dark {
+  --kv-logo-sigma: var(--kv-artifact);
+  --kv-hero-name: var(--kv-artifact);
+  --kv-formula-syntax: var(--kv-artifact);
   --vp-c-brand-1: #D06AFF;
   --vp-c-brand-2: #b857e3;
   --vp-c-brand-3: #9f47c7;
   --vp-c-brand-soft: rgba(208, 106, 255, 0.14);
 }
 
-/* === Логотип { KVANTRA } через siteTitle === */
-/* VitePress рисует заголовок текстом — стилизуем моноширинно,
-   скобки добавляем псевдоэлементами. */
+.dark body {
+  background:
+    linear-gradient(180deg, rgba(196, 255, 123, 0.018), transparent 260px),
+    var(--vp-c-bg);
+}
+
+/* === Logo {Σ} === */
 .VPNavBarTitle .title {
   font-family: var(--vp-font-family-mono);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  font-size: 1rem;
+  color: var(--kv-logo-sigma);
 }
 
 .VPNavBarTitle .title::before {
-  content: '{ ';
-  color: var(--kv-core);
-  font-weight: 400;
+  content: '{';
+  color: var(--kv-logo-bracket);
+  font-weight: 900;
+  margin-right: 0;
 }
 
 .VPNavBarTitle .title::after {
-  content: ' }';
-  color: var(--kv-core);
-  font-weight: 400;
+  content: '}';
+  color: var(--kv-logo-bracket);
+  font-weight: 900;
+  margin-left: 0;
 }
 
-.dark .VPNavBarTitle .title::before,
-.dark .VPNavBarTitle .title::after {
-  color: var(--kv-semantic);
+.VPNavBarTranslations,
+.VPNavScreenTranslations {
+  display: none !important;
 }
 
-/* === Hero — моноширинный заголовок === */
+@media (min-width: 768px) {
+  .VPNavBarExtra {
+    display: none !important;
+  }
+
+  .VPNavBarAppearance,
+  .VPNavBarSocialLinks {
+    display: flex !important;
+    align-items: center;
+  }
+
+  .VPNavBarSocialLinks {
+    order: 2;
+  }
+
+  .VPNavBarAppearance {
+    order: 4;
+  }
+}
+
+@media (min-width: 768px) {
+  .VPNavBar .content-body {
+    gap: 10px;
+  }
+
+  .VPNavBar .menu {
+    margin-right: 4px;
+  }
+
+  .VPNavBar .social-links {
+    margin-right: 0;
+  }
+
+  .VPNavBar .appearance,
+  .VPNavBar .social-links {
+    padding-left: 0;
+  }
+}
+
+@media (min-width: 960px) {
+  .VPHero {
+    padding-top: 92px !important;
+    padding-bottom: 44px !important;
+  }
+}
+
+.VPNavBar,
+.VPNavBar .content-body,
+.VPNavBar .wrapper {
+  background-color: var(--vp-nav-bg-color);
+}
+
+.VPNavBar .divider-line {
+  background-color: var(--vp-c-divider);
+}
+
+/* === Compact locale switch === */
+.locale-switch {
+  display: none;
+  order: 3;
+}
+
+@media (min-width: 768px) {
+  .locale-switch {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0;
+    padding-left: 0;
+  }
+}
+
+.locale-switch--screen {
+  display: inline-flex;
+  margin-top: 18px;
+}
+
+.locale-switch__items {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 7px;
+  background: var(--vp-c-bg);
+}
+
+.locale-switch__pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 31px;
+  height: 24px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--vp-c-text-2);
+  text-decoration: none;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.locale-switch__pill + .locale-switch__pill {
+  border-left: 1px solid var(--vp-c-divider);
+}
+
+.locale-switch__pill:hover {
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+}
+
+.locale-switch__pill.is-active {
+  color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+}
+
+/* === Hero === */
 .VPHero .name {
   font-family: var(--vp-font-family-mono);
   letter-spacing: 0.04em;
   background: none;
   -webkit-background-clip: initial;
   -webkit-text-fill-color: currentColor;
-  color: var(--vp-c-text-1);
+  color: var(--kv-hero-name);
 }
 
 .VPHero .text {
@@ -78,24 +207,97 @@
   opacity: 0.75;
 }
 
-/* === Карточки фич === */
+.VPHero .actions {
+  padding-top: 14px;
+}
+
+/* === Feature cards === */
+.vp-doc .lead-panel {
+  border-left: 1px solid var(--vp-c-brand-1);
+  padding: 18px 24px;
+  margin: 2.8rem 0 3rem;
+  max-width: 860px;
+  background: linear-gradient(90deg, var(--vp-c-brand-soft), transparent 78%);
+}
+
+.vp-doc .lead-panel p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--vp-c-text-1);
+}
+
+.formula-strip {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: -1.7rem 0 2.6rem;
+  padding-left: 24px;
+  max-width: 860px;
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.formula-strip .formula-syntax {
+  white-space: nowrap;
+  font-family: var(--vp-font-family-mono);
+  font-weight: 700;
+  color: var(--kv-formula-syntax);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  font-size: 0.86rem;
+}
+
+.formula-strip .formula-syntax::after {
+  content: '·';
+  color: var(--kv-logo-bracket);
+  padding-left: 14px;
+}
+
+@media (max-width: 720px) {
+  .formula-strip {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding-left: 0;
+    margin-top: -1.8rem;
+  }
+
+  .formula-strip .formula-syntax {
+    font-size: 0.8rem;
+  }
+
+  .formula-strip .formula-syntax::after {
+    padding-left: 10px;
+  }
+}
+
 .vp-doc .feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-  margin: 2rem 0;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  column-gap: 34px;
+  row-gap: 0;
+  margin: 2rem 0 3rem;
+  border-top: 1px solid var(--vp-c-divider);
 }
 
 .vp-doc .feature-card {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  padding: 22px 24px;
-  transition: border-color 0.25s, transform 0.25s;
+  border-bottom: 1px solid var(--vp-c-divider);
+  padding: 22px 0;
+  transition: border-color 0.25s;
 }
 
 .vp-doc .feature-card:hover {
-  border-color: var(--vp-c-brand-1);
-  transform: translateY(-2px);
+  border-bottom-color: var(--vp-c-brand-1);
+}
+
+@media (max-width: 720px) {
+  .vp-doc .feature-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .vp-doc .feature-card h3 {
@@ -111,7 +313,7 @@
   line-height: 1.55;
 }
 
-/* === Блок установки === */
+/* === Install block === */
 .install-block {
   background: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-divider);
@@ -132,7 +334,7 @@
   padding: 0;
 }
 
-/* === Пайплайн === */
+/* === Pipeline === */
 .pipeline {
   display: flex;
   flex-direction: column;
@@ -186,30 +388,37 @@
   line-height: 1.45;
 }
 
-/* === Карточки режимов === */
+/* === Mode cards === */
 .mode-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 2rem 0 3rem;
+  border-top: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid var(--vp-c-divider);
+  position: relative;
 }
 
-@media (max-width: 768px) {
-  .mode-grid {
-    grid-template-columns: 1fr;
-  }
+.mode-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 1px;
+  background: var(--vp-c-brand-1);
 }
 
 .mode-card {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  padding: 22px 24px;
-  text-align: center;
-  transition: border-color 0.25s;
+  display: grid;
+  grid-template-columns: 130px 170px 1fr;
+  gap: 18px;
+  align-items: baseline;
+  border-bottom: 1px solid var(--vp-c-divider);
+  padding: 18px 0 18px 24px;
+  text-align: left;
 }
 
-.mode-card:hover {
-  border-color: var(--vp-c-brand-1);
+.mode-card:last-child {
+  border-bottom: none;
 }
 
 .mode-card .mode-name {
@@ -225,7 +434,7 @@
   opacity: 0.5;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .mode-card p {
@@ -235,7 +444,14 @@
   opacity: 0.85;
 }
 
-/* === Бейджи совместимости === */
+@media (max-width: 720px) {
+  .mode-card {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+/* === Compatibility badges === */
 .compat-grid {
   display: flex;
   flex-wrap: wrap;
@@ -244,7 +460,7 @@
 }
 
 .compat-badge {
-  background: var(--vp-c-bg-soft);
+  background: transparent;
   border: 1px solid var(--vp-c-divider);
   border-radius: 6px;
   padding: 5px 12px;
@@ -253,23 +469,17 @@
   font-weight: 500;
 }
 
-/* === Use-case карточки === */
+/* === Use-case cards === */
 .usecase-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 2rem 0 3rem;
 }
 
 .usecase-card {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  padding: 22px 24px;
-  transition: border-color 0.25s;
-}
-
-.usecase-card:hover {
-  border-color: var(--vp-c-brand-1);
+  border-top: 1px solid var(--vp-c-divider);
+  padding: 18px 0;
 }
 
 .usecase-card .uc-label {
@@ -294,16 +504,44 @@
   line-height: 1.5;
 }
 
-/* === Подвал — пасхалка инлайн === */
+/* === Footer === */
 .footer-ghost-inline {
+  display: inline-block;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--vp-c-divider);
   opacity: 0.3;
   font-style: italic;
   font-size: 0.85em;
   letter-spacing: 0.04em;
 }
 
+.footer-ghost-inline::before,
+.footer-ghost-inline::after {
+  content: '·';
+  color: var(--kv-logo-bracket);
+  opacity: 0.8;
+  padding: 0 10px;
+  font-style: normal;
+}
+
+.footer-brand {
+  display: inline-block;
+  margin-bottom: 7px;
+  font-family: var(--vp-font-family-mono);
+  color: var(--kv-logo-sigma);
+  letter-spacing: 0.04em;
+  font-weight: 700;
+}
+
+.footer-brand span {
+  color: var(--kv-logo-bracket);
+  font-weight: 500;
+}
+
 .VPFooter {
   font-size: 0.85rem;
+  border-top: none !important;
 }
 
 .VPFooter .message a,
@@ -318,7 +556,7 @@
   border-bottom-color: var(--vp-c-brand-1);
 }
 
-/* === Пользовательские блоки === */
+/* === Custom blocks === */
 .custom-block.tip {
   border-color: var(--vp-c-brand-1);
 }
@@ -327,7 +565,28 @@
   color: var(--vp-c-brand-1);
 }
 
-/* === Секция drift/core_mix === */
+.etalon-note {
+  margin: 1.4rem 0;
+  padding: 18px 22px;
+  border-left: 1px solid var(--vp-c-brand-1);
+  background: linear-gradient(90deg, var(--vp-c-brand-soft), transparent 86%);
+}
+
+.etalon-note strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--vp-c-brand-1);
+  font-size: 0.92rem;
+}
+
+.etalon-note p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+/* === Drift/core_mix === */
 .drift-diagram {
   background: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-divider);

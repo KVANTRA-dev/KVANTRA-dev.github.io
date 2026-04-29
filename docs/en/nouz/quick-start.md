@@ -10,29 +10,44 @@ pip install nouz-mcp
 
 ## Setup
 
-### 1. Point to Your Vault
+### 1. Create config.yaml (Optional)
+
+Without `config.yaml`, the server starts in **LUCA** mode (pure graph). For PRIZMA/SLOI, create a local config:
 
 ```bash
-export OBSIDIAN_ROOT=~/my-vault
+cp config.template.yaml config.yaml
 ```
 
-### 2. Connect an Embedding Provider (Optional)
+On Windows PowerShell:
 
-Required for PRIZMA and SLOI modes. Any OpenAI-compatible API works: LM Studio, Ollama, or a cloud provider.
-
-```bash
-export EMBED_API_URL=http://127.0.0.1:1234/v1
+```powershell
+Copy-Item config.template.yaml config.yaml
 ```
 
-### 3. Create config.yaml
+If your MCP client starts the server outside the project directory, pass the path explicitly through `NOUZ_CONFIG`.
 
-Place `config.yaml` in your vault root. Minimal config:
+Minimal config:
 
 ```yaml
 mode: prizma  # luca | prizma | sloi
 ```
 
-For semantic classification, add knowledge domains (cores) — full etalon text examples → [Configuration](/en/nouz/configuration).
+For semantic classification, add domains (etalons) — full examples → [Configuration](/en/nouz/configuration).
+
+### 2. Point to Your Vault
+
+```bash
+export OBSIDIAN_ROOT=/path/to/your/obsidian-vault
+```
+
+### 3. Connect an Embedding Provider (For PRIZMA/SLOI)
+
+Any OpenAI-compatible API works: LM Studio, Ollama, or a cloud provider.
+
+```bash
+export EMBED_API_URL=http://127.0.0.1:1234/v1
+export EMBED_MODEL=nomic-embed-text
+```
 
 ### 4. Connect to Your AI Client
 
@@ -63,7 +78,7 @@ nouz-mcp
 [INFO] Indexing database on startup...
 [INFO] Indexed: 42 files, errors: 0
 [INFO] Core etalons loaded from DB: ['S', 'D', 'E']
-[INFO] NOUZ MCP Server v2.5.1 started
+[INFO] NOUZ MCP Server v2.5.2 started
 ```
 
 ## First Steps
@@ -77,7 +92,7 @@ format_entity_compact("My Module.md")
 
 # Classify a new note
 suggest_metadata("New Note.md")
-# → {sign: "SE", level: 4, bridges: [...]}
+# → {sign: "σE", artifact_sign: "σ", level: 4, bridges: [...]}
 
 # Recalculate signs across the entire vault
 recalc_signs()
@@ -98,5 +113,5 @@ You get the full DAG: hierarchical connections, entity formulas, navigation. Add
 
 - Python 3.10+
 - Obsidian vault (any directory with `.md` files)
-- SQLite (built-in)
+- No SQLite server required: Python includes `sqlite3`, and the package installs `aiosqlite`
 - LM Studio, Ollama, or OpenAI-compatible API (optional, for PRIZMA/SLOI)

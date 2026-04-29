@@ -48,6 +48,10 @@ export default defineConfig({
             },
           ],
         },
+        footer: {
+          message: '<span class="footer-brand"><span>{</span>КВАНТРА<span>}</span></span><br><a href="https://t.me/volnaya_sreda">Telegram</a> · <a href="https://t.me/volnaya_sreda">Вольная Среда</a> · <a href="mailto:belkinamariaigorevna@yandex.ru">Email</a>',
+          copyright: '<span class="footer-ghost-inline">косинусы считаются, синтаксис меняется, семантика остаётся</span>',
+        },
         docFooter: { prev: 'Назад', next: 'Далее' },
         outlineTitle: 'Содержание',
       },
@@ -86,6 +90,10 @@ export default defineConfig({
             },
           ],
         },
+        footer: {
+          message: '<span class="footer-brand"><span>{</span>KVANTRA<span>}</span></span><br><a href="https://t.me/volnaya_sreda">Telegram</a> · <a href="https://t.me/volnaya_sreda">Volnaya Sreda</a> · <a href="mailto:belkinamariaigorevna@yandex.ru">Email</a>',
+          copyright: '<span class="footer-ghost-inline">косинусы считаются, синтаксис меняется, семантика остаётся</span>',
+        },
         docFooter: { prev: 'Previous', next: 'Next' },
         outlineTitle: 'On this page',
       },
@@ -93,24 +101,11 @@ export default defineConfig({
   },
 
   themeConfig: {
-    siteTitle: 'KVANTRA',
-
-    nav: [
-      { text: 'RU', link: '/nouz/quick-start' },
-      { text: 'EN', link: '/en/nouz/quick-start' },
-      { text: 'Быстрый старт', link: '/nouz/quick-start' },
-      { text: 'Документация', link: '/nouz/how-it-works' },
-      { text: 'Примеры', link: '/nouz/use-cases' },
-    ],
+    siteTitle: 'Σ',
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/KVANTRA-dev/NOUZ-MCP' },
     ],
-
-    footer: {
-      message: '<a href="https://t.me/volnaya_sreda">Telegram</a> · <a href="https://t.me/volnaya_sreda">Вольная Среда</a> · <a href="mailto:belkinamariaigorevna@yandex.ru">Email</a>',
-      copyright: 'KVANTRA · <span class="footer-ghost-inline">косинусы считаются, синтаксис меняется, семантика остаётся</span>',
-    },
 
     search: false,
   },

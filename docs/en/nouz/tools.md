@@ -2,100 +2,100 @@
 
 NOUZ provides 15 tools through the Model Context Protocol. Availability depends on the mode:
 
-| # | Tool | LUCA | PRIZMA | SLOI |
-| - | ---- | ---- | ------ | ---- |
-| 1 | `obsidian_read_file` | yes | yes | yes |
-| 2 | `obsidian_write_file` | yes | yes | yes |
-| 3 | `obsidian_list_files` | yes | yes | yes |
-| 4 | `obsidian_get_children` | yes | yes | yes |
-| 5 | `obsidian_get_parents` | yes | yes | yes |
-| 6 | `obsidian_format_entity_compact` | yes | yes | yes |
-| 7 | `obsidian_index_all` | yes | yes | yes |
-| 8 | `obsidian_suggest_metadata` | — | yes | yes |
-| 9 | `obsidian_suggest_parents` | — | yes | yes |
-| 10 | `obsidian_embed` | — | yes | yes |
-| 11 | `obsidian_calibrate_cores` | — | yes | yes |
-| 12 | `obsidian_recalc_signs` | — | yes | yes |
-| 13 | `obsidian_recalc_core_mix` | — | yes | yes |
-| 14 | `obsidian_process_orphans` | — | yes | yes |
-| 15 | `obsidian_add_entity` | — | yes | yes |
+| # | Tool | Meaning | LUCA | PRIZMA | SLOI |
+| - | ---- | ------- | ---- | ------ | ---- |
+| 1 | `read_file` | read a file | ✓ | ✓ | ✓ |
+| 2 | `write_file` | write a file | ✓ | ✓ | ✓ |
+| 3 | `list_files` | list indexed files | ✓ | ✓ | ✓ |
+| 4 | `get_children` | get children | ✓ | ✓ | ✓ |
+| 5 | `get_parents` | get parents | ✓ | ✓ | ✓ |
+| 6 | `format_entity_compact` | build node formula | ✓ | ✓ | ✓ |
+| 7 | `index_all` | re-index the base | ✓ | ✓ | ✓ |
+| 8 | `suggest_metadata` | suggest metadata | — | ✓ | ✓ |
+| 9 | `suggest_parents` | suggest parents | — | ✓ | ✓ |
+| 10 | `embed` | create embedding | — | ✓ | ✓ |
+| 11 | `calibrate_cores` | calibrate etalons | — | ✓ | ✓ |
+| 12 | `recalc_signs` | recalculate signs | — | ✓ | ✓ |
+| 13 | `recalc_core_mix` | recalculate domain mix | — | ✓ | ✓ |
+| 14 | `process_orphans` | process orphan notes | — | ✓ | ✓ |
+| 15 | `add_entity` | create an entity | — | ✓ | ✓ |
 
 ---
 
 ## Reading and Writing
 
-### `obsidian_read_file`
+### `read_file`
 
-Read an Obsidian note with YAML frontmatter. Returns metadata (type, level, sign, parents, tags) and content body. Re-indexes the file in the database as a side effect.
+Read a Markdown file and return YAML frontmatter together with content. The YAML fields include `type`, `level`, `sign`, `artifact_sign`, `parents`, and `tags`. Reading also re-indexes the file in the database.
 
-### `obsidian_write_file`
+### `write_file`
 
-Create or update a note with frontmatter. Checks the graph for cycles before writing. Automatically syncs `parents` and `parents_meta` fields.
+Create or update a note with YAML frontmatter. Checks the graph for cycles before writing and syncs simple parent links `parents` with detailed link metadata `parents_meta`.
 
-### `obsidian_list_files`
+### `list_files`
 
-List indexed files with optional filters: by `level`, `sign`, `subfolder`, or `no_metadata` (files without YAML frontmatter).
+List indexed files with filters by `level`, `sign`, `subfolder`, or `no_metadata`.
 
 ---
 
 ## Graph Navigation
 
-### `obsidian_get_children`
+### `get_children`
 
-Get all descendants of a node (direct and transitive) from the DAG index. Returns a flat list of relative paths.
+Get descendants of a node from the DAG index: direct and transitive.
 
-### `obsidian_get_parents`
+### `get_parents`
 
-Get parent links for a file from the DAG index. Returns `{entity, link_type}` for each connection.
+Get parent links for a file. Returns `entity` and `link_type` for each connection.
 
-### `obsidian_format_entity_compact`
+### `format_entity_compact`
 
-Compact structural formula of a node's position: `(children)[node]{parents}`. Quick way to see a note's graph neighborhood.
+Compact formula for a node's position: `(children)[node]{parents}`. The formula displays link types that help keep the structure readable: `hierarchy`, `semantic`, and `temporary`.
 
 ---
 
 ## Semantics <Badge type="tip" text="PRIZMA / SLOI" />
 
-### `obsidian_suggest_metadata`
+### `suggest_metadata`
 
-The main tool for AI agents. Analyzes a file's content and suggests: domain sign, hierarchy level, tags, semantic and analogy bridges, hierarchy errors. Returns `proposed: true` — the decision is human's.
+Analyzes a file and suggests sign, `artifact_sign`, level, tags, bridges, and hierarchy errors. Suggestions return `proposed: true`: the decision stays with you.
 
-### `obsidian_suggest_parents`
+### `suggest_parents`
 
-Finds semantically similar notes by vector cosine similarity. Suggests them as potential parent links for orphan notes. Returns top candidates ranked by similarity score, with same-core matches prioritized.
+Finds parent candidates for orphan notes by cosine similarity. Candidates below `parent_link_threshold` are discarded; candidates from the same domain win ties.
 
-### `obsidian_embed`
+### `embed`
 
-Generate a vector embedding for arbitrary text. Useful for ad-hoc similarity checks.
+Generate an embedding for arbitrary text. Useful for debugging similarity and manual checks.
 
 ---
 
 ## Database Maintenance <Badge type="tip" text="PRIZMA / SLOI" />
 
-### `obsidian_index_all`
+### `index_all`
 
-Re-index all markdown files in the vault. With `with_embeddings=true` — also recompute vectors (slower, requires an embedding provider). Idempotent — safe to re-run.
+Re-index all markdown files. With `with_embeddings=true`, also recomputes embeddings.
 
-### `obsidian_calibrate_cores`
+### `calibrate_cores`
 
-Recompute reference vector embeddings for all semantic cores defined in `config.yaml`. After running, check pairwise cosine in two variants: raw and mean-centered. Good result: mean-centered is significantly lower than raw. If mean-centered between different domains is roughly equal to within-domain values — etalons overlap, consider reformulating.
+Recompute reference vectors from `config.yaml`. Returns raw and mean-centered pairwise cosine values to check domain separation.
 
-### `obsidian_recalc_signs`
+### `recalc_signs`
 
-Reclassify all files by embeddings. Updates `sign_auto` and `sign_source` in the database (does not touch YAML files). Use `dry_run=true` to preview changes without writing.
+Reclassify files against current etalons. Updates domain sign `sign`, automatic sign `sign_auto`, sign source `sign_source`, and material type `artifact_sign` in the database. YAML files are not changed. Use `dry_run=true` to preview.
 
-### `obsidian_recalc_core_mix`
+### `recalc_core_mix`
 
-Bottom-up aggregation: quants (L4) → modules (L3) → patterns (L2). Each parent receives a weighted average of its children's sign distributions. Writes updated core_mix to the database only.
+Recalculate `core_mix` bottom-up: L4 gets a profile from text classification, while L3 and L2 aggregate child nodes. Updates the database only.
 
 ---
 
 ## Automation <Badge type="tip" text="PRIZMA / SLOI" />
 
-### `obsidian_process_orphans`
+### `process_orphans`
 
-Find files with empty/missing sign OR missing parents (L2-L5) in YAML and auto-fill: sign (by content heuristic for L5, by embedding for L1-L4), tags (LLM-extracted), parents (embedding-suggested for orphan nodes). Writes updated YAML back to files. Use `dry_run=true` to preview without writing.
+Finds files with missing signs or missing parents and suggests sign/artifact_sign, tags, and possible parents. Can run as `dry_run` or write YAML.
 
-### `obsidian_add_entity`
+### `add_entity`
 
-Create a new entity in one step: auto-determines sign, tags, level; auto-suggests parents by embedding similarity. For L5 (artifact, default): sign by content heuristic, no embedding needed. For L4 (quant): composite sign = artifact_sign from children + core_sign from embedding. For L1-L3: core_sign from embedding. Set `auto_parents=true` to automatically link to the top suggested parent.
+Creates an entity in one step: writes the file, determines sign/artifact_sign, tags, and with `auto_parents=true` adds the best parent above threshold.

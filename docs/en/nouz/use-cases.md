@@ -1,55 +1,118 @@
 # Use Cases
 
-Concrete tasks that NOUZ solves — and how exactly it works.
+NOUZ is useful in two different situations: when a knowledge base is just beginning, and when it already exists, has history, and contains mixed conventions. These need different workflows.
 
-## PKM: Large Vault with Lost Connections
+## Who It Is For
 
-**Situation:** 400+ notes. Folders `/ml`, `/physics`, `/dev`. The idea that entropy and technical debt are the same phenomenon lives across several folders.
+NOUZ makes sense when a knowledge base has grown beyond a simple folder of notes: it has domains, levels, recurring topics, decisions, logs, research, or project documentation.
 
-**What NOUZ does:**
+Good fit:
+
+- researchers and writers working across several fields who want to see intersections;
+- developers and teams who need MCP access to living project memory;
+- Obsidian users whose vault already has some links, while many relationships still live only in their head;
+- bases where it matters to distinguish structure from content: what a note was meant to be, and what it actually talks about.
+
+Not the best fit:
+
+- a small vault of 20–30 notes without stable themes;
+- if all you need is full-text search;
+- if you are not ready to define domains once and check etalon quality.
+
+## New Knowledge Base
+
+**Situation:** you are starting a vault from scratch or importing a small material set. The structure has not accumulated accidental links yet, so NOUZ can be introduced gently: the graph grows with the base.
+
+**How to work:**
+
+1. Start with LUCA: YAML, parents, graph, entity formula.
+2. Add new notes normally.
+3. For new notes, call `suggest_metadata` or `suggest_parents`.
+4. When enough material has accumulated, enable PRIZMA: etalons, embeddings, bridges, `core_mix`.
+
+Minimal note:
+
+```yaml
+---
+type: quant
+level: 4
+parents:
+  - "[[Module Name]]"
+parents_meta:
+  - entity: Module Name
+    link_type: hierarchy
+tags:
+  - topic
+---
+```
+
+What the agent gets:
+
+```text
+suggest_metadata("New Note.md")
+→ {
+    sign: "E",
+    level: 4,
+    suggested_parents: ["Architecture/Patterns.md"],
+    bridges: [
+      {type: "semantic", target: "Design/CQRS.md", cosine: 0.74, proposed: true}
+    ]
+  }
+```
+
+**Idea:** the human shapes the structure as the base grows, while NOUZ proposes placement, domain, tags, and bridges. The decision stays with the human.
+
+---
+
+## Existing Knowledge Base
+
+**Situation:** you already have a large vault: hundreds of notes, old folders, different writing styles, partially filled YAML. Here it is risky to turn on automation and trust it all at once. Settings depend heavily on the actual data.
+
+**How to work:**
+
+1. Index the base first, without mass rewrites.
+2. Inspect real domains, note types, levels, and the gap between folders and content.
+3. Write etalons for this base, not for an abstract example.
+4. Run `calibrate_cores` and check raw / mean-centered cosines.
+5. Tune thresholds: `sign_spread`, `pattern_second_sign_threshold`, `semantic_bridge_threshold`, `parent_link_threshold`.
+6. Run `recalc_signs`, `suggest_metadata`, and `process_orphans` in batches, reviewing results.
+
+Example:
 
 ```bash
-# 1. Launch and index the vault
-nouz-mcp
-# → Indexed: 412 files
-
-# 2. Reclassify all notes by content
+index_all()
+calibrate_cores()
 recalc_signs()
-# → 412 notes classified. sign_auto updated.
-
-# 3. Search for semantic bridges
 suggest_metadata("Technical Debt.md")
-# → bridges:
-#   - semantic: "Entropy.md" (cosine: 0.71)  ← different domains, same meaning
-#   - semantic: "Tragedy of the Commons.md" (cosine: 0.63)
 ```
 
-**Result:** The AI suggests connections you didn't make manually. You confirm the accurate ones. The knowledge base starts to understand itself.
+```text
+bridges:
+  - semantic: "Entropy.md" (cosine: 0.71)
+  - semantic: "Tragedy of the Commons.md" (cosine: 0.63)
+```
+
+**Idea:** NOUZ shows the state of an existing base: lost links, unmarked notes, weak parents, drift between `sign` and `core_mix`. New structure appears through your decisions, not over them.
 
 ---
 
-## Research: Tracking Topic Drift
+## Drift: When Structure Diverges from Reality
 
-**Situation:** The "Machine Learning" module started as technical, but the last 20 notes are about AI philosophy and ethics. The structure no longer reflects the content.
-
-**How NOUZ shows this:**
+**Situation:** the "Machine Learning" module started as technical, but recent notes are increasingly about AI philosophy, ethics, and system limits. The name and YAML say one thing; the content now says another.
 
 ```python
-# Get the node's formula
 format_entity_compact("ML/Machine Learning.md")
 # → sign: E (Engineering), core_mix: {S: 61%, E: 39%}
-# → DRIFT WARNING: sign=E, but core_mix says S dominates
+# → DRIFT WARNING: sign=E, core_mix says S dominates
 ```
 
-**core_drift** is a signal: the module has grown beyond what it was intended to be. You can rename it, split it, or accept the evolution. NOUZ simply makes it visible.
+`core_drift` is a signal: the module has moved away from its original intent. You can rename it, split it, move some notes, or accept the evolution.
 
 ---
 
-## AI Agent: Knowledge Layer from a Vault
+## AI Agent: Structured Memory
 
-**Situation:** Building an AI agent that needs structured context — "where is this in the hierarchy and what's connected to it" — on top of regular vector search.
-
-**Configuration (Claude Desktop):**
+**Situation:** an agent needs more than similar-text search. It needs to know where a note sits in the graph and what connects to it.
 
 ```json
 {
@@ -66,74 +129,29 @@ format_entity_compact("ML/Machine Learning.md")
 }
 ```
 
-**What the agent gets:**
-
-```
-User: "Tell me about our monitoring system architecture"
+```text
+User: "Tell me about the monitoring architecture"
 
 Agent uses NOUZ:
 1. list_files(subfolder="infrastructure") → 12 files
 2. get_children("Infrastructure/Monitoring.md") → [Prometheus.md, Grafana.md, Alerting.md]
 3. format_entity_compact("Infrastructure/Monitoring.md") → (S2E)[E]{E}
 4. read_file each child → full context
-
-Agent responds with the real structure of your knowledge base,
-not generic words from training data.
 ```
+
+The agent answers from the structure of your knowledge base: hierarchy, neighboring nodes, child materials, and close embedding matches.
 
 ---
 
-## Zettelkasten: Building a DAG from Scratch
+## Living Project Documentation
 
-**Situation:** A new knowledge base. You want to start structuring notes correctly from day one.
+**Situation:** a project has architecture notes, decisions, bugs, retrospectives, and research. These often live near each other, but not always connected.
 
-**Step 1 — Minimal YAML for a note:**
-
-```yaml
----
-type: quant
-level: 4
-parents:
-  - "[[Module Name]]"
-parents_meta:
-  - entity: Module Name
-    link_type: hierarchy
-tags:
-  - topic
----
-```
-
-**Step 2 — AI helps place it:**
-
-```
-Agent: "Analyze this new note and suggest where it belongs"
-
-suggest_metadata("New Note.md")
-→ {
-    sign: "E",
-    level: 4,
-    suggested_parents: ["Architecture/Patterns.md"],
-    bridges: [
-      {type: "semantic", target: "Design/CQRS.md", cosine: 0.74, proposed: true}
-    ]
-  }
-```
-
-**Step 3 — Confirm or reject.** NOUZ writes to files only with your consent. `proposed: true` means it's waiting for a decision.
-
----
-
-## Dev Notes: Living Project Documentation
-
-**Situation:** Project notes — architecture, decisions, bugs, retrospectives. You want your AI assistant to understand the full project context.
-
-**Vault structure:**
-
-```
+```text
 Project/
 ├── Architecture.md       # L3 module
 ├── Decisions/
-│   ├── ADR-001.md        # L4 quant — specific decision
+│   ├── ADR-001.md        # L4 quant
 │   ├── ADR-002.md
 ├── Bugs/
 │   ├── Bug-tracker.md    # L3 module
@@ -142,38 +160,10 @@ Project/
     └── 2026-Q1.md        # L5 artifact
 ```
 
-**Benefits:** `get_children("Project/Architecture.md")` gives the agent the full hierarchy. `suggest_parents("New bug.md")` finds similar past incidents. `format_entity_compact` shows where any note sits in the project structure.
+`get_children("Project/Architecture.md")` gives the agent the hierarchy. `suggest_parents("New bug.md")` finds similar past incidents. `format_entity_compact` shows where any note sits in the project structure.
 
----
+## What Stays Yours
 
-## Project Documentation: When Structure Diverges from Reality
+NOUZ computes, compares, and proposes, but the structure of the base remains your decision. This matters for living archives: the server makes levels, links, domains, and drift visible, while you choose what to accept, split, or keep as a bridge in the graph.
 
-**Situation:** You have a large knowledge base — a project, a team, a corporate vault. Organized by domains: architecture, APIs, business logic, requirements. Everything looks neat. But over time something starts to creak: architecture notes quietly accumulate business logic, and requirements drift into technical details.
-
-You can't catch this manually. You can work with a vault for months that no longer reflects what it actually is.
-
-**What NOUZ does about it:**
-
-`core_drift` is not an error or a warning in the usual sense. It's a signal: the intent with which a module was created diverges from what its notes are actually about. NOUZ computes this automatically by comparing the domain sign (what the module should be) with `core_mix` (what it has become by content).
-
-```
-Module "Service Architecture":
-  sign: E (Engineering)         ← set at creation
-  core_mix: {S: 58%, E: 42%}   ← reality from recent notes
-
-  → DRIFT WARNING
-```
-
-This means: recent notes in this module are about systems thinking and principles — not about code. The module has outgrown its boundaries. Or the boundaries have become too tight.
-
-**What to do about it** — you decide. Rename. Split into two. Or simply accept that the module has evolved. NOUZ makes the invisible — visible.
-
----
-
-## Start Simple
-
-Hierarchy builds gradually:
-
-1. **Start with LUCA** — add `parents` to YAML of notes you want to connect
-2. **Then PRIZMA** — once you have 50+ notes, enable embeddings and see the classification
-3. **SLOI if you want** — if you need a strict 5-level structure with validation
+The usual next steps are simple: tune etalons for your base, check their quality with `calibrate_cores`, then connect an MCP client and give the agent graph context.

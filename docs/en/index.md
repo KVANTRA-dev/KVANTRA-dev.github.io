@@ -2,8 +2,8 @@
 layout: home
 hero:
   name: NOUZ
-  text: Semantic Knowledge Graph for Obsidian
-  tagline: An MCP server that builds structure from content. Classification, connections, domains — derived from your notes' text.
+  text: Structured Memory for Obsidian and AI Agents
+  tagline: "An MCP server for Markdown knowledge bases: hierarchy, domains, links, and graph context exposed to agents through tools."
   actions:
     - theme: brand
       text: Quick Start
@@ -19,32 +19,31 @@ hero:
 
 ## What NOUZ Does
 
-You write notes in Obsidian. NOUZ reads them, determines each note's domain, builds the hierarchy, and finds connections you didn't make manually. All of this is available to your AI assistant through MCP — as structured memory, not just text search.
+<div class="lead-panel">
+  <p>NOUZ turns a folder of Markdown notes into a managed knowledge graph. You define the semantic frame and make the decisions; the server computes domains, checks links, aggregates node composition, and gives the agent structured context through MCP.</p>
+</div>
+
+<div class="formula-strip">
+  <span class="formula-syntax">(children)[node]{parents}</span>
+  <span>a short graph coordinate for a note: what it belongs to and what it contains</span>
+</div>
 
 <div class="feature-grid">
   <div class="feature-card">
-    <h3>DAG from YAML</h3>
-    <p>Each note declares its parents in frontmatter. NOUZ builds a directed acyclic graph and checks for cycles. A node's position in the graph is expressed as a formula: <code>(children)[node]{parents}</code></p>
+    <h3>Graph from YAML</h3>
+    <p>Each note declares its parents in YAML frontmatter. NOUZ builds a directed acyclic graph, checks cycles, and stores links in a local index.</p>
   </div>
   <div class="feature-card">
-    <h3>Content-Based Classification</h3>
-    <p>Define 2–4 domains by text in your config. Embeddings classify each note automatically — by meaning, not by folder location.</p>
+    <h3>Clean Classification</h3>
+    <p>Domains are defined by etalon texts. NOUZ compares notes with etalons after mean subtraction: shared embedding bias fades, and the dominant meaning becomes easier to see.</p>
   </div>
   <div class="feature-card">
     <h3>Cross-Domain Bridges</h3>
-    <p>A note on thermodynamics connects to information theory. A note on deadlocks links to the tragedy of the commons. The AI suggests connections, you decide.</p>
+    <p>The server proposes semantic, tag, and analogy bridges between graph branches. Proposals stay candidates until you decide to add the link.</p>
   </div>
   <div class="feature-card">
-    <h3>Bidirectional Causality</h3>
-    <p><strong>Intent</strong> flows top-down: domain sign inherits from cores to modules. <strong>Reality</strong> flows bottom-up: core_mix aggregates from content. Drift between them is a signal.</p>
-  </div>
-  <div class="feature-card">
-    <h3>13 MCP Tools</h3>
-    <p>From <code>suggest_metadata</code> to <code>recalc_core_mix</code> — everything for an agent to work with a knowledge graph: read, write, navigate, classify.</p>
-  </div>
-  <div class="feature-card">
-    <h3>Local and Private</h3>
-    <p>Notes, embeddings, and database — all on your machine. LM Studio, Ollama, any OpenAI-compatible API. Your data stays with you.</p>
+    <h3>Structural Drift</h3>
+    <p><strong>Intent</strong> lives in structure and YAML. <strong>Actual composition</strong> flows bottom-up: <code>core_mix</code> aggregates the domain profile of content. Drift between them is a signal for analysis.</p>
   </div>
 </div>
 
@@ -56,12 +55,12 @@ Start simple. Add semantics when you're ready.
   <div class="mode-card">
     <div class="mode-name">LUCA</div>
     <div class="mode-sub">Pure Graph</div>
-    <p>YAML frontmatter, hierarchy, entity formulas. Works without embeddings and without config — just point to your vault.</p>
+    <p>YAML frontmatter, hierarchy, entity formulas. Point it to your notes directory: the default mode works without embeddings or config.</p>
   </div>
   <div class="mode-card">
     <div class="mode-name">PRIZMA</div>
     <div class="mode-sub">Semantic Layer</div>
-    <p>Full classification: domains by embeddings, sign inheritance, semantic and analogy bridges, drift detection.</p>
+    <p>Mean-subtracted classification, composite signs, semantic/tag/analogy bridges, <code>core_mix</code>, and drift signals.</p>
   </div>
   <div class="mode-card">
     <div class="mode-name">SLOI</div>
@@ -76,31 +75,31 @@ Start simple. Add semantics when you're ready.
   <div class="usecase-card">
     <div class="uc-label">PKM / Zettelkasten</div>
     <h3>Many Notes — Few Connections</h3>
-    <p>500+ notes and you know there's something valuable in there. But you only see what you linked manually. NOUZ finds the rest.</p>
+    <p>Your notes already have manual links, while some semantic intersections stay in your head. NOUZ surfaces candidates; the decision stays with you.</p>
   </div>
   <div class="usecase-card">
     <div class="uc-label">Researchers</div>
     <h3>Ideas Across Disciplines</h3>
-    <p>Notes on physics, on system architecture, on organizational theory. NOUZ notices when the same idea lives in different branches — just in different words.</p>
+    <p>Notes on physics, system architecture, and organizational theory can describe the same pattern in different words. NOUZ helps make those intersections visible.</p>
   </div>
   <div class="usecase-card">
     <div class="uc-label">AI Developers</div>
     <h3>Structured Memory for Agents</h3>
-    <p>Not just vector search — a graph with hierarchy, domains, and connections. The agent understands context, not just finds similar text.</p>
+    <p>The agent gets graph context: parents, children, level, domains, links, and note content. It can work with the base as a structure.</p>
   </div>
 </div>
 
 ## Hierarchy
 
-The graph is built top-down. Each level has its role:
+The graph is built top-down. Each level has its role, and larger bases can add `meta_root`: a level-0 anchor that gathers domains into one system and stays out of semantic calculations.
 
 | Level | Type | What Goes Here | Sign Source |
 | ----- | ---- | -------------- | ----------- |
-| L1 | Core | Knowledge domain — a broad area | Manual in config |
-| L2 | Pattern | Key theme within a core | Manual + embedding validation |
-| L3 | Module | Functional group, project | Inherited from L2 |
-| L4 | Quant | One idea — a guide, research, post | Computed from content |
-| L5 | Artifact | Raw material: logs, chats, configs | Inherited from parent |
+| L1 | Core | Knowledge domain — a broad area | Manual or etalon-based |
+| L2 | Pattern | Thematic frame for child modules and quants | Manual or etalon-based |
+| L3 | Module | Functional group, project | Manual or etalon-based |
+| L4 | Quant | One idea — a guide, research, post | Child artifact type + content domain |
+| L5 | Artifact | Raw material: logs, chats, configs | Content-structure heuristic |
 
 ## Works With
 
@@ -108,19 +107,50 @@ The graph is built top-down. Each level has its role:
   <span class="compat-badge">Claude Desktop</span>
   <span class="compat-badge">Cursor</span>
   <span class="compat-badge">OpenCode</span>
-  <span class="compat-badge">ChatGPT</span>
-  <span class="compat-badge">VS Code Copilot</span>
-  <span class="compat-badge">Any MCP Client</span>
+  <span class="compat-badge">Claude Code</span>
+  <span class="compat-badge">Cline</span>
+  <span class="compat-badge">Continue</span>
+  <span class="compat-badge">VS Code MCP</span>
+  <span class="compat-badge">Any stdio MCP client</span>
 </div>
 
 ## Try It Quickly
 
 ```bash
 pip install nouz-mcp
-export OBSIDIAN_ROOT=/path/to/vault
-nouz-mcp
 ```
 
-Add it to your MCP client config and ask your AI: `"show me the structure of my knowledge base"`.
+Create `config.yaml` from the template, or use LUCA mode by default:
+
+```yaml
+mode: prizma
+```
+
+Point to your vault and connect embeddings (for PRIZMA/SLOI):
+
+```bash
+export OBSIDIAN_ROOT=/path/to/vault
+export EMBED_API_URL=http://127.0.0.1:1234/v1
+```
+
+Run via MCP client:
+
+```json
+{
+  "mcpServers": {
+    "nouz": {
+      "command": "python",
+      "args": ["-m", "nouz_mcp"],
+      "env": {
+        "OBSIDIAN_ROOT": "/path/to/vault"
+      }
+    }
+  }
+}
+```
 
 **LUCA mode** works without embeddings — YAML and graph only. [→ Quick Start](/en/nouz/quick-start)
+
+## Research Context
+
+NOUZ is a practical MCP server; the theory is optional. For readers interested in the research frame behind the project: [Recursive Self-Organization as a Universal Principle](https://doi.org/10.5281/zenodo.19595850).

@@ -10,29 +10,44 @@ pip install nouz-mcp
 
 ## Настройка
 
-### 1. Укажите путь к vault
+### 1. Создайте config.yaml (опционально)
+
+Без `config.yaml` сервер запустится в режиме **LUCA** (чистый граф). Для PRIZMA/SLOI создайте локальный конфиг:
 
 ```bash
-export OBSIDIAN_ROOT=~/my-vault
+cp config.template.yaml config.yaml
 ```
 
-### 2. Подключите провайдер эмбеддингов (опционально)
+В Windows PowerShell:
 
-Нужно для режимов PRIZMA и SLOI. Любой OpenAI-совместимый API: LM Studio, Ollama, облачный провайдер.
-
-```bash
-export EMBED_API_URL=http://127.0.0.1:1234/v1
+```powershell
+Copy-Item config.template.yaml config.yaml
 ```
 
-### 3. Создайте config.yaml
+Если MCP-клиент запускает сервер не из директории проекта, передайте путь явно через `NOUZ_CONFIG`.
 
-Положите `config.yaml` в корень vault. Минимальный конфиг:
+Минимальный конфиг:
 
 ```yaml
 mode: prizma  # luca | prizma | sloi
 ```
 
-Для семантической классификации добавьте домены (ядра) — полные примеры текстов эталонов → [Конфигурация](/nouz/configuration).
+Для семантической классификации добавьте домены (`etalons`, эталонные тексты) — полные примеры → [Конфигурация](/nouz/configuration).
+
+### 2. Укажите путь к папке с заметками
+
+```bash
+export OBSIDIAN_ROOT=/path/to/your/obsidian-vault
+```
+
+### 3. Подключите провайдер эмбеддингов (для PRIZMA/SLOI)
+
+Любой OpenAI-совместимый API: LM Studio, Ollama, облачный провайдер.
+
+```bash
+export EMBED_API_URL=http://127.0.0.1:1234/v1
+export EMBED_MODEL=nomic-embed-text
+```
 
 ### 4. Подключите к ИИ-клиенту
 
@@ -63,7 +78,7 @@ nouz-mcp
 [INFO] Indexing database on startup...
 [INFO] Indexed: 42 files, errors: 0
 [INFO] Core etalons loaded from DB: ['S', 'D', 'E']
-[INFO] NOUZ MCP Server v2.5.1 started
+[INFO] NOUZ MCP Server v2.5.2 started
 ```
 
 ## Первые шаги
@@ -71,13 +86,13 @@ nouz-mcp
 Когда NOUZ подключён, ИИ-ассистент использует инструменты напрямую:
 
 ```python
-# Позиция заметки в графе
-format_entity_compact("Мой модуль.md")
-# → (2E)[E]{E}
-
-# Классификация новой заметки
+# Классификация новой заметки: знак домена, тип материала, мосты
 suggest_metadata("Новая заметка.md")
-# → {sign: "SE", level: 4, bridges: [...]}
+# → {sign: "σE", artifact_sign: "σ", level: 4, bridges: [...]}
+
+# Графовый контекст заметки
+get_parents("Новая заметка.md")
+get_children("Новая заметка.md")
 
 # Пересчитать знаки по всему хранилищу
 recalc_signs()
@@ -97,6 +112,6 @@ mode: luca
 ## Требования
 
 - Python 3.10+
-- Obsidian vault (любая папка с `.md` файлами)
-- SQLite (встроен)
+- Obsidian vault или любая папка с `.md` файлами
+- SQLite-сервер не нужен: Python включает `sqlite3`, а пакет ставит `aiosqlite`
 - LM Studio, Ollama или OpenAI-совместимый API (опционально, для PRIZMA/SLOI)

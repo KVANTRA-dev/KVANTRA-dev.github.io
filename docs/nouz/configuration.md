@@ -1,52 +1,170 @@
 # Конфигурация
 
-NOUZ читает `config.yaml` из корня vault. Для режима LUCA файл необязателен — сервер стартует с базовыми настройками.
+NOUZ ищет `config.yaml` в таком порядке: путь из `NOUZ_CONFIG`, текущая рабочая директория, затем директория установленного сервера. Для режима LUCA файл необязателен — сервер стартует с базовыми настройками.
+
+Без `config.yaml` сервер работает в режиме **LUCA** (чистый граф).
 
 ## Минимальный конфиг
 
-```yaml
-prizma:
-  mode: luca  # luca | prizma | sloi
+Из исходников:
+
+```bash
+cp config.template.yaml config.yaml
 ```
 
-Этого достаточно, чтобы запустить NOUZ в режиме чистого графа без эмбеддингов.
+В Windows PowerShell:
+
+```powershell
+Copy-Item config.template.yaml config.yaml
+```
+
+```yaml
+mode: prizma  # luca | prizma | sloi
+```
+
+Положите файл в рабочую директорию проекта или передайте абсолютный путь через `NOUZ_CONFIG`. Этого достаточно для запуска с семантической классификацией.
 
 ## Полный конфиг
 
 ```yaml
-prizma:
-  # Режим работы
-  mode: sloi  # luca | prizma | sloi
+# Режим работы: luca | prizma | sloi
+mode: prizma
 
-  # Домены знаний (ядра) — определяют семантическое пространство
-  # Только для режимов prizma и sloi
-  cores:
-    S:
-      name: Systems Thinking
-      etalon: >
-        Methodology for analysing complex objects: feedback loops,
-        emergent properties, self-regulation, bifurcation points.
-        Not data and not code — a way of thinking about how parts
-        form a whole and why systems behave non-linearly.
-    D:
-      name: Data
-      etalon: >
-        Physics and cosmology: Lagrangians, tensors, quarks, fermions,
-        plasma, vacuum fluctuations. Pure science about the nature of
-        matter, energy and spacetime.
-    E:
-      name: Engineering
-      etalon: >
-        Software engineering, ML, infrastructure: writing and debugging
-        code, deployment, containerisation, neural networks, inference,
-        microservices, CI/CD, refactoring, APIs.
+# Meta-root: якорная заметка уровня 0.
+# Полезна для больших баз; для старта можно оставить пустой.
+# Исключается из всех семантических операций.
+meta_root: ""
 
-  # Пороги классификации
-  thresholds:
-    confident_cosine: 0.45    # Ниже → знак «слабый», не блокирует мосты
-    core_percent: 30          # Минимум % для присвоения знака домену
-    semantic_bridge: 0.55     # Порог для семантических мостов
-    analogy_bridge: 0.55      # Порог для аналогических мостов (структурный изоморфизм)
+# Семантические эталоны — описания доменов для классификации.
+# Каждый эталон: 2-3 предложения предметным языком домена.
+# Избегайте общих слов, которые встречаются в нескольких доменах.
+etalons:
+  - sign: S
+    name: Systems Analysis
+    text: >
+      Methodology for analysing complex objects: feedback loops,
+      emergent properties, self-regulation, bifurcation points.
+      Cybernetics, synergetics, dissipative structures, catastrophe
+      theory, autopoiesis — tools for understanding how the whole
+      exceeds the sum of its parts. Not data and not code — a way
+      of thinking about how parts form a whole and why systems
+      behave non-linearly.
+  - sign: D
+    name: Data & Science
+    text: >
+      Physics and cosmology: from subatomic particles to the large-scale
+      structure of the Universe. Lagrangians, curvature tensors, scattering
+      cross-sections, quarks, bosons, fermions, plasma, vacuum fluctuations,
+      cosmic microwave background, cosmological constant, decoherence.
+      Pure science about the nature of matter, energy and spacetime.
+  - sign: E
+    name: Engineering
+    text: >
+      Software engineering, machine learning and infrastructure: writing
+      and debugging code, deployment, containerisation, neural networks,
+      inference, tokenisation, data serialisation, microservices, CI/CD,
+      automated testing, refactoring, Git, Docker, Kubernetes, APIs.
+      The practical discipline of building computational systems from
+      architecture to production.
+
+# Уровни иерархии.
+# Значения технически настраиваются, но стандарт L1-L5 лучше оставлять как есть:
+# документация, примеры и режим SLOI рассчитаны именно на эту шкалу.
+levels:
+  core: 1
+  pattern: 2
+  module: 3
+  quant: 4
+  artifact: 5
+
+# Пороги классификации и связей
+thresholds:
+  # Минимальная разница между max и min cosine для присвоения знака.
+  # Если spread < sign_spread → различие между доменами слишком слабое.
+  sign_spread: 0.05
+
+  # Минимальный абсолютный cosine до ближайшего ядра.
+  # Если max_cosine >= confident_cosine → sign_source = "auto" (надёжный).
+  # Если max_cosine < confident_cosine → sign_source = "weak_auto" (лучшая догадка,
+  #   мосты в тот же домен НЕ блокируются).
+  confident_cosine: 0.6
+
+  # Минимальный нормализованный % для включения ядра в составной знак.
+  # После spread-нормализации: если adjusted_score / total * 100 >= threshold,
+  # ядро включается. Позволяет составные знаки вроде "SE" при двух ядрах ≥ 30%.
+  pattern_second_sign_threshold: 30.0
+
+  # Минимальный cosine similarity для предложения семантического моста.
+  # Предлагается только между заметками с разными ядрами (cross-domain).
+  semantic_bridge_threshold: 0.55
+
+  # Минимальное структурное сходство для аналогического моста.
+  # Аналогические мосты соединяют заметки из разных ядер с похожими
+  # позициями в графе (core_mix, level, degree, tags).
+  structural_bridge_threshold: 0.55
+
+  # Минимальный cosine similarity для авто-привязки к родителю.
+  # Используется в process_orphans и add_entity при auto_parents=true.
+  # Сырой cosine (без бонуса за то же ядро) — гарантирует осмысленную близость.
+  parent_link_threshold: 0.55
+
+  # Порог надёжности после spread-нормализации.
+  # Если доминантное ядро >= confident_spread% → sign_source = "auto".
+  # Ниже → sign_source = "weak_auto" (мосты не блокируются).
+  confident_spread: 60.0
+
+# Типы артефактов. Это справочник знаков, а не embedding-эталоны.
+# L5 получает artifact_sign по эвристике содержимого.
+# L4 может включать artifact_sign как часть составного знака.
+artifact_signs:
+  - sign: β
+    name: Note
+    text: "Краткая заметка, наблюдение, мысль на полях."
+  - sign: δ
+    name: Concept
+    text: "Определение, понятие, описание сущности."
+  - sign: ζ
+    name: Reference
+    text: "Внешний источник, документация, ссылка, цитата."
+  - sign: σ
+    name: Log
+    text: "Хроника событий, запись сессии, лог диалога."
+  - sign: μ
+    name: News
+    text: "Новость, обновление, заметка о релизе."
+  - sign: λ
+    name: Hypothesis
+    text: "Гипотеза, допущение, исследовательская версия."
+  - sign: 🝕
+    name: Specification
+    text: "Техническая спецификация, инструкция, требования."
+
+# Дополнительные символы для парсинга имён файлов (опционально).
+# Только для извлечения знаков из имён, НЕ для классификации.
+sign_chars: ""
+```
+
+## Профили (опционально)
+
+Для переключения между наборами эталонов через `PROFILE`:
+
+```yaml
+mode: prizma
+profiles:
+  default:
+    mode: prizma
+    etalons: []
+  research:
+    mode: sloi
+    etalons:
+      - sign: T
+        name: Theory
+        text: >
+          Scientific theories, hypotheses, formal models...
+```
+
+```bash
+export PROFILE=research
 ```
 
 ## Параметры
@@ -55,38 +173,53 @@ prizma:
 
 | Значение | Описание |
 |----------|----------|
-| `luca` | Чистый граф. Только YAML frontmatter и связи. Эмбеддинги не нужны. |
+| `luca` | Чистый граф. Только YAML-блоки и связи. Эмбеддинги не нужны. Режим по умолчанию. |
 | `prizma` | Семантика + граф. Эмбеддинги классифицируют заметки по доменам. Гибкая иерархия. |
-| `sloi` | Строгая 5-уровневая иерархия с валидацией. Требует эмбеддинги. |
+| `sloi` | Строгая 5-уровневая иерархия с валидацией. Требует эмбеддинги. Пропуск уровня = ошибка. |
 
-### `cores`
+### `etalons`
 
-Словарь доменов. Ключ — произвольный символ или буква (A, B, C или T, M, P — на ваш выбор). Каждый домен содержит:
+Список доменов. Каждый эталон содержит:
 
-- **`name`** — человекочитаемое название
-- **`etalon`** — описательный текст 200–500 слов. Основа классификации. Пишите предметным языком вашего домена. Избегайте слов которые встречаются в нескольких доменах одновременно.
+- **`sign`** — короткий символ домена. В примере используются `S`, `D`, `E`, но можно выбрать другие буквы или знаки, если они последовательно указаны в конфиге и не конфликтуют с `artifact_signs`.
+- **`name`** — название
+- **`text`** — описательный текст 2–3 предложения. Основа классификации. Пишите предметным языком вашего домена, используйте доменный жаргон. Избегайте слов, которые встречаются в нескольких доменах одновременно.
 
-::: tip Качество эталонов
-Запустите `calibrate_cores` и проверьте два числа в выводе: сырой pairwise cosine и mean-centered. Сырой у трансформерных моделей обычно высокий (0.6–0.75) — это нормально, это анизотропия. Смотрите на mean-centered: он должен быть заметно ниже сырого и заметно отличаться между доменами. Если mean-centered у всех пар примерно одинаковый — эталоны семантически перекрываются. Уберите общие слова, усильте специфику каждого домена.
-:::
+<div class="etalon-note">
+  <strong>Качество эталонов</strong>
+  <p>Запустите <code>calibrate_cores</code> и проверьте pairwise cosine между эталонами. Сырой cosine у трансформерных моделей обычно высокий (0.6-0.75) из-за анизотропии. Смотрите на mean-centered: он должен быть заметно ниже сырого и различаться между парами. Если пары выглядят почти одинаково, усилите специфику доменов и уберите общие слова.</p>
+</div>
+
+### `artifact_signs`
+
+Справочник типов материала для L5-артефактов. Это не эталоны для embeddings: сервер выбирает `artifact_sign` эвристически по структуре и словам в тексте. Например, лог получает `σ`, спецификация — `🝕`, гипотеза — `λ`.
 
 ### `thresholds`
 
 | Параметр | По умолчанию | Описание |
 |----------|-------------|----------|
-| `confident_cosine` | 0.45 | Абсолютный порог cosine similarity к ближайшему эталону. Ниже → `sign_source: weak_auto` |
-| `core_percent` | 30 | Минимальный процент после нормализации spread для присвоения знака |
-| `semantic_bridge` | 0.55 | Cosine ≥ этого значения → предложить семантический мост |
-| `analogy_bridge` | 0.55 | Порог для аналогических мостов (структурный изоморфизм) |
+| `sign_spread` | 0.05 | Минимальная разница max/min cosine для классификации |
+| `confident_cosine` | 0.6 | Абсолютный порог cosine к ближайшему ядру |
+| `pattern_second_sign_threshold` | 30.0 | Минимальный % для составного знака |
+| `semantic_bridge_threshold` | 0.55 | Порог семантических мостов |
+| `structural_bridge_threshold` | 0.55 | Порог аналогических мостов |
+| `parent_link_threshold` | 0.55 | Порог авто-привязки к родителю |
+| `confident_spread` | 60.0 | Порог надёжности классификации (%) |
 
 ## Переменные окружения
 
 | Переменная | Обязательна | Описание |
 |------------|-------------|----------|
-| `OBSIDIAN_ROOT` | Да | Абсолютный путь к vault |
+| `OBSIDIAN_ROOT` | Да | Абсолютный путь к папке с заметками |
+| `NOUZ_CONFIG` | Нет | Абсолютный путь к `config.yaml`; если не задан, сервер ищет файл в текущей директории |
+| `PROFILE` | Нет | Имя профиля из config.yaml (по умолчанию: `default`) |
+| `EMBED_PROVIDER` | Нет | `openai`-compatible или `ollama` (по умолчанию: `openai`) |
+| `EMBED_ENABLED` | Нет | `true` или `false` (по умолчанию: `true`) |
 | `EMBED_API_URL` | Для prizma/sloi | URL OpenAI-совместимого API эмбеддингов |
-| `EMBED_MODEL` | Нет | Имя модели (по умолчанию: `nomic-embed-text`) |
-| `LLM_API_URL` | Нет | URL для LLM (если используется) |
+| `EMBED_MODEL` | Нет | Имя модели эмбеддингов |
+| `EMBED_API_KEY` | Нет | API-ключ для облачных провайдеров |
+| `LLM_API_URL` | Нет | URL для LLM (извлечение тегов) |
+| `LLM_MODEL` | Нет | Имя LLM-модели |
 
 ```bash
 export OBSIDIAN_ROOT=/path/to/vault
@@ -99,58 +232,10 @@ export EMBED_MODEL=nomic-embed-text
 | Провайдер | URL | Примечание |
 |-----------|-----|------------|
 | LM Studio | `http://127.0.0.1:1234/v1` | Рекомендуется для локального запуска |
-| Ollama | `http://127.0.0.1:11434/v1` | Требует `ollama serve` |
-| OpenAI | `https://api.openai.com/v1` | Добавьте `OPENAI_API_KEY` |
-| GigaChat Proxy | `http://127.0.0.1:PORT/v1` | Через gigachat_proxy |
-| Любой OpenAI-compatible | — | Стандартный `/v1/embeddings` endpoint |
+| Ollama | `http://127.0.0.1:11434` | Использует endpoint `/api/embeddings` |
+| OpenAI | `https://api.openai.com/v1` | Добавьте `EMBED_API_KEY` |
+| Любой OpenAI-compatible | — | Стандартный endpoint `/v1/embeddings` |
 
-## Примеры конфигов
+## Как писать свои эталоны
 
-### Разработчик (код, архитектура, ML)
-
-```yaml
-prizma:
-  mode: prizma
-  cores:
-    A:
-      name: Architecture
-      etalon: >
-        Software architecture, system design, microservices, distributed systems,
-        API design, scalability patterns, database schemas, event-driven architecture.
-        How components are structured and interact at the system level.
-    M:
-      name: Machine Learning
-      etalon: >
-        Neural networks, transformers, fine-tuning, embeddings, inference optimization,
-        quantization, training pipelines, datasets, evaluation metrics. Applied ML engineering.
-    D:
-      name: DevOps
-      etalon: >
-        CI/CD, Docker, Kubernetes, deployment, monitoring, observability, SLOs,
-        infrastructure as code, cloud providers, reliability engineering.
-```
-
-### Исследователь (наука + методология + инструменты)
-
-```yaml
-prizma:
-  mode: sloi
-  cores:
-    T:
-      name: Theory
-      etalon: >
-        Scientific theories, hypotheses, formal models, mathematical frameworks.
-        Physics, chemistry, biology at the conceptual and formal level.
-    M:
-      name: Methodology
-      etalon: >
-        Research methods, epistemology, logic, argumentation, systematic review,
-        experimental design, statistical analysis, peer review process.
-    P:
-      name: Practice
-      etalon: >
-        Laboratory protocols, instruments, data pipelines, software tools for science,
-        reproducibility, datasets, computational notebooks.
-```
-
-
+S/D/E выше — стартовый пример трёх хорошо различимых доменов: системный анализ, научные данные и инженерная практика. Его можно взять как шаблон качества текста, но сами ядра лучше выбирать под вашу базу. Обычно хватает 2–4 доменов с плотным предметным языком и ясными границами между соседними областями. После изменения эталонов запустите `calibrate_cores` и проверьте страницу [Качество эталонов](/nouz/etalon-quality).
