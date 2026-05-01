@@ -3,7 +3,7 @@ layout: home
 hero:
   name: NOUZ
   text: Structured Memory for Obsidian and AI Agents
-  tagline: "An MCP server for Markdown knowledge bases: hierarchy, domains, links, and graph context exposed to agents through tools."
+  tagline: "A Semiotronika project: an MCP server for Markdown knowledge bases, exposing hierarchy, domains, links, and graph context to agents through tools."
   actions:
     - theme: brand
       text: Quick Start
@@ -20,7 +20,7 @@ hero:
 ## What NOUZ Does
 
 <div class="lead-panel">
-  <p>NOUZ turns a folder of Markdown notes into a managed knowledge graph. You define the semantic frame and make the decisions; the server computes domains, checks links, aggregates node composition, and gives the agent structured context through MCP.</p>
+  <p>Semiotronika builds semantic tools for people and AI agents working with complex knowledge. NOUZ turns a folder of Markdown notes into a managed knowledge graph: you define the semantic frame and make the decisions, while the server computes domains, checks links, aggregates node composition, and gives the agent structured context through MCP.</p>
 </div>
 
 <div class="formula-strip">

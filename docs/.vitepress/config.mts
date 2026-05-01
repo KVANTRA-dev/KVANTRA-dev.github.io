@@ -8,7 +8,7 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
     ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }],
     ['meta', { property: 'og:type', content: 'website' }],
-    ['meta', { property: 'og:url', content: 'https://kvantra.tech/' }],
+    ['meta', { property: 'og:url', content: 'https://semiotronika.ru/' }],
     ['meta', { property: 'og:title', content: 'NOUZ — Семантический граф знаний для Obsidian' }],
     ['meta', { property: 'og:description', content: 'MCP-сервер, превращающий Obsidian в семантический граф знаний. Структура рождается из содержания.' }],
   ],
@@ -49,7 +49,7 @@ export default defineConfig({
           ],
         },
         footer: {
-          message: '<span class="footer-brand"><span>{</span>КВАНТРА<span>}</span></span><br><a href="https://t.me/volnaya_sreda">Telegram</a> · <a href="https://t.me/volnaya_sreda">Вольная Среда</a> · <a href="mailto:belkinamariaigorevna@yandex.ru">Email</a>',
+          message: '<span class="footer-brand"><span>{</span>СЕМИОТРОНИКА<span>}</span></span><br><a href="https://t.me/volnaya_sreda">Telegram</a> · <a href="https://t.me/volnaya_sreda">Вольная Среда</a> · <a href="mailto:belkinamariaigorevna@yandex.ru">Email</a>',
           copyright: '<span class="footer-ghost-inline">косинусы считаются, синтаксис меняется, семантика остаётся</span>',
         },
         docFooter: { prev: 'Назад', next: 'Далее' },
@@ -91,7 +91,7 @@ export default defineConfig({
           ],
         },
         footer: {
-          message: '<span class="footer-brand"><span>{</span>KVANTRA<span>}</span></span><br><a href="https://t.me/volnaya_sreda">Telegram</a> · <a href="https://t.me/volnaya_sreda">Volnaya Sreda</a> · <a href="mailto:belkinamariaigorevna@yandex.ru">Email</a>',
+          message: '<span class="footer-brand"><span>{</span>SEMIOTRONIKA<span>}</span></span><br><a href="https://t.me/volnaya_sreda">Telegram</a> · <a href="https://t.me/volnaya_sreda">Volnaya Sreda</a> · <a href="mailto:belkinamariaigorevna@yandex.ru">Email</a>',
           copyright: '<span class="footer-ghost-inline">косинусы считаются, синтаксис меняется, семантика остаётся</span>',
         },
         docFooter: { prev: 'Previous', next: 'Next' },
@@ -104,7 +104,7 @@ export default defineConfig({
     siteTitle: 'Σ',
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/KVANTRA-dev/NOUZ-MCP' },
+      { icon: 'github', link: 'https://github.com/Semiotronika/NOUZ-MCP' },
     ],
 
     search: false,
