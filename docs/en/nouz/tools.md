@@ -1,24 +1,28 @@
 # MCP Tools
 
-NOUZ provides 15 tools through the Model Context Protocol. Availability depends on the mode:
+Tools are the main interface of NOUZ. Through them an AI agent does not merely read a folder of files; it works with a knowledge base as a structure: nodes, links, levels, domains, bridge candidates, and drift signals.
+
+The philosophy is simple: every action should be explicit. One tool reads a note, another shows its graph position, another suggests metadata, and another recalculates the composition of the base. Automation proposes; the human, or an agent following your rules, decides.
+
+NOUZ provides up to 15 tools through the Model Context Protocol. Availability depends on the mode:
 
 | # | Tool | Meaning | LUCA | PRIZMA | SLOI |
 | - | ---- | ------- | ---- | ------ | ---- |
-| 1 | `read_file` | read a file | ✓ | ✓ | ✓ |
-| 2 | `write_file` | write a file | ✓ | ✓ | ✓ |
-| 3 | `list_files` | list indexed files | ✓ | ✓ | ✓ |
-| 4 | `get_children` | get children | ✓ | ✓ | ✓ |
-| 5 | `get_parents` | get parents | ✓ | ✓ | ✓ |
-| 6 | `format_entity_compact` | build node formula | ✓ | ✓ | ✓ |
-| 7 | `index_all` | re-index the base | ✓ | ✓ | ✓ |
-| 8 | `suggest_metadata` | suggest metadata | — | ✓ | ✓ |
-| 9 | `suggest_parents` | suggest parents | — | ✓ | ✓ |
-| 10 | `embed` | create embedding | — | ✓ | ✓ |
-| 11 | `calibrate_cores` | calibrate etalons | — | ✓ | ✓ |
-| 12 | `recalc_signs` | recalculate signs | — | ✓ | ✓ |
-| 13 | `recalc_core_mix` | recalculate domain mix | — | ✓ | ✓ |
-| 14 | `process_orphans` | process orphan notes | — | ✓ | ✓ |
-| 15 | `add_entity` | create an entity | — | ✓ | ✓ |
+| 1 | `read_file` | read a note with YAML and refresh it in the index | ✓ | ✓ | ✓ |
+| 2 | `write_file` | write a note with cycle checks and synchronized links | ✓ | ✓ | ✓ |
+| 3 | `list_files` | inspect the file map without loading full text | ✓ | ✓ | ✓ |
+| 4 | `get_children` | traverse down the graph: what this node contains | ✓ | ✓ | ✓ |
+| 5 | `get_parents` | traverse up the graph: where this note belongs | ✓ | ✓ | ✓ |
+| 6 | `format_entity_compact` | get a compact formula for a node's position | ✓ | ✓ | ✓ |
+| 7 | `index_all` | build the local index of files, YAML, and links | ✓ | ✓ | ✓ |
+| 8 | `suggest_metadata` | propose domain, level, tags, bridges, and warnings | — | ✓ | ✓ |
+| 9 | `suggest_parents` | find possible parents by semantic similarity | — | ✓ | ✓ |
+| 10 | `embed` | test an embedding for arbitrary text | — | ✓ | ✓ |
+| 11 | `calibrate_cores` | build reference vectors for semantic domains | — | ✓ | ✓ |
+| 12 | `recalc_signs` | recalculate automatic classification for the base | — | ✓ | ✓ |
+| 13 | `recalc_core_mix` | aggregate domain composition bottom-up and reveal drift | — | ✓ | ✓ |
+| 14 | `process_orphans` | process files without metadata and propose fills | — | ✓ | ✓ |
+| 15 | `add_entity` | create a new entity with initial metadata | — | ✓ | ✓ |
 
 ---
 
@@ -26,11 +30,11 @@ NOUZ provides 15 tools through the Model Context Protocol. Availability depends 
 
 ### `read_file`
 
-Read a Markdown file and return YAML frontmatter together with content. The YAML fields include `type`, `level`, `sign`, `artifact_sign`, `parents`, and `tags`. Reading also re-indexes the file in the database.
+Read a Markdown file and return YAML frontmatter together with content. The YAML fields include `type`, `level`, `sign`, `artifact_sign`, `parents`, and `tags`. Reading also re-indexes the file in the database, so later suggestions use fresh state.
 
 ### `write_file`
 
-Create or update a note with YAML frontmatter. Checks the graph for cycles before writing and syncs simple parent links `parents` with detailed link metadata `parents_meta`.
+Create or update a note with YAML frontmatter. Checks the graph for cycles before writing and syncs simple parent links `parents` with detailed link metadata `parents_meta`. This is the final-action tool: read and suggest first, then write.
 
 ### `list_files`
 
