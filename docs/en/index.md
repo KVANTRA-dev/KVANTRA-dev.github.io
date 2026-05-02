@@ -3,7 +3,7 @@ layout: home
 hero:
   name: NOUZ
   text: Structured Memory for Obsidian and AI Agents
-  tagline: "An MCP server for Markdown knowledge bases, exposing hierarchy, domains, links, and graph context to agents through clear tools."
+  tagline: "NOUZ helps agents find the right notes, links, and context in an Obsidian vault without reading everything blindly."
   actions:
     - theme: brand
       text: Quick Start
@@ -20,58 +20,58 @@ hero:
 ## What NOUZ Does
 
 <div class="lead-panel">
-  <p>NOUZ turns a folder of Markdown notes into a managed knowledge graph. You define the semantic frame and make the decisions, while the server computes domains, checks links, aggregates node composition, and gives the agent structured context through MCP tools.</p>
+  <p>NOUZ turns an Obsidian vault into a local map of knowledge. Instead of a folder of files, the agent gets notes, links, levels, and nearby context. The structure stays under your control, while NOUZ helps keep the base organized and ready for precise agent work.</p>
 </div>
 
 <div class="formula-strip">
   <span class="formula-syntax">(children)[node]{parents}</span>
-  <span>a short graph coordinate for a note: what it belongs to and what it contains</span>
+  <span>a short coordinate for a note: what it contains and where it belongs</span>
 </div>
 
-## Tools as a Philosophy
+## Why It Matters
 
-NOUZ does not try to replace thinking with automation. Its tools make structure visible: one tool reads a note, another shows parents and children, another suggests metadata, and another recalculates the domain composition of the base. The agent receives not “a pile of files”, but a clear set of operations over a knowledge graph.
+As a knowledge base grows, agents start wasting context: reading too many files, missing important links, mixing drafts with conclusions, and rebuilding context from scratch. NOUZ gives the agent precise actions over the base: read a note, inspect its place in the graph, follow links, suggest metadata, and find related material.
 
-That is the core idea of the project: knowledge stays local and human-governed, while computation helps surface links, drift, and structural gaps.
+It does not replace thinking. It removes blind file wandering and leaves decisions where they belong: with the person using the system.
 
 <div class="feature-grid">
   <div class="feature-card">
-    <h3>Graph from YAML</h3>
-    <p>Each note declares its parents in YAML frontmatter. NOUZ builds a directed acyclic graph, checks cycles, and stores links in a local index.</p>
+    <h3>Less Wasted Context</h3>
+    <p>The agent can request a specific part of the base: one note, its parents, children, nearby links, or candidate connections. Work shifts from repeated blind reading to a reusable local index.</p>
   </div>
   <div class="feature-card">
-    <h3>Clean Classification</h3>
-    <p>Domains are defined by etalon texts. NOUZ compares notes with etalons after mean subtraction: shared embedding bias fades, and the dominant meaning becomes easier to see.</p>
+    <h3>No Auto-Rewrites</h3>
+    <p>NOUZ surfaces possible metadata, links, duplicates, and drift signals. Nothing becomes part of the vault unless it is confirmed.</p>
   </div>
   <div class="feature-card">
-    <h3>Cross-Domain Bridges</h3>
-    <p>The server proposes semantic, tag, and analogy bridges between graph branches. Proposals stay candidates until you decide to add the link.</p>
+    <h3>Hidden Connections</h3>
+    <p>The semantic layer helps reveal intersections between notes, even when they use different words or live in different branches.</p>
   </div>
   <div class="feature-card">
-    <h3>Structural Drift</h3>
-    <p><strong>Intent</strong> lives in structure and YAML. <strong>Actual composition</strong> flows bottom-up: <code>core_mix</code> aggregates the domain profile of content. Drift between them is a signal for analysis.</p>
+    <h3>Memory for Agents</h3>
+    <p>Through MCP, the agent gets practical tools: read a note, inspect its position, find neighbors, and suggest structure.</p>
   </div>
 </div>
 
 ## Three Modes
 
-Start simple. Add semantics when you're ready.
+Start simple: Obsidian, YAML, and graph structure. Add semantics later, when the vault grows beyond manual links.
 
 <div class="mode-grid">
   <div class="mode-card">
     <div class="mode-name">LUCA</div>
-    <div class="mode-sub">Pure Graph</div>
-    <p>YAML frontmatter, hierarchy, entity formulas. Point it to your notes directory: the default mode works without embeddings or config.</p>
+    <div class="mode-sub">Basic Graph</div>
+    <p>Obsidian vault structure: YAML metadata, parents, children, and note formulas. Works without embeddings or a complex config.</p>
   </div>
   <div class="mode-card">
     <div class="mode-name">PRIZMA</div>
     <div class="mode-sub">Semantic Layer</div>
-    <p>Mean-subtracted classification, composite signs, semantic/tag/analogy bridges, <code>core_mix</code>, and drift signals.</p>
+    <p>Adds classification, related ideas, bridges between themes, <code>core_mix</code>, and drift signals. Useful when the vault outgrows manual linking.</p>
   </div>
   <div class="mode-card">
     <div class="mode-name">SLOI</div>
-    <div class="mode-sub">Strict Hierarchy</div>
-    <p>5 levels: Core → Pattern → Module → Quant → Artifact. Skipping a level triggers an error. Bottom-up aggregation validates structure.</p>
+    <div class="mode-sub">Level Discipline</div>
+    <p>A strict five-level structure: Core → Pattern → Module → Quant → Artifact. Useful for research bases and team knowledge where order matters.</p>
   </div>
 </div>
 
@@ -79,23 +79,44 @@ Start simple. Add semantics when you're ready.
 
 <div class="usecase-grid">
   <div class="usecase-card">
-    <div class="uc-label">PKM / Zettelkasten</div>
-    <h3>Many Notes — Few Connections</h3>
-    <p>Your notes already have manual links, while some semantic intersections stay in your head. NOUZ surfaces candidates; the decision stays with you.</p>
+    <div class="uc-label">Obsidian power users</div>
+    <h3>The vault grew, the links live in your head</h3>
+    <p>NOUZ helps expose structure, find orphan notes, spot weak areas, and give the agent context without manually opening dozens of files.</p>
   </div>
   <div class="usecase-card">
-    <div class="uc-label">Researchers</div>
-    <h3>Ideas Across Disciplines</h3>
-    <p>Notes on physics, system architecture, and organizational theory can describe the same pattern in different words. NOUZ helps make those intersections visible.</p>
+    <div class="uc-label">Researchers and writers</div>
+    <h3>Sources, hypotheses, and conclusions</h3>
+    <p>Material from different domains can point to the same pattern in different language. NOUZ helps turn those intersections into a working research system.</p>
   </div>
   <div class="usecase-card">
     <div class="uc-label">AI Developers</div>
-    <h3>Structured Memory for Agents</h3>
-    <p>The agent gets graph context: parents, children, level, domains, links, and note content. It can work with the base as a structure.</p>
+    <h3>Working memory for agents</h3>
+    <p>The agent gets more than file access: it can see where a note sits, what it connects to, which material is nearby, and what to inspect next.</p>
   </div>
 </div>
 
-## Hierarchy
+## For Teams
+
+The easiest way to try NOUZ is with Obsidian. If your knowledge base already lives in Notion, Confluence, Google Docs, or GitHub, you do not have to migrate it: the same approach can be connected through MCP connectors or custom adapters.
+
+Semiotronika can help audit and set up agent-ready knowledge bases: duplicates, outdated pages, weak links, orphan sections, and a safer workflow: `Read → Analyze → Draft → Review → Apply`.
+
+<div class="feature-grid">
+  <div class="feature-card">
+    <h3>Knowledge Base Audit</h3>
+    <p>A map of the current base: where knowledge is messy, which topics have drifted, what is outdated, what duplicates exist, and where agents lack structure.</p>
+  </div>
+  <div class="feature-card">
+    <h3>Agent-ready setup</h3>
+    <p>Obsidian, NOUZ, metadata rules, a local index, and a workflow where humans confirm important changes before they land.</p>
+  </div>
+  <div class="feature-card">
+    <h3>Connectors and adapters</h3>
+    <p>For team systems, NOUZ can act as a semantic layer beside the existing base without breaking Notion, Confluence, or another familiar tool.</p>
+  </div>
+</div>
+
+## Technical Foundation
 
 The graph is built top-down. Each level has its role, and larger bases can add `meta_root`: a level-0 anchor that gathers domains into one system and stays out of semantic calculations.
 
@@ -126,13 +147,15 @@ The graph is built top-down. Each level has its role, and larger bases can add `
 pip install nouz-mcp
 ```
 
-Create `config.yaml` from the template, or use LUCA mode by default:
+Start with Obsidian: point NOUZ to your vault and connect it to an MCP client. **LUCA** works without embeddings; PRIZMA and SLOI need `config.yaml` and an embedding endpoint.
+
+Example semantic mode:
 
 ```yaml
 mode: prizma
 ```
 
-Point to your vault and connect embeddings (for PRIZMA/SLOI):
+Environment variables:
 
 ```bash
 export OBSIDIAN_ROOT=/path/to/vault
@@ -155,7 +178,7 @@ Run via MCP client:
 }
 ```
 
-**LUCA mode** works without embeddings — YAML and graph only. [→ Quick Start](/en/nouz/quick-start)
+[→ Quick Start](/en/nouz/quick-start)
 
 ## Research Context
 

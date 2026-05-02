@@ -1,8 +1,8 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: 'NOUZ — семантический MCP-сервер для Obsidian и Markdown',
-  description: 'NOUZ превращает Obsidian и Markdown-базы в локальный семантический граф знаний для AI-агентов: иерархия, домены, связи, drift и MCP-инструменты.',
+  title: 'NOUZ — структурная память для Obsidian и AI-агентов',
+  description: 'NOUZ помогает AI-агентам работать с Obsidian-базой как со структурой: находить нужные заметки, связи и контекст без слепого чтения файлов.',
   cleanUrls: true,
   sitemap: {
     hostname: 'https://semiotronika.ru',
@@ -30,11 +30,11 @@ export default defineConfig({
     const normalizedPath = routePath ? `/${routePath}` : '/'
     const canonical = new URL(normalizedPath, 'https://semiotronika.ru').toString()
     const title = isEnglish
-      ? 'NOUZ — semantic MCP server for Obsidian and Markdown'
-      : 'NOUZ — семантический MCP-сервер для Obsidian и Markdown'
+      ? 'NOUZ — structured memory for Obsidian and AI agents'
+      : 'NOUZ — структурная память для Obsidian и AI-агентов'
     const description = isEnglish
-      ? 'Local MCP server that turns Obsidian and Markdown files into a semantic knowledge graph: hierarchy, domains, links, drift, and tools for AI agents.'
-      : 'Локальный MCP-сервер, превращающий Obsidian и Markdown-файлы в граф знаний: домены, иерархия, связи, drift и инструменты для AI-агентов.'
+      ? 'NOUZ helps AI agents work with an Obsidian vault as structure: finding notes, links, and context without blindly reading files.'
+      : 'NOUZ помогает AI-агентам работать с Obsidian-базой как со структурой: находить нужные заметки, связи и контекст без слепого чтения файлов.'
     const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'SoftwareApplication',
