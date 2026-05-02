@@ -3,7 +3,7 @@ layout: home
 hero:
   name: NOUZ
   text: Structured Memory for Obsidian and AI Agents
-  tagline: "NOUZ helps agents find the right notes, links, and context in an Obsidian vault without reading everything blindly."
+  tagline: "NOUZ helps agents find the right notes, links, and context in an Obsidian vault."
   actions:
     - theme: brand
       text: Quick Start
@@ -30,7 +30,7 @@ hero:
 
 ## Why It Matters
 
-As a knowledge base grows, agents start wasting context: reading too many files, missing important links, mixing drafts with conclusions, and rebuilding context from scratch. NOUZ gives the agent precise actions over the base: read a note, inspect its place in the graph, follow links, suggest metadata, and find related material.
+As a knowledge base grows, agents have a harder time choosing the right context: they read too many files, miss important links, mix drafts with conclusions, and rebuild material from scratch. NOUZ gives the agent precise actions over the base: read a note, inspect its place in the graph, follow links, suggest metadata, and find related material.
 
 It does not replace thinking. It removes blind file wandering and leaves decisions where they belong: with the person using the system.
 
@@ -81,7 +81,7 @@ Start simple: Obsidian, YAML, and graph structure. Add semantics later, when the
   <div class="usecase-card">
     <div class="uc-label">Obsidian power users</div>
     <h3>The vault grew, the links live in your head</h3>
-    <p>NOUZ helps expose structure, find orphan notes, spot weak areas, and give the agent context without manually opening dozens of files.</p>
+    <p>NOUZ helps expose structure, find disconnected notes, spot weak areas, and give the agent context without manually opening dozens of files.</p>
   </div>
   <div class="usecase-card">
     <div class="uc-label">Researchers and writers</div>
@@ -99,12 +99,12 @@ Start simple: Obsidian, YAML, and graph structure. Add semantics later, when the
 
 The easiest way to try NOUZ is with Obsidian. If your knowledge base already lives in Notion, Confluence, Google Docs, or GitHub, you do not have to migrate it: the same approach can be connected through MCP connectors or custom adapters.
 
-Semiotronika can help audit and set up agent-ready knowledge bases: duplicates, outdated pages, weak links, orphan sections, and a safer workflow: `Read → Analyze → Draft → Review → Apply`.
+Semiotronika can help audit and set up agent-ready knowledge bases: duplicates, outdated pages, weak links, and disconnected sections. The workflow is explicit: the agent reads the base and suggests changes; a person reviews and applies them.
 
 <div class="feature-grid">
   <div class="feature-card">
     <h3>Knowledge Base Audit</h3>
-    <p>A map of the current base: where knowledge is messy, which topics have drifted, what is outdated, what duplicates exist, and where agents lack structure.</p>
+    <p>A map of the current base: where structure has weakened, which topics are outdated, what duplicates exist, and where agents lack links.</p>
   </div>
   <div class="feature-card">
     <h3>Agent-ready setup</h3>

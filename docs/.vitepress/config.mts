@@ -1,8 +1,8 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: 'NOUZ — структурная память для Obsidian и AI-агентов',
-  description: 'NOUZ помогает AI-агентам работать с Obsidian-базой как со структурой: находить нужные заметки, связи и контекст без слепого чтения файлов.',
+  title: 'NOUZ — структурная память для Obsidian и ИИ-агентов',
+  description: 'NOUZ помогает ИИ-агентам работать с Obsidian-базой как со структурой: находить нужные заметки, связи и контекст.',
   cleanUrls: true,
   sitemap: {
     hostname: 'https://semiotronika.ru',
@@ -31,10 +31,10 @@ export default defineConfig({
     const canonical = new URL(normalizedPath, 'https://semiotronika.ru').toString()
     const title = isEnglish
       ? 'NOUZ — structured memory for Obsidian and AI agents'
-      : 'NOUZ — структурная память для Obsidian и AI-агентов'
+      : 'NOUZ — структурная память для Obsidian и ИИ-агентов'
     const description = isEnglish
-      ? 'NOUZ helps AI agents work with an Obsidian vault as structure: finding notes, links, and context without blindly reading files.'
-      : 'NOUZ помогает AI-агентам работать с Obsidian-базой как со структурой: находить нужные заметки, связи и контекст без слепого чтения файлов.'
+      ? 'NOUZ helps AI agents work with an Obsidian vault as structure: finding notes, links, and context.'
+      : 'NOUZ помогает ИИ-агентам работать с Obsidian-базой как со структурой: находить нужные заметки, связи и контекст.'
     const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'SoftwareApplication',
