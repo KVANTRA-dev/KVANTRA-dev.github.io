@@ -231,12 +231,13 @@
   display: flex;
   align-items: baseline;
   gap: 14px;
-  margin: -1.7rem 0 2.6rem;
+  margin: -1.2rem 0 2.8rem;
   padding-left: 24px;
   max-width: 860px;
   color: var(--vp-c-text-2);
   font-size: 0.9rem;
   line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 .formula-strip .formula-syntax {
@@ -259,11 +260,11 @@
 
 @media (max-width: 720px) {
   .formula-strip {
-    display: flex;
-    align-items: baseline;
+    align-items: flex-start;
+    flex-direction: column;
     gap: 10px;
     padding-left: 0;
-    margin-top: -1.8rem;
+    margin: -0.8rem 0 2.2rem;
   }
 
   .formula-strip .formula-syntax {
@@ -271,7 +272,8 @@
   }
 
   .formula-strip .formula-syntax::after {
-    padding-left: 10px;
+    content: '';
+    padding-left: 0;
   }
 }
 

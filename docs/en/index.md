@@ -23,16 +23,16 @@ hero:
   <p>NOUZ turns a folder of Markdown notes into a managed knowledge graph. You define the semantic frame and make the decisions, while the server computes domains, checks links, aggregates node composition, and gives the agent structured context through MCP tools.</p>
 </div>
 
+<div class="formula-strip">
+  <span class="formula-syntax">(children)[node]{parents}</span>
+  <span>a short graph coordinate for a note: what it belongs to and what it contains</span>
+</div>
+
 ## Tools as a Philosophy
 
 NOUZ does not try to replace thinking with automation. Its tools make structure visible: one tool reads a note, another shows parents and children, another suggests metadata, and another recalculates the domain composition of the base. The agent receives not “a pile of files”, but a clear set of operations over a knowledge graph.
 
 That is the core idea of the project: knowledge stays local and human-governed, while computation helps surface links, drift, and structural gaps.
-
-<div class="formula-strip">
-  <span class="formula-syntax">(children)[node]{parents}</span>
-  <span>a short graph coordinate for a note: what it belongs to and what it contains</span>
-</div>
 
 <div class="feature-grid">
   <div class="feature-card">
