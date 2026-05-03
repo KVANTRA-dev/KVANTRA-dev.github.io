@@ -132,13 +132,15 @@ With a local embedding provider, texts stay on your machine. With a cloud provid
 
 The graph is built top-down. Each level has its role, and larger bases can add `meta_root`: a level-0 anchor that gathers domains into one system and stays out of semantic calculations.
 
+Below are the working graph levels. They do not need to become folder names: level, type, and short code live in YAML metadata, while the material remains ordinary notes.
+
 | Level | Type | What Goes Here | Sign Source |
 | ----- | ---- | -------------- | ----------- |
-| L1 | Core | Knowledge domain — a broad area | Manual or etalon-based |
+| L1 | Core / Domain | Broad area of knowledge or work | Manual or etalon-based |
 | L2 | Pattern | Thematic frame for child modules and notes | Manual or etalon-based |
 | L3 | Module | Functional group, project | Manual or etalon-based |
-| L4 | Quant | One complete thought: a guide, decision, note, or process description | Optional artifact type + content domain |
-| L5 | Artifact | Raw material: logs, chats, configs | Content-structure heuristic |
+| L4 | Note / Quant | One complete thought: a guide, decision, note, or process description | Optional material type + content domain |
+| L5 | Artifact | Raw material: logs, chats, sources, configs | Content-structure heuristic |
 
 ## Works With
 

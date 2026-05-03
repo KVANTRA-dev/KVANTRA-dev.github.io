@@ -34,6 +34,8 @@ mode: prizma  # luca | prizma | sloi
 
 For semantic classification, add domains (etalons) — full examples → [Configuration](/en/nouz/configuration).
 
+In NOUZ terms, a domain, or core, is a broad area of the vault: product, engineering, processes, personal notes, or another frame that fits your material. `sign` is the short domain code, while `artifact_sign` is the short material-type code: note, log, source, specification.
+
 ### 2. Point to Your Vault
 
 ```bash
@@ -78,7 +80,7 @@ nouz-mcp
 [INFO] Indexing database on startup...
 [INFO] Indexed: 42 files, errors: 0
 [INFO] Core etalons loaded from DB: ['S', 'D', 'E']
-[INFO] NOUZ MCP Server v3.0.1 started
+[INFO] NOUZ MCP Server v3.0.2 started
 ```
 
 ## First Steps
@@ -88,7 +90,7 @@ Once NOUZ is connected, your AI assistant uses the tools directly:
 ```python
 # Classify a new note
 suggest_metadata("New Note.md")
-# → {sign: "σE", artifact_sign: "σ", level: 4, bridges: [...]}
+# → {sign: "E", artifact_sign: "n", level: 4, bridges: [...]}
 
 # Recalculate signs across the entire knowledge base
 recalc_signs()

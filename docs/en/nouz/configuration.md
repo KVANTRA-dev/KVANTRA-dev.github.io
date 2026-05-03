@@ -22,7 +22,7 @@ Copy-Item config.template.yaml config.yaml
 mode: prizma  # luca | prizma | sloi
 ```
 
-Place this file in the project working directory or pass its absolute path through `NOUZ_CONFIG`. That is enough to start with semantic classification.
+Place this file in the project working directory or pass its absolute path through `NOUZ_CONFIG`. That is enough to enable PRIZMA; for domain classification, add `etalons` from the full example below.
 
 ## Full Config
 
@@ -83,19 +83,19 @@ thresholds:
   # If spread < sign_spread → the difference between domains is too weak.
   sign_spread: 0.05
 
-  # Minimum absolute cosine to the nearest core.
+  # Minimum absolute cosine to the nearest domain.
   # If max_cosine >= confident_cosine → sign_source = "auto" (reliable).
   # If max_cosine < confident_cosine → sign_source = "weak_auto" (best guess,
-  #   bridges to the same core are NOT blocked).
+  #   bridges to the same domain are NOT blocked).
   confident_cosine: 0.6
 
-  # Minimum normalized % for a core to appear in a compound sign.
+  # Minimum normalized % for a domain to appear in a compound sign.
   # After spread normalization: if adjusted_score / total * 100 >= threshold,
-  # the core is included. Allows compound signs like "SE" when two cores both score ≥ 30%.
+  # the domain is included. Allows compound signs like "SE" when two domains both score ≥ 30%.
   pattern_second_sign_threshold: 30.0
 
   # Minimum cosine similarity to propose a semantic bridge.
-  # Only proposed between notes with different cores (cross-domain).
+  # Only proposed between notes with different domains (cross-domain).
   semantic_bridge_threshold: 0.55
 
   # Minimum cosine similarity to auto-link a file to a parent.
@@ -104,33 +104,38 @@ thresholds:
   parent_link_threshold: 0.55
 
   # Reliability threshold after spread normalization.
-  # If dominant core >= confident_spread% → sign_source = "auto".
+  # If dominant domain >= confident_spread% → sign_source = "auto".
   # Below → sign_source = "weak_auto" (bridges not blocked).
   confident_spread: 60.0
 
 # Artifact signs. This is a sign dictionary, not embedding etalons.
 # L5 artifacts get artifact_sign by content heuristics.
-# L4 quants can include artifact_sign as part of the composite sign.
+# L4 notes/quants can include artifact_sign as part of the composite sign.
+# Public convention: domains use uppercase codes (S/D/E),
+# material types use lowercase codes (n/c/r/l/u/h/s).
+# You can replace them if codes stay short and do not conflict with domains.
+# If needed, add keywords to any material type: the server will use
+# those words instead of the built-in RU/EN heuristic.
 artifact_signs:
-  - sign: β
+  - sign: n
     name: Note
     text: "Short note, observation, marginal thought."
-  - sign: δ
+  - sign: c
     name: Concept
     text: "Definition, concept, entity description."
-  - sign: ζ
+  - sign: r
     name: Reference
     text: "External source, documentation, link, citation."
-  - sign: σ
+  - sign: l
     name: Log
     text: "Chronicle of events, session record, dialogue log."
-  - sign: μ
-    name: News
-    text: "News item, update, release note."
-  - sign: λ
+  - sign: u
+    name: Update
+    text: "Update, release note, changelog entry."
+  - sign: h
     name: Hypothesis
     text: "Hypothesis, assumption, speculative idea."
-  - sign: 🝕
+  - sign: s
     name: Specification
     text: "Technical specification, instruction, requirements."
 
@@ -177,25 +182,26 @@ export PROFILE=team
 
 A list of domains. Each etalon contains:
 
-- **`sign`** — short domain symbol. The example uses `S`, `D`, `E`, but you can choose other letters or symbols if they are used consistently in config and do not conflict with `artifact_signs`.
+- **`sign`** — short domain code. The example uses `S`, `D`, `E`, but you can choose other letters or symbols if they are used consistently in config and do not conflict with `artifact_signs`.
 - **`name`** — name
 - **`text`** — descriptive text of 2–3 sentences. The basis of classification. Write in the subject language of your domain, use domain-specific jargon. Avoid words that appear across multiple domains.
 
 <div class="etalon-note">
   <strong>Etalon Quality</strong>
-  <p>Run <code>calibrate_cores</code> and check pairwise cosine between etalons. Raw cosine for transformer models is usually high (0.6-0.75) because of anisotropy. Look at mean-centered values: they should be noticeably lower than raw and differ between pairs. If all pairs look almost the same, strengthen domain specificity and remove common words.</p>
+  <p>The S/D/E etalons above are only a starting example of three well-separated domains. The domains themselves should match your base: most setups need 2–4 domains with dense subject language and clear boundaries between neighboring areas.</p>
+  <p>After changing etalons, run <code>calibrate_cores</code> and check pairwise cosine. Raw cosine for transformer models is usually high (0.6-0.75) because of anisotropy; mean-centered values should be noticeably lower than raw and differ between pairs. If all pairs look almost the same, strengthen domain specificity and remove common words. Details: <a href="/en/nouz/etalon-quality">Etalon Quality</a>.</p>
 </div>
 
 ### `artifact_signs`
 
-A dictionary of material types for L5 artifacts. These are not embedding etalons: the server chooses `artifact_sign` with content-structure heuristics. For example, a log gets `σ`, a specification gets `🝕`, a hypothesis gets `λ`.
+A dictionary of material types for L5 artifacts. These are not embedding etalons: the server chooses `artifact_sign` with content-structure heuristics. For example, a log gets `l`, a specification gets `s`, a hypothesis gets `h`. When starting out, you can usually leave this dictionary unchanged. If you change the codes, keep them short and do not reuse domain signs. For your own languages and formats, add `keywords` to the relevant material type.
 
 ### `thresholds`
 
 | Parameter | Default | Description |
 | --------- | ------- | ----------- |
 | `sign_spread` | 0.05 | Min max/min cosine difference for classification |
-| `confident_cosine` | 0.6 | Absolute cosine threshold to nearest core |
+| `confident_cosine` | 0.6 | Absolute cosine threshold to nearest domain |
 | `pattern_second_sign_threshold` | 30.0 | Min % for compound sign inclusion |
 | `semantic_bridge_threshold` | 0.55 | Semantic bridge threshold |
 | `parent_link_threshold` | 0.55 | Auto-parent linking threshold |
@@ -230,7 +236,3 @@ export EMBED_MODEL=nomic-embed-text
 | Ollama | `http://127.0.0.1:11434` | Uses `/api/embeddings` endpoint |
 | OpenAI | `https://api.openai.com/v1` | Add `EMBED_API_KEY` |
 | Any OpenAI-compatible | — | Standard `/v1/embeddings` endpoint |
-
-## Writing Your Own Etalons
-
-The S/D/E etalons above are a starting example of three well-separated domains: systems analysis, scientific data, and engineering practice. You can reuse them as a template for text quality, but the domains themselves should match your base. Most setups need 2–4 domains with dense subject language and clear boundaries between neighboring areas. After changing etalons, run `calibrate_cores` and check [Etalon Quality](/en/nouz/etalon-quality).

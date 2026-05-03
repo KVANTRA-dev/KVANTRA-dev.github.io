@@ -34,7 +34,9 @@ mode: prizma  # luca | prizma | sloi
 
 Для семантической классификации добавьте домены (`etalons`, эталонные тексты) — полные примеры → [Конфигурация](/nouz/configuration).
 
-### 2. Укажите путь к папке базы
+В терминах NOUZ домен, или ядро, — это крупная область базы: продукт, разработка, процессы, личные заметки или другая ваша рамка. `sign` — короткий код домена, а `artifact_sign` — короткий код типа материала: заметка, лог, источник, спецификация.
+
+### 2. Укажите путь к папке базы (`vault`)
 
 ```bash
 export OBSIDIAN_ROOT=/path/to/your/obsidian-vault
@@ -78,7 +80,7 @@ nouz-mcp
 [INFO] Indexing database on startup...
 [INFO] Indexed: 42 files, errors: 0
 [INFO] Core etalons loaded from DB: ['S', 'D', 'E']
-[INFO] NOUZ MCP Server v3.0.1 started
+[INFO] NOUZ MCP Server v3.0.2 started
 ```
 
 ## Первые шаги
@@ -88,7 +90,7 @@ nouz-mcp
 ```python
 # Классификация новой заметки: знак домена, тип материала, мосты
 suggest_metadata("Новая заметка.md")
-# → {sign: "σE", artifact_sign: "σ", level: 4, bridges: [...]}
+# → {sign: "E", artifact_sign: "n", level: 4, bridges: [...]}
 
 # Графовый контекст заметки
 get_parents("Новая заметка.md")

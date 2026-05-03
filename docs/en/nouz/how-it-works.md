@@ -15,9 +15,9 @@ That lets the agent work with a note as a node in the knowledge graph. Semantic 
 
 ### Level 0 (meta_root)
 
-Anchor node for the whole base. Set in `config.yaml` as `meta_root: "My Knowledge Base"`. L1 cores can reference it, while the node itself is excluded from semantic calculations. In graph visualization, it is the center that holds domains in one system without affecting their content classification.
+Anchor node for the whole base. Set in `config.yaml` as `meta_root: "My Knowledge Base"`. L1 domains can reference it, while the node itself is excluded from semantic calculations. In graph visualization, it is the center that holds domains in one system without affecting their content classification.
 
-### artifact_sign
+### Material Type (`artifact_sign`)
 
 Sign determined by content heuristics (logs, chats, configs). Used for L5 to separate material type from topic. For L4 it becomes part of a composite sign (artifact + core).
 
@@ -28,12 +28,12 @@ NOUZ has two sign layers:
 | Level | How It Is Determined |
 | ----- | -------------------- |
 | L1-L3 | Domain sign from etalons, unless manually set |
-| L4 Quant | Optional composite sign: its own `artifact_sign` + content domain sign |
-| L5 Artifact | `artifact_sign` from content-structure heuristic, no domain sign |
+| L4 Note / Quant | Optional composite sign: its own `artifact_sign` + content domain sign |
+| L5 Artifact / Raw Material | `artifact_sign` from content-structure heuristic, no domain sign |
 
 Manual markup has priority. If `sign` is already set in YAML, the server does not overwrite it as truth, but it can still compute `sign_auto` for comparison.
 
-`artifact_sign` describes the material type: note, concept, reference, log, news, hypothesis, specification. For L4 it can be stored in YAML as part of a composite sign; for L5 it is stored in the database and displayed as the artifact sign.
+`artifact_sign` describes the material type: note, concept, reference, log, update, hypothesis, specification. The public convention uses short lowercase codes for this: `n/c/r/l/u/h/s`. For L4 it can be stored in YAML as part of a composite sign; for L5 it is stored in the database and displayed as the artifact sign.
 
 ## Etalon Classification
 
