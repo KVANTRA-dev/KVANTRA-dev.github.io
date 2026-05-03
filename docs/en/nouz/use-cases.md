@@ -169,8 +169,10 @@ The usual next steps are simple: tune etalons for your base, check their quality
 
 ## If Your Base Is Not in Obsidian
 
-Obsidian is the easiest way to try NOUZ, but the approach is not tied to one editor. If your material already lives in Notion, Confluence, Google Docs, GitHub, or an internal portal, it can be connected through MCP connectors or custom adapters. NOUZ becomes a structural layer beside the existing base rather than a replacement for the team's familiar tool.
+Obsidian is the easiest way to try NOUZ. The same approach can also move into other working environments: Notion, Confluence, Google Docs, GitHub, or an internal portal. Through MCP connectors or custom adapters, NOUZ works beside the current base as a structural layer while the familiar tool stays in place.
 
-The work usually starts with an audit: duplicates, outdated pages, weak links, disconnected sections, and places where the agent lacks enough context. Then the team can define domains, metadata rules, a local index, and a review process for proposed changes.
+In working bases, the task is usually broader than a one-time install. Start with a small part of the base and inspect duplicates, outdated pages, weak links, disconnected sections, and places where the agent lacks enough context. Then define domains, metadata rules, a local index, and a review process for proposed changes.
 
-Semiotronika can join at this stage: inspect the existing base, shape an agent-ready structure, and leave a workflow where the agent suggests changes and you decide what to accept.
+Semiotronika can help make that stage calm and practical: inspect the existing base, shape an agent-ready structure, and leave a workflow where the agent suggests changes and you decide what to accept.
+
+If you want to discuss where to start with your own base, contact Semiotronika on [Telegram](https://t.me/volnaya_sreda) or by [email](mailto:belkinamariaigorevna@yandex.ru). A short note about where the material lives and what the agent should be able to do is enough.

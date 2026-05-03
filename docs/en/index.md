@@ -48,6 +48,15 @@ It does not replace thinking. It removes blind file wandering and leaves decisio
   </div>
 </div>
 
+## What Changes for the Agent
+
+| Before NOUZ | With NOUZ |
+| ----------- | --------- |
+| The agent reads a folder almost blindly | The agent asks for a specific note, parents, children, and nearby context |
+| Relationships live in people's heads | Relationships become part of a local graph exposed through MCP |
+| Old pages, duplicates, and orphan notes surface by accident | The server shows weak spots and suggests what to inspect |
+| Automation feels risky | Suggestions and previews come first; your decision comes before writing |
+
 ## Three Modes
 
 Start simple: Obsidian, YAML, and graph structure. Add semantics later, when the vault grows beyond manual links.
@@ -90,26 +99,34 @@ Start simple: Obsidian, YAML, and graph structure. Add semantics later, when the
   </div>
 </div>
 
-## If Your Base Is Not in Obsidian
+## Beyond Obsidian
 
-The easiest way to try NOUZ is with Obsidian. If your knowledge base already lives in Notion, Confluence, Google Docs, or GitHub, you do not have to migrate it: the same approach can be connected through MCP connectors or custom adapters.
+Obsidian is the easiest way to try NOUZ, but the approach is broader than a Markdown folder. If your material already lives in Notion, Confluence, Google Docs, or GitHub, NOUZ can be connected beside those tools through MCP connectors or custom adapters.
 
-Semiotronika can help audit and set up agent-ready knowledge bases: duplicates, outdated pages, weak links, disconnected sections, and a review process where the agent suggests changes and you accept only what fits your system.
+That transition usually starts with a small part of the base: inspect the structure, see where the agent lacks context, and only then decide which rules and links should become part of the workflow.
 
 <div class="feature-grid">
   <div class="feature-card">
-    <h3>Knowledge Base Audit</h3>
-    <p>A map of the current base: where structure has weakened, which topics are outdated, what duplicates exist, and where agents lack links.</p>
+    <h3>Structure Check</h3>
+    <p>First you see which materials are already connected, where order is still manual, and which areas are hard for the agent to read as a system.</p>
   </div>
   <div class="feature-card">
-    <h3>Agent-ready setup</h3>
-    <p>Obsidian, NOUZ, metadata rules, a local index, and a workflow where you confirm important changes before they land.</p>
+    <h3>Working Loop</h3>
+    <p>The index, metadata rules, and MCP access can be added gradually: from reading and navigation to proposed changes that pass review.</p>
   </div>
   <div class="feature-card">
     <h3>Connectors and adapters</h3>
-    <p>For team systems, NOUZ can act as a semantic layer beside the existing base without breaking Notion, Confluence, or another familiar tool.</p>
+    <p>If the base is shared, NOUZ can act as a structural layer beside the existing material without breaking Notion, Confluence, or another familiar tool.</p>
   </div>
 </div>
+
+[→ Use Cases](/en/nouz/use-cases)
+
+## Data and Control
+
+NOUZ runs locally: notes stay in your folder, the index is stored in SQLite beside the base, and file changes go through explicit tools. You can start with reading and indexing, inspect suggestions in preview mode, and write YAML metadata only after review.
+
+With a local embedding provider, texts stay on your machine. With a cloud provider, only the fragments requested for embeddings are sent out.
 
 ## Technical Foundation
 

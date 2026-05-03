@@ -78,7 +78,7 @@ nouz-mcp
 [INFO] Indexing database on startup...
 [INFO] Indexed: 42 files, errors: 0
 [INFO] Core etalons loaded from DB: ['S', 'D', 'E']
-[INFO] NOUZ MCP Server v3.0.0 started
+[INFO] NOUZ MCP Server v3.0.1 started
 ```
 
 ## First Steps
@@ -94,6 +94,20 @@ suggest_metadata("New Note.md")
 recalc_signs()
 recalc_core_mix()
 ```
+
+## Which Mode to Choose
+
+| If you need | Mode |
+| ----------- | ---- |
+| Graph navigation, parents, children, and indexing without embeddings | **LUCA** |
+| Semantic links, drift signals, and related material | **PRIZMA** |
+| A strict five-level structure with hierarchy validation | **SLOI** |
+
+## Safe First Run
+
+Start with indexing and reading: `index_all`, `list_files`, `read_file`, `get_parents`, `get_children`. These actions reveal the state of the base without mass edits.
+
+For changes, use suggestions and preview first: `suggest_metadata`, `suggest_parents`, `process_orphans(dry_run=true)`. Once the result is clear, write only YAML metadata with `update_metadata` while preserving the note body.
 
 ## Simple Start
 

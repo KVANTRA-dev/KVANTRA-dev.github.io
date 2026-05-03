@@ -78,7 +78,7 @@ nouz-mcp
 [INFO] Indexing database on startup...
 [INFO] Indexed: 42 files, errors: 0
 [INFO] Core etalons loaded from DB: ['S', 'D', 'E']
-[INFO] NOUZ MCP Server v3.0.0 started
+[INFO] NOUZ MCP Server v3.0.1 started
 ```
 
 ## Первые шаги
@@ -98,6 +98,20 @@ get_children("Новая заметка.md")
 recalc_signs()
 recalc_core_mix()
 ```
+
+## Какой режим выбрать
+
+| Если нужно | Режим |
+| ---------- | ----- |
+| Дать агенту граф, родителей, детей и навигацию без эмбеддингов | **LUCA** |
+| Искать смысловые связи, дрифт и похожие материалы | **PRIZMA** |
+| Держать строгую пятиуровневую структуру с проверкой иерархии | **SLOI** |
+
+## Безопасный первый запуск
+
+Начните с индексации и чтения: `index_all`, `list_files`, `read_file`, `get_parents`, `get_children`. Эти действия помогают увидеть состояние базы без массовых правок.
+
+Для изменений используйте предложения и предпросмотр: `suggest_metadata`, `suggest_parents`, `process_orphans(dry_run=true)`. Когда результат понятен, можно записывать только YAML через `update_metadata`, не меняя текст заметки.
 
 ## Простой старт
 
