@@ -4,11 +4,10 @@ NOUZ is useful in two different situations: when a knowledge base is just beginn
 
 ## Who It Is For
 
-NOUZ makes sense when a knowledge base has grown beyond a simple folder of notes: it has domains, levels, recurring topics, decisions, logs, research, or project documentation.
+NOUZ makes sense when a knowledge base has grown beyond a simple folder of notes: it has domains, levels, recurring topics, decisions, logs, project documentation, or working materials.
 
 Good fit:
 
-- researchers and writers working across several fields who want to see intersections;
 - developers and teams who need MCP access to living project memory;
 - Obsidian users whose vault already has some links, while many relationships still live only in their head;
 - bases where it matters to distinguish structure from content: what a note was meant to be, and what it actually talks about.
@@ -25,7 +24,7 @@ Not the best fit:
 
 **How to work:**
 
-1. Start with LUCA: YAML, parents, graph, entity formula.
+1. Start with LUCA: YAML, parents, graph navigation.
 2. Add new notes normally.
 3. For new notes, call `suggest_metadata` or `suggest_parents`.
 4. When enough material has accumulated, enable PRIZMA: etalons, embeddings, bridges, `core_mix`.
@@ -34,7 +33,7 @@ Minimal note:
 
 ```yaml
 ---
-type: quant
+type: note
 level: 4
 parents:
   - "[[Module Name]]"
@@ -53,14 +52,14 @@ suggest_metadata("New Note.md")
 → {
     sign: "E",
     level: 4,
-    suggested_parents: ["Architecture/Patterns.md"],
+    suggested_parents: ["Project/Architecture.md"],
     bridges: [
-      {type: "semantic", target: "Design/CQRS.md", cosine: 0.74, proposed: true}
+      {type: "semantic", target: "Project/Decisions/ADR-001.md", cosine: 0.74, proposed: true}
     ]
   }
 ```
 
-**Idea:** the human shapes the structure as the base grows, while NOUZ proposes placement, domain, tags, and bridges. The decision stays with the human.
+**Idea:** you shape the structure as the base grows, while NOUZ proposes placement, domain, tags, and bridges. The decision stays with you.
 
 ---
 
@@ -83,13 +82,13 @@ Example:
 index_all()
 calibrate_cores()
 recalc_signs()
-suggest_metadata("Technical Debt.md")
+suggest_metadata("New Monitoring Runbook.md")
 ```
 
 ```text
 bridges:
-  - semantic: "Entropy.md" (cosine: 0.71)
-  - semantic: "Tragedy of the Commons.md" (cosine: 0.63)
+  - semantic: "Project/Monitoring.md" (cosine: 0.71)
+  - semantic: "Project/Incidents/2026-04.md" (cosine: 0.63)
 ```
 
 **Idea:** NOUZ shows the state of an existing base: lost links, unmarked notes, weak parents, drift between `sign` and `core_mix`. New structure appears through your decisions, not over them.
@@ -98,10 +97,10 @@ bridges:
 
 ## Drift: When Structure Diverges from Reality
 
-**Situation:** the "Machine Learning" module started as technical, but recent notes are increasingly about AI philosophy, ethics, and system limits. The name and YAML say one thing; the content now says another.
+**Situation:** the "Monitoring" module started as technical instructions, but later accumulated incident notes, on-call rules, and process decisions. The name and YAML say one thing; the content has become broader.
 
 ```python
-format_entity_compact("ML/Machine Learning.md")
+recalc_core_mix(dry_run=True)
 # → sign: E (Engineering), core_mix: {S: 61%, E: 39%}
 # → DRIFT WARNING: sign=E, core_mix says S dominates
 ```
@@ -135,7 +134,7 @@ User: "Tell me about the monitoring architecture"
 Agent uses NOUZ:
 1. list_files(subfolder="infrastructure") → 12 files
 2. get_children("Infrastructure/Monitoring.md") → [Prometheus.md, Grafana.md, Alerting.md]
-3. format_entity_compact("Infrastructure/Monitoring.md") → (S2E)[E]{E}
+3. get_parents("Infrastructure/Prometheus.md") → [Monitoring.md]
 4. read_file each child → full context
 ```
 
@@ -145,25 +144,33 @@ The agent answers from the structure of your knowledge base: hierarchy, neighbor
 
 ## Living Project Documentation
 
-**Situation:** a project has architecture notes, decisions, bugs, retrospectives, and research. These often live near each other, but not always connected.
+**Situation:** a project has architecture notes, decisions, bugs, retrospectives, instructions, and logs. These often live near each other, but not always connected.
 
 ```text
 Project/
 ├── Architecture.md       # L3 module
 ├── Decisions/
-│   ├── ADR-001.md        # L4 quant
+│   ├── ADR-001.md        # L4 note
 │   ├── ADR-002.md
 ├── Bugs/
 │   ├── Bug-tracker.md    # L3 module
-│   ├── Issue-42.md       # L4 quant
+│   ├── Issue-42.md       # L4 note
 └── Retrospectives/
     └── 2026-Q1.md        # L5 artifact
 ```
 
-`get_children("Project/Architecture.md")` gives the agent the hierarchy. `suggest_parents("New bug.md")` finds similar past incidents. `format_entity_compact` shows where any note sits in the project structure.
+`get_children("Project/Architecture.md")` gives the agent the hierarchy. `suggest_parents("New bug.md")` finds similar past incidents. `list_files(level=4)` shows the key notes that make up the project.
 
 ## What Stays Yours
 
 NOUZ computes, compares, and proposes, but the structure of the base remains your decision. This matters for living archives: the server makes levels, links, domains, and drift visible, while you choose what to accept, split, or keep as a bridge in the graph.
 
 The usual next steps are simple: tune etalons for your base, check their quality with `calibrate_cores`, then connect an MCP client and give the agent graph context.
+
+## If the Base Already Lives in a Team Tool
+
+Obsidian is the easiest way to try NOUZ, but the approach is not tied to one editor. If your material already lives in Notion, Confluence, Google Docs, GitHub, or an internal portal, it can be connected through MCP connectors or custom adapters. NOUZ becomes a structural layer beside the existing base rather than a replacement for the team's familiar tool.
+
+The work usually starts with an audit: duplicates, outdated pages, weak links, disconnected sections, and places where the agent lacks enough context. Then the team can define domains, metadata rules, a local index, and a review process for proposed changes.
+
+Semiotronika can help with that setup: inspect the existing base, shape an agent-ready structure, and leave the team with a workflow where the agent suggests changes and you decide what to accept.

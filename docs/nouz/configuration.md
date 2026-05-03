@@ -98,11 +98,6 @@ thresholds:
   # Предлагается только между заметками с разными ядрами (cross-domain).
   semantic_bridge_threshold: 0.55
 
-  # Минимальное структурное сходство для аналогического моста.
-  # Аналогические мосты соединяют заметки из разных ядер с похожими
-  # позициями в графе (core_mix, level, degree, tags).
-  structural_bridge_threshold: 0.55
-
   # Минимальный cosine similarity для авто-привязки к родителю.
   # Используется в process_orphans и add_entity при auto_parents=true.
   # Сырой cosine (без бонуса за то же ядро) — гарантирует осмысленную близость.
@@ -113,7 +108,7 @@ thresholds:
   # Ниже → sign_source = "weak_auto" (мосты не блокируются).
   confident_spread: 60.0
 
-# Типы артефактов. Это справочник знаков, а не embedding-эталоны.
+# Типы артефактов. Это справочник знаков, а не эталоны для эмбеддингов.
 # L5 получает artifact_sign по эвристике содержимого.
 # L4 может включать artifact_sign как часть составного знака.
 artifact_signs:
@@ -134,7 +129,7 @@ artifact_signs:
     text: "Новость, обновление, заметка о релизе."
   - sign: λ
     name: Hypothesis
-    text: "Гипотеза, допущение, исследовательская версия."
+    text: "Гипотеза, допущение, предварительная версия."
   - sign: 🝕
     name: Specification
     text: "Техническая спецификация, инструкция, требования."
@@ -154,17 +149,18 @@ profiles:
   default:
     mode: prizma
     etalons: []
-  research:
-    mode: sloi
+  team:
+    mode: prizma
     etalons:
-      - sign: T
-        name: Theory
+      - sign: P
+        name: Product
         text: >
-          Scientific theories, hypotheses, formal models...
+          Product decisions, roadmap notes, user feedback,
+          requirements, release planning...
 ```
 
 ```bash
-export PROFILE=research
+export PROFILE=team
 ```
 
 ## Параметры
@@ -192,7 +188,7 @@ export PROFILE=research
 
 ### `artifact_signs`
 
-Справочник типов материала для L5-артефактов. Это не эталоны для embeddings: сервер выбирает `artifact_sign` эвристически по структуре и словам в тексте. Например, лог получает `σ`, спецификация — `🝕`, гипотеза — `λ`.
+Справочник типов материала для L5-артефактов. Это не эталоны для эмбеддингов: сервер выбирает `artifact_sign` эвристически по структуре и словам в тексте. Например, лог получает `σ`, спецификация — `🝕`, гипотеза — `λ`.
 
 ### `thresholds`
 
@@ -202,7 +198,6 @@ export PROFILE=research
 | `confident_cosine` | 0.6 | Абсолютный порог cosine к ближайшему ядру |
 | `pattern_second_sign_threshold` | 30.0 | Минимальный % для составного знака |
 | `semantic_bridge_threshold` | 0.55 | Порог семантических мостов |
-| `structural_bridge_threshold` | 0.55 | Порог аналогических мостов |
 | `parent_link_threshold` | 0.55 | Порог авто-привязки к родителю |
 | `confident_spread` | 60.0 | Порог надёжности классификации (%) |
 
@@ -210,7 +205,7 @@ export PROFILE=research
 
 | Переменная | Обязательна | Описание |
 |------------|-------------|----------|
-| `OBSIDIAN_ROOT` | Да | Абсолютный путь к папке с заметками |
+| `OBSIDIAN_ROOT` | Да | Абсолютный путь к папке базы (`vault`) |
 | `NOUZ_CONFIG` | Нет | Абсолютный путь к `config.yaml`; если не задан, сервер ищет файл в текущей директории |
 | `PROFILE` | Нет | Имя профиля из config.yaml (по умолчанию: `default`) |
 | `EMBED_PROVIDER` | Нет | `openai`-compatible или `ollama` (по умолчанию: `openai`) |
@@ -232,9 +227,9 @@ export EMBED_MODEL=nomic-embed-text
 | Провайдер | URL | Примечание |
 |-----------|-----|------------|
 | LM Studio | `http://127.0.0.1:1234/v1` | Рекомендуется для локального запуска |
-| Ollama | `http://127.0.0.1:11434` | Использует endpoint `/api/embeddings` |
+| Ollama | `http://127.0.0.1:11434` | Использует путь `/api/embeddings` |
 | OpenAI | `https://api.openai.com/v1` | Добавьте `EMBED_API_KEY` |
-| Любой OpenAI-compatible | — | Стандартный endpoint `/v1/embeddings` |
+| Любой OpenAI-совместимый API | — | Стандартный путь `/v1/embeddings` |
 
 ## Как писать свои эталоны
 

@@ -78,7 +78,7 @@ nouz-mcp
 [INFO] Indexing database on startup...
 [INFO] Indexed: 42 files, errors: 0
 [INFO] Core etalons loaded from DB: ['S', 'D', 'E']
-[INFO] NOUZ MCP Server v2.5.6 started
+[INFO] NOUZ MCP Server v3.0.0 started
 ```
 
 ## First Steps
@@ -86,15 +86,11 @@ nouz-mcp
 Once NOUZ is connected, your AI assistant uses the tools directly:
 
 ```python
-# Note position in the graph
-format_entity_compact("My Module.md")
-# → (2E)[E]{E}
-
 # Classify a new note
 suggest_metadata("New Note.md")
 # → {sign: "σE", artifact_sign: "σ", level: 4, bridges: [...]}
 
-# Recalculate signs across the entire vault
+# Recalculate signs across the entire knowledge base
 recalc_signs()
 recalc_core_mix()
 ```
@@ -107,7 +103,7 @@ Begin with **LUCA mode** — no embeddings required:
 mode: luca
 ```
 
-You get the full DAG: hierarchical connections, entity formulas, navigation. Add semantics later by switching to PRIZMA or SLOI.
+You get the full DAG: hierarchical connections, graph navigation, and local indexing. Add semantics later by switching to PRIZMA or SLOI.
 
 ## Requirements
 

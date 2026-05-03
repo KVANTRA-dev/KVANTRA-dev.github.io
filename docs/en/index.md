@@ -23,16 +23,11 @@ hero:
   <p>NOUZ turns an Obsidian vault into a local map of knowledge. Instead of a folder of files, the agent gets notes, links, levels, and nearby context. The structure stays under your control, while NOUZ helps keep the base organized and ready for precise agent work.</p>
 </div>
 
-<div class="formula-strip">
-  <span class="formula-syntax">(children)[node]{parents}</span>
-  <span>a short coordinate for a note: what it contains and where it belongs</span>
-</div>
-
 ## Why It Matters
 
 As a knowledge base grows, agents have a harder time choosing the right context: they read too many files, miss important links, mix drafts with conclusions, and rebuild material from scratch. NOUZ gives the agent precise actions over the base: read a note, inspect its place in the graph, follow links, suggest metadata, and find related material.
 
-It does not replace thinking. It removes blind file wandering and leaves decisions where they belong: with the person using the system.
+It does not replace thinking. It removes blind file wandering and leaves decisions where they belong: with you.
 
 <div class="feature-grid">
   <div class="feature-card">
@@ -61,7 +56,7 @@ Start simple: Obsidian, YAML, and graph structure. Add semantics later, when the
   <div class="mode-card">
     <div class="mode-name">LUCA</div>
     <div class="mode-sub">Basic Graph</div>
-    <p>Obsidian vault structure: YAML metadata, parents, children, and note formulas. Works without embeddings or a complex config.</p>
+    <p>Obsidian vault structure: YAML metadata, parents, children, and graph navigation. Works without embeddings or a complex config.</p>
   </div>
   <div class="mode-card">
     <div class="mode-name">PRIZMA</div>
@@ -71,7 +66,7 @@ Start simple: Obsidian, YAML, and graph structure. Add semantics later, when the
   <div class="mode-card">
     <div class="mode-name">SLOI</div>
     <div class="mode-sub">Level Discipline</div>
-    <p>A strict five-level structure: Core → Pattern → Module → Quant → Artifact. Useful for research bases and team knowledge where order matters.</p>
+    <p>A strict five-level structure: Core → Pattern → Module → Quant → Artifact. Useful for large knowledge bases and team memory where order matters.</p>
   </div>
 </div>
 
@@ -84,9 +79,9 @@ Start simple: Obsidian, YAML, and graph structure. Add semantics later, when the
     <p>NOUZ helps expose structure, find disconnected notes, spot weak areas, and give the agent context without manually opening dozens of files.</p>
   </div>
   <div class="usecase-card">
-    <div class="uc-label">Researchers and writers</div>
-    <h3>Sources, hypotheses, and conclusions</h3>
-    <p>Material from different domains can point to the same pattern in different language. NOUZ helps turn those intersections into a working research system.</p>
+    <div class="uc-label">Knowledge base owners</div>
+    <h3>The material grew, order is still manual</h3>
+    <p>NOUZ helps surface recurring topics, outdated notes, weak links, and areas where an agent needs more structure to work confidently.</p>
   </div>
   <div class="usecase-card">
     <div class="uc-label">AI Developers</div>
@@ -99,7 +94,7 @@ Start simple: Obsidian, YAML, and graph structure. Add semantics later, when the
 
 The easiest way to try NOUZ is with Obsidian. If your knowledge base already lives in Notion, Confluence, Google Docs, or GitHub, you do not have to migrate it: the same approach can be connected through MCP connectors or custom adapters.
 
-Semiotronika can help audit and set up agent-ready knowledge bases: duplicates, outdated pages, weak links, and disconnected sections. The workflow is explicit: the agent reads the base and suggests changes; a person reviews and applies them.
+Semiotronika can help audit and set up agent-ready knowledge bases: duplicates, outdated pages, weak links, and disconnected sections. The workflow is explicit: the agent reads the base and suggests changes; you review and apply only what fits your system.
 
 <div class="feature-grid">
   <div class="feature-card">
@@ -108,7 +103,7 @@ Semiotronika can help audit and set up agent-ready knowledge bases: duplicates, 
   </div>
   <div class="feature-card">
     <h3>Agent-ready setup</h3>
-    <p>Obsidian, NOUZ, metadata rules, a local index, and a workflow where humans confirm important changes before they land.</p>
+    <p>Obsidian, NOUZ, metadata rules, a local index, and a workflow where you confirm important changes before they land.</p>
   </div>
   <div class="feature-card">
     <h3>Connectors and adapters</h3>
@@ -123,9 +118,9 @@ The graph is built top-down. Each level has its role, and larger bases can add `
 | Level | Type | What Goes Here | Sign Source |
 | ----- | ---- | -------------- | ----------- |
 | L1 | Core | Knowledge domain — a broad area | Manual or etalon-based |
-| L2 | Pattern | Thematic frame for child modules and quants | Manual or etalon-based |
+| L2 | Pattern | Thematic frame for child modules and notes | Manual or etalon-based |
 | L3 | Module | Functional group, project | Manual or etalon-based |
-| L4 | Quant | One idea — a guide, research, post | Child artifact type + content domain |
+| L4 | Quant | One complete thought: a guide, decision, note, or process description | Optional artifact type + content domain |
 | L5 | Artifact | Raw material: logs, chats, configs | Content-structure heuristic |
 
 ## Works With
@@ -179,7 +174,3 @@ Run via MCP client:
 ```
 
 [→ Quick Start](/en/nouz/quick-start)
-
-## Research Context
-
-NOUZ is a practical MCP server; the theory is optional. For readers interested in the research frame behind the project: [Recursive Self-Organization as a Universal Principle](https://doi.org/10.5281/zenodo.19595850).

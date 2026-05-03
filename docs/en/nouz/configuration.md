@@ -98,11 +98,6 @@ thresholds:
   # Only proposed between notes with different cores (cross-domain).
   semantic_bridge_threshold: 0.55
 
-  # Minimum structural similarity for an analogy bridge.
-  # Analogy bridges connect notes from different cores with similar
-  # graph positions (core_mix, level, degree, tags).
-  structural_bridge_threshold: 0.55
-
   # Minimum cosine similarity to auto-link a file to a parent.
   # Used by process_orphans and add_entity when auto_parents=true.
   # Raw cosine only — ensures meaningful proximity.
@@ -154,17 +149,18 @@ profiles:
   default:
     mode: prizma
     etalons: []
-  research:
-    mode: sloi
+  team:
+    mode: prizma
     etalons:
-      - sign: T
-        name: Theory
+      - sign: P
+        name: Product
         text: >
-          Scientific theories, hypotheses, formal models...
+          Product decisions, roadmap notes, user feedback,
+          requirements, release planning...
 ```
 
 ```bash
-export PROFILE=research
+export PROFILE=team
 ```
 
 ## Parameters
@@ -202,7 +198,6 @@ A dictionary of material types for L5 artifacts. These are not embedding etalons
 | `confident_cosine` | 0.6 | Absolute cosine threshold to nearest core |
 | `pattern_second_sign_threshold` | 30.0 | Min % for compound sign inclusion |
 | `semantic_bridge_threshold` | 0.55 | Semantic bridge threshold |
-| `structural_bridge_threshold` | 0.55 | Analogy bridge threshold |
 | `parent_link_threshold` | 0.55 | Auto-parent linking threshold |
 | `confident_spread` | 60.0 | Classification reliability threshold (%) |
 

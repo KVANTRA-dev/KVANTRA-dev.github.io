@@ -2,7 +2,7 @@
 
 Tools are the main interface of NOUZ. Through them an AI agent does not merely read a folder of files; it works with a knowledge base as a structure: nodes, links, levels, domains, bridge candidates, and drift signals.
 
-The philosophy is simple: every action should be explicit. One tool reads a note, another shows its graph position, another suggests metadata, and another recalculates the composition of the base. Automation proposes; the human, or an agent following your rules, decides.
+The principle is simple: every action should be explicit. One tool reads a note, another shows its graph position, another suggests metadata, and another recalculates the composition of the base. Automation proposes; you, or an agent following your rules, decide.
 
 NOUZ provides up to 15 tools through the Model Context Protocol. Availability depends on the mode:
 
@@ -10,10 +10,10 @@ NOUZ provides up to 15 tools through the Model Context Protocol. Availability de
 | - | ---- | ------- | ---- | ------ | ---- |
 | 1 | `read_file` | read a note with YAML and refresh it in the index | ✓ | ✓ | ✓ |
 | 2 | `write_file` | write a note with cycle checks and synchronized links | ✓ | ✓ | ✓ |
-| 3 | `list_files` | inspect the file map without loading full text | ✓ | ✓ | ✓ |
-| 4 | `get_children` | traverse down the graph: what this node contains | ✓ | ✓ | ✓ |
-| 5 | `get_parents` | traverse up the graph: where this note belongs | ✓ | ✓ | ✓ |
-| 6 | `format_entity_compact` | get a compact formula for a node's position | ✓ | ✓ | ✓ |
+| 3 | `update_metadata` | update YAML only while preserving note body | ✓ | ✓ | ✓ |
+| 4 | `list_files` | inspect the file map without loading full text | ✓ | ✓ | ✓ |
+| 5 | `get_children` | traverse down the graph: what this node contains | ✓ | ✓ | ✓ |
+| 6 | `get_parents` | traverse up the graph: where this note belongs | ✓ | ✓ | ✓ |
 | 7 | `index_all` | build the local index of files, YAML, and links | ✓ | ✓ | ✓ |
 | 8 | `suggest_metadata` | propose domain, level, tags, bridges, and warnings | — | ✓ | ✓ |
 | 9 | `suggest_parents` | find possible parents by semantic similarity | — | ✓ | ✓ |
@@ -36,6 +36,10 @@ Read a Markdown file and return YAML frontmatter together with content. The YAML
 
 Create or update a note with YAML frontmatter. Checks the graph for cycles before writing and syncs simple parent links `parents` with detailed link metadata `parents_meta`. This is the final-action tool: read and suggest first, then write.
 
+### `update_metadata`
+
+Update only the YAML frontmatter of an existing note. The Markdown body after frontmatter is preserved exactly. Use it for safe changes to `type`, `level`, `sign`, `artifact_sign`, `tags`, `parents`, and `parents_meta` when the note content must stay untouched.
+
 ### `list_files`
 
 List indexed files with filters by `level`, `sign`, `subfolder`, or `no_metadata`.
@@ -51,12 +55,6 @@ Get descendants of a node from the DAG index: direct and transitive.
 ### `get_parents`
 
 Get parent links for a file. Returns `entity` and `link_type` for each connection.
-
-### `format_entity_compact`
-
-Compact formula for a node's position: `(children)[node]{parents}`. The formula displays link types that help keep the structure readable: `hierarchy`, `semantic`, and `temporary`.
-
----
 
 ## Semantics <Badge type="tip" text="PRIZMA / SLOI" />
 

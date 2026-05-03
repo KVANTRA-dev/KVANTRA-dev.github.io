@@ -34,7 +34,7 @@ mode: prizma  # luca | prizma | sloi
 
 Для семантической классификации добавьте домены (`etalons`, эталонные тексты) — полные примеры → [Конфигурация](/nouz/configuration).
 
-### 2. Укажите путь к папке с заметками
+### 2. Укажите путь к папке базы
 
 ```bash
 export OBSIDIAN_ROOT=/path/to/your/obsidian-vault
@@ -78,7 +78,7 @@ nouz-mcp
 [INFO] Indexing database on startup...
 [INFO] Indexed: 42 files, errors: 0
 [INFO] Core etalons loaded from DB: ['S', 'D', 'E']
-[INFO] NOUZ MCP Server v2.5.6 started
+[INFO] NOUZ MCP Server v3.0.0 started
 ```
 
 ## Первые шаги
@@ -107,11 +107,11 @@ recalc_core_mix()
 mode: luca
 ```
 
-Вы получаете полный DAG: иерархические связи, формулы сущностей, навигацию. Семантику можно добавить позже — переключением на PRIZMA или SLOI.
+Вы получаете полный DAG: иерархические связи, навигацию по графу и локальный индекс. Семантику можно добавить позже — переключением на PRIZMA или SLOI.
 
 ## Требования
 
 - Python 3.10+
-- Obsidian vault или любая папка с `.md` файлами
+- Obsidian-база (`vault`) или любая папка с `.md` файлами
 - SQLite-сервер не нужен: Python включает `sqlite3`, а пакет ставит `aiosqlite`
 - LM Studio, Ollama или OpenAI-совместимый API (опционально, для PRIZMA/SLOI)

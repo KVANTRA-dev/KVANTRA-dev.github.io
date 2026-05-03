@@ -2,28 +2,6 @@
 
 NOUZ reads YAML frontmatter, builds a DAG, classifies content through etalons, and proposes links between branches. You define the structure and make the decisions; AI helps compute, compare, and notice weak spots in the graph.
 
-## Entity Formula
-
-Every node can be shown as a compact formula:
-
-```
-(children)[node]{parents}
-```
-
-**( )** — children. Signs are aggregated; a number prefix appears only when count is greater than one.
-
-**[ ]** — the node itself: its `sign` or `artifact_sign`.
-
-**{ }** — parents. The formula stays compact even as plain text.
-
-```
-(2E)[E]{S}      — two E children, self E, parent S
-(σE)[σE]{E}     — quant with artifact_sign σ and domain sign E
-[β]             — artifact without parents or children
-```
-
-`format_entity_compact` returns this formula for any note. It is not a separate classification mechanism; it is a visual coordinate: what sits below the node, what sign the node has, and what structure it belongs to above.
-
 ## Graph Context
 
 NOUZ builds the graph **top-down**: from domains to artifacts. The graph defines explicit structure, while the semantic layer adds computed signals: domain, bridges, `core_mix`, and drift.
@@ -31,10 +9,9 @@ NOUZ builds the graph **top-down**: from domains to artifacts. The graph defines
 Through MCP, an agent can explicitly request a note's place in the graph:
 - parents and children;
 - level and `sign`;
-- compact formula `(children)[node]{parents}`;
 - `core_mix`, when PRIZMA or SLOI is enabled.
 
-That lets the agent work with a note as a node in the knowledge graph. Semantic calculations are separate: text is compared with etalons, bridges are found through embeddings, and `core_mix` shows how quant content changes the picture bottom-up.
+That lets the agent work with a note as a node in the knowledge graph. Semantic calculations are separate: text is compared with etalons, bridges are found through embeddings, and `core_mix` shows how note content changes the overall picture bottom-up.
 
 ### Level 0 (meta_root)
 
@@ -51,7 +28,7 @@ NOUZ has two sign layers:
 | Level | How It Is Determined |
 | ----- | -------------------- |
 | L1-L3 | Domain sign from etalons, unless manually set |
-| L4 Quant | Composite sign: `artifact_sign` from linked artifacts + content domain sign |
+| L4 Quant | Optional composite sign: its own `artifact_sign` + content domain sign |
 | L5 Artifact | `artifact_sign` from content-structure heuristic, no domain sign |
 
 Manual markup has priority. If `sign` is already set in YAML, the server does not overwrite it as truth, but it can still compute `sign_auto` for comparison.
@@ -64,7 +41,7 @@ Domains are defined in `config.yaml` as an `etalons` list. `calibrate_cores` tur
 
 During classification the server:
 
-1. Takes the content embedding after stripping HTML formulas.
+1. Takes the note content embedding without YAML frontmatter.
 2. Compares it with mean-centered etalons.
 3. Computes spread: `max_score - min_score`.
 4. If `spread < sign_spread` (`0.05`), the difference between domains is too weak, so the server does not choose a domain.
@@ -102,18 +79,15 @@ If a module's `sign` says "Engineering" while `core_mix` increasingly points to 
 | `temporary` | User or AI | Temporary link for material not yet settled in the graph |
 | `semantic` | AI proposes | Texts from different domains share meaning |
 | `tag` | AI proposes | Similarity between tags or short concepts |
-| `analogy` | AI proposes | Similar graph role across different domains |
 | `error` | Server | Strict hierarchy violation in SLOI |
 
-The formula displays only `hierarchy`, `semantic`, and `temporary` links to stay readable. Other link types remain available in MCP data and in the index.
+All link types remain available in MCP data and in the index. Structural workflows usually start from `hierarchy`; semantic and tag links stay as proposals until you accept them.
 
 ## Bridges
 
 **Semantic bridges** compare a whole note against notes from other domains. Default threshold: `semantic_bridge_threshold = 0.55`.
 
 **Tag bridges** compare tags and short concepts. They can reveal shared concepts even when full texts are different.
-
-**Analogy bridges** look for structural similarity: similar `core_mix`, level, degree, and tag overlap. Default threshold: `structural_bridge_threshold = 0.55`.
 
 All bridges are returned as proposals (`proposed: true`). The server shows candidates; you decide what becomes a link.
 
