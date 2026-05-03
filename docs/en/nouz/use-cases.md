@@ -175,4 +175,4 @@ In working bases, the task is usually broader than a one-time install. Start wit
 
 Semiotronika can help make that stage calm and practical: inspect the existing base, shape an agent-ready structure, and leave a workflow where the agent suggests changes and you decide what to accept.
 
-If you want to discuss where to start with your own base, contact Semiotronika on [Telegram](https://t.me/volnaya_sreda) or by [email](mailto:belkinamariaigorevna@yandex.ru). A short note about where the material lives and what the agent should be able to do is enough.
+If you want to discuss where to start with your own base, contact Semiotronika on [Telegram](https://t.me/Masha_Belkina) or by [email](mailto:belkinamariaigorevna@yandex.ru). A short note about where the material lives and what the agent should be able to do is enough.
