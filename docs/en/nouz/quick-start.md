@@ -79,7 +79,7 @@ nouz-mcp
 [INFO] Indexing database on startup...
 [INFO] Indexed: 42 files, errors: 0
 [INFO] Core etalons loaded from DB: ['S', 'D', 'E']
-[INFO] NOUZ MCP Server v3.0.2 started
+[INFO] NOUZ MCP Server v3.0.3 started
 ```
 
 ## First Steps
