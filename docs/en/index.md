@@ -182,8 +182,7 @@ Run via MCP client:
 {
   "mcpServers": {
     "nouz": {
-      "command": "python",
-      "args": ["-m", "nouz_mcp"],
+      "command": "nouz-mcp",
       "env": {
         "OBSIDIAN_ROOT": "/path/to/vault"
       }

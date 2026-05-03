@@ -59,8 +59,7 @@ Add to your MCP configuration (Claude Desktop, Cursor, OpenCode, etc.):
 {
   "mcpServers": {
     "nouz": {
-      "command": "python",
-      "args": ["-m", "nouz_mcp"],
+      "command": "nouz-mcp",
       "env": {
         "OBSIDIAN_ROOT": "/path/to/vault",
         "EMBED_API_URL": "http://127.0.0.1:1234/v1"
