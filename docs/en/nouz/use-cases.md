@@ -167,10 +167,10 @@ NOUZ computes, compares, and proposes, but the structure of the base remains you
 
 The usual next steps are simple: tune etalons for your base, check their quality with `calibrate_cores`, then connect an MCP client and give the agent graph context.
 
-## If the Base Already Lives in a Team Tool
+## If Your Base Is Not in Obsidian
 
 Obsidian is the easiest way to try NOUZ, but the approach is not tied to one editor. If your material already lives in Notion, Confluence, Google Docs, GitHub, or an internal portal, it can be connected through MCP connectors or custom adapters. NOUZ becomes a structural layer beside the existing base rather than a replacement for the team's familiar tool.
 
 The work usually starts with an audit: duplicates, outdated pages, weak links, disconnected sections, and places where the agent lacks enough context. Then the team can define domains, metadata rules, a local index, and a review process for proposed changes.
 
-Semiotronika can help with that setup: inspect the existing base, shape an agent-ready structure, and leave the team with a workflow where the agent suggests changes and you decide what to accept.
+Semiotronika can join at this stage: inspect the existing base, shape an agent-ready structure, and leave a workflow where the agent suggests changes and you decide what to accept.

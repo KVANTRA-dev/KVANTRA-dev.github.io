@@ -90,11 +90,11 @@ Start simple: Obsidian, YAML, and graph structure. Add semantics later, when the
   </div>
 </div>
 
-## For Teams
+## If Your Base Is Not in Obsidian
 
 The easiest way to try NOUZ is with Obsidian. If your knowledge base already lives in Notion, Confluence, Google Docs, or GitHub, you do not have to migrate it: the same approach can be connected through MCP connectors or custom adapters.
 
-Semiotronika can help audit and set up agent-ready knowledge bases: duplicates, outdated pages, weak links, and disconnected sections. The workflow is explicit: the agent reads the base and suggests changes; you review and apply only what fits your system.
+Semiotronika can help audit and set up agent-ready knowledge bases: duplicates, outdated pages, weak links, disconnected sections, and a review process where the agent suggests changes and you accept only what fits your system.
 
 <div class="feature-grid">
   <div class="feature-card">
