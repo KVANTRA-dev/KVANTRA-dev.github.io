@@ -212,7 +212,6 @@ export default defineConfig({
               text: 'Начало работы',
               items: [
                 { text: 'Быстрый старт', link: '/nouz/quick-start' },
-                { text: 'Для ИИ-агентов', link: '/nouz/for-agents' },
                 { text: 'Конфигурация', link: '/nouz/configuration' },
               ],
             },
@@ -255,7 +254,6 @@ export default defineConfig({
               text: 'Getting Started',
               items: [
                 { text: 'Quick Start', link: '/en/nouz/quick-start' },
-                { text: 'For AI Agents', link: '/en/nouz/for-agents' },
                 { text: 'Configuration', link: '/en/nouz/configuration' },
               ],
             },
