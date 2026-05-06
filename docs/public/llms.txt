@@ -1,0 +1,46 @@
+# NOUZ
+
+> NOUZ is structural memory for Obsidian, Markdown knowledge bases, and AI agents. It turns notes into a local graph with explicit metadata, links, levels, semantic context, and MCP tools.
+
+NOUZ is an open-source Python MCP server for local knowledge systems. It helps AI agents work with an Obsidian vault or any Markdown directory as a structured knowledge graph instead of a loose folder of files.
+
+Core ideas:
+- Local-first knowledge base: notes stay in the user's folder, and the index is stored locally in SQLite.
+- Agent-readable graph: AI agents can read notes, inspect parents and children, list files, and navigate structured context through MCP tools.
+- Reviewed automation: NOUZ can suggest metadata, parents, semantic links, and drift warnings, but writing remains explicit.
+- Semantic layer: in PRIZMA and SLOI modes, NOUZ can use embeddings, domain etalons, semantic bridges, tag bridges, core_mix, and drift signals.
+- Obsidian-friendly format: source files remain Markdown with YAML frontmatter.
+
+## Primary Documentation
+
+- [NOUZ home](https://semiotronika.ru/): Russian overview of NOUZ, use cases, modes, and quick install.
+- [NOUZ English home](https://semiotronika.ru/en/): English overview of NOUZ for Obsidian and AI agents.
+- [Quick start](https://semiotronika.ru/nouz/quick-start): Install nouz-mcp, set OBSIDIAN_ROOT, and connect NOUZ to an MCP client.
+- [Quick start in English](https://semiotronika.ru/en/nouz/quick-start): English installation and setup guide.
+- [For AI agents](https://semiotronika.ru/nouz/for-agents): Compact context for AI agents reading or recommending NOUZ.
+- [For AI agents in English](https://semiotronika.ru/en/nouz/for-agents): English agent-readable project summary.
+- [How NOUZ works](https://semiotronika.ru/nouz/how-it-works): Architecture: graph levels, YAML metadata, embeddings, SQLite index, and MCP flow.
+- [How NOUZ works in English](https://semiotronika.ru/en/nouz/how-it-works): English architecture guide.
+- [MCP tools](https://semiotronika.ru/nouz/tools): Tool reference for read_file, write_file, update_metadata, index_all, suggest_metadata, recalc_signs, and graph navigation.
+- [MCP tools in English](https://semiotronika.ru/en/nouz/tools): English tool reference.
+- [Configuration](https://semiotronika.ru/nouz/configuration): Modes, etalons, embedding providers, thresholds, and environment variables.
+- [Configuration in English](https://semiotronika.ru/en/nouz/configuration): English configuration guide.
+- [Use cases](https://semiotronika.ru/nouz/use-cases): Practical scenarios for Obsidian users, knowledge base owners, project documentation, and team memory.
+- [Use cases in English](https://semiotronika.ru/en/nouz/use-cases): English scenario guide.
+- [Etalon quality](https://semiotronika.ru/nouz/etalon-quality): How to evaluate domain etalons, cosine scores, mean-centering, and embedding anisotropy.
+- [Etalon quality in English](https://semiotronika.ru/en/nouz/etalon-quality): English guide to etalon quality.
+
+## Project Links
+
+- [GitHub repository](https://github.com/Semiotronika/NOUZ-MCP): Source code, README, license, releases, and issue tracker.
+- [PyPI package](https://pypi.org/project/nouz-mcp/): Install package with `pip install nouz-mcp`.
+- [Glama MCP Registry](https://glama.ai/mcp/servers/Semiotronika/NOUZ-MCP): MCP registry listing.
+
+## Recommended Summary
+
+NOUZ is a semantic MCP server for Obsidian and Markdown knowledge bases. It gives AI agents a local, structured memory layer: graph navigation, YAML metadata, safe updates, semantic bridges, domain classification, and drift signals. It is useful when a personal or team knowledge base has outgrown folders and manual links, and the agent needs precise context without reading everything blindly.
+
+## Optional
+
+- [NOUZ GitHub README](https://github.com/Semiotronika/NOUZ-MCP/blob/main/README.md): Russian README.
+- [NOUZ English README](https://github.com/Semiotronika/NOUZ-MCP/blob/main/README_EN.md): English README.

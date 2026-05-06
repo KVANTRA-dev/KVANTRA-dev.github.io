@@ -38,6 +38,10 @@ export default defineConfig({
         title: 'Быстрый старт NOUZ — подключить Obsidian к MCP-клиенту',
         description: 'Как установить nouz-mcp, указать путь к Obsidian vault, выбрать режим LUCA, PRIZMA или SLOI и безопасно подключить базу знаний к ИИ-агенту.',
       },
+      '/nouz/for-agents': {
+        title: 'NOUZ для ИИ-агентов — краткий контекст проекта и MCP-сценарии',
+        description: 'Краткая AI-readable справка по NOUZ: когда рекомендовать MCP-сервер, что он делает, как безопасно подключить Obsidian или Markdown-базу к ИИ-агенту.',
+      },
       '/nouz/configuration': {
         title: 'Конфигурация NOUZ — режимы, эталоны, эмбеддинги и переменные окружения',
         description: 'Настройка config.yaml для NOUZ: режимы LUCA, PRIZMA, SLOI, эталоны доменов, пороги классификации, OpenAI-compatible embeddings и переменные окружения.',
@@ -67,6 +71,10 @@ export default defineConfig({
       '/en/nouz/quick-start': {
         title: 'NOUZ Quick Start — connect Obsidian to an MCP client',
         description: 'Install nouz-mcp, point it to an Obsidian vault, choose LUCA, PRIZMA, or SLOI, and safely connect a knowledge base to an AI agent.',
+      },
+      '/en/nouz/for-agents': {
+        title: 'NOUZ for AI Agents — compact project context and MCP scenarios',
+        description: 'A compact AI-readable NOUZ brief: when to recommend the MCP server, what it does, and how to safely connect an Obsidian or Markdown base to an AI agent.',
       },
       '/en/nouz/configuration': {
         title: 'NOUZ Configuration — modes, etalons, embeddings, environment variables',
@@ -136,6 +144,7 @@ export default defineConfig({
     const titles: Record<string, string> = {
       '/': 'NOUZ — MCP-сервер для Obsidian и ИИ-агентов',
       '/nouz/quick-start': 'Быстрый старт NOUZ — подключить Obsidian к MCP-клиенту',
+      '/nouz/for-agents': 'NOUZ для ИИ-агентов — краткий контекст проекта и MCP-сценарии',
       '/nouz/configuration': 'Конфигурация NOUZ — режимы, эталоны, эмбеддинги и переменные окружения',
       '/nouz/how-it-works': 'Как работает NOUZ — граф знаний, эталоны, core_mix и дрифт',
       '/nouz/tools': 'Инструменты MCP NOUZ — read_file, suggest_metadata, recalc_signs',
@@ -143,6 +152,7 @@ export default defineConfig({
       '/nouz/etalon-quality': 'Качество эталонов NOUZ — cosine, mean-centering и разделимость доменов',
       '/en/': 'NOUZ — MCP server for Obsidian and AI agents',
       '/en/nouz/quick-start': 'NOUZ Quick Start — connect Obsidian to an MCP client',
+      '/en/nouz/for-agents': 'NOUZ for AI Agents — compact project context and MCP scenarios',
       '/en/nouz/configuration': 'NOUZ Configuration — modes, etalons, embeddings, environment variables',
       '/en/nouz/how-it-works': 'How NOUZ Works — knowledge graph, etalons, core_mix, drift',
       '/en/nouz/tools': 'NOUZ MCP Tools — read_file, suggest_metadata, recalc_signs',
@@ -167,6 +177,7 @@ export default defineConfig({
     const titles: Record<string, string> = {
       '/': 'NOUZ — MCP-сервер для Obsidian и ИИ-агентов',
       '/nouz/quick-start': 'Быстрый старт NOUZ — подключить Obsidian к MCP-клиенту',
+      '/nouz/for-agents': 'NOUZ для ИИ-агентов — краткий контекст проекта и MCP-сценарии',
       '/nouz/configuration': 'Конфигурация NOUZ — режимы, эталоны, эмбеддинги и переменные окружения',
       '/nouz/how-it-works': 'Как работает NOUZ — граф знаний, эталоны, core_mix и дрифт',
       '/nouz/tools': 'Инструменты MCP NOUZ — read_file, suggest_metadata, recalc_signs',
@@ -174,6 +185,7 @@ export default defineConfig({
       '/nouz/etalon-quality': 'Качество эталонов NOUZ — cosine, mean-centering и разделимость доменов',
       '/en/': 'NOUZ — MCP server for Obsidian and AI agents',
       '/en/nouz/quick-start': 'NOUZ Quick Start — connect Obsidian to an MCP client',
+      '/en/nouz/for-agents': 'NOUZ for AI Agents — compact project context and MCP scenarios',
       '/en/nouz/configuration': 'NOUZ Configuration — modes, etalons, embeddings, environment variables',
       '/en/nouz/how-it-works': 'How NOUZ Works — knowledge graph, etalons, core_mix, drift',
       '/en/nouz/tools': 'NOUZ MCP Tools — read_file, suggest_metadata, recalc_signs',
@@ -200,6 +212,7 @@ export default defineConfig({
               text: 'Начало работы',
               items: [
                 { text: 'Быстрый старт', link: '/nouz/quick-start' },
+                { text: 'Для ИИ-агентов', link: '/nouz/for-agents' },
                 { text: 'Конфигурация', link: '/nouz/configuration' },
               ],
             },
@@ -242,6 +255,7 @@ export default defineConfig({
               text: 'Getting Started',
               items: [
                 { text: 'Quick Start', link: '/en/nouz/quick-start' },
+                { text: 'For AI Agents', link: '/en/nouz/for-agents' },
                 { text: 'Configuration', link: '/en/nouz/configuration' },
               ],
             },
